@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-HELLOWORLD_SITE = $(BR2_EXTERNAL_k1_PATH)/../app-src/test
+HELLOWORLD_SITE = $(BR2_EXTERNAL_k1_PATH)/../package-src/test
 HELLOWORLD_SITE_METHOD = local
 HELLOWORLD_INSTALL_TARGET = YES
 

@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-TCM_SITE = $(BR2_EXTERNAL_k1_PATH)/../app-src/tcm
+TCM_SITE = $(BR2_EXTERNAL_k1_PATH)/../package-src/tcm
 TCM_SITE_METHOD = local
 TCM_INSTALL_TARGET = YES
 
