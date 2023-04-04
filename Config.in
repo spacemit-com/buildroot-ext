@@ -1,0 +1,8 @@
+
+menu "k1 config"
+
+source "$BR2_EXTERNAL_k1_PATH/package/helloworld/Config.in"
+source "$BR2_EXTERNAL_k1_PATH/package/tcm/Config.in"
+
+
+endmenu
