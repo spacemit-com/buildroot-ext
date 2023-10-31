@@ -1,0 +1,12 @@
+#for dev purpose , lists pkg-source dir here and buildroot use it priority
+#为了方便源码开发，这里提供各模块源码路径覆写，buildroot优先使用
+
+#e.g example
+#XXX is package name defined in buildroot
+#XXX_OVERRIDE_SRCDIR = /path/to/xxx/dir
+#XXX_OVERRIDE_SRCDIR_RSYNC_EXCLUSIONS = --exclude unittests --exclude test.txt  --include .git
+
+
+LINUX_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/linux-6.1
+UBOOT_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/uboot-2022.10
+OPENSBI_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/opensbi
