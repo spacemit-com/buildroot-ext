@@ -1,0 +1,10 @@
+config BR2_PACKAGE_OABENCHV2
+	bool "oabenchv2"
+	help
+	OABench 2.0 is a second-generation suite of benchmarks that 
+	allows the user to approximate the performance of processors in 
+	printers, plotters, and other office automation systems that 
+	handle text and image processing tasks.
+	
+	  https://github.com/eembc/oabenchv2
+

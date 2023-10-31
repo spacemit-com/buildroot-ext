@@ -1,0 +1,45 @@
+diff --git a/util/make/gcc.mak b/util/make/gcc.mak
+index 77b9e40..a1888b3 100644
+--- a/util/make/gcc.mak
++++ b/util/make/gcc.mak
+@@ -13,7 +13,7 @@
+ # SYSTEM ENVIRONMENT SECTION
+ 
+ # Tools Root Directory
+-TOOLS	= /usr
++TOOLS	=
+ # For Solaris
+ #TOOLS	= /usr/local
+ 
+@@ -25,17 +25,17 @@ TOOLS	= /usr
+ #		line.
+ #		OBJOUT = -o \
+ 
+-CC		= $(TOOLS)/bin/gcc
++CC		?= gcc
+ OBJOUT	= -o
+ OBJ		= .o
+ 
+-AS		= $(TOOLS)/bin/as
++AS		= as
+ 
+-LD		= $(TOOLS)/bin/gcc
++LD		= $(CC)
+ EXEOUT	= -o
+-EXE		= .exe
++EXE		= 
+ 
+-AR		= $(TOOLS)/bin/ar
++AR		= ar
+ LIBTYPE	= .a
+ LIBOUT	= 
+ 
+@@ -44,7 +44,7 @@ LIBOUT	=
+ # You may need to override the Environment variable INCLUDE.
+ # INCLUDE is used by most compilers, and should not 
+ # be passed to the compiler in the makefile.
+-INCLUDE = $(TOOLS)/include
++INCLUDE = 
+ 
+ # -c             compile but do not link
+ # -o             specify the output file name

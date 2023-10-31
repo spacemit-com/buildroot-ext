@@ -1,0 +1,8 @@
+config BR2_PACKAGE_POSTMARK
+	bool "postmark"
+	help
+	  postmark
+
+	  https://github.com/Andiry/postmark
+
+comment "postmark"

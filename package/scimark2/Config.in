@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SCIMARK2
+	bool "scimark2"
+	help
+	  SciMark 2.0 is a C benchmark for scientific and numerical computing.  
+
+	  https://github.com/kunjara/swetest
+

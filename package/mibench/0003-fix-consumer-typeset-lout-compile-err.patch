@@ -1,0 +1,15 @@
+diff --git a/consumer/typeset/lout-3.24/Makefile b/consumer/typeset/lout-3.24/Makefile
+index 163623d..a1d988e 100755
+--- a/consumer/typeset/lout-3.24/Makefile
++++ b/consumer/typeset/lout-3.24/Makefile
+@@ -301,8 +301,8 @@ PDF_COMPRESSION	= 0
+ ZLIB		=
+ ZLIBPATH	=
+ 
+-CC	= gcc
+-LD	= gcc -static
++CC	?= gcc
++LD	= $(CC) -static
+ 
+ RCOPY	= cp -r
+ 

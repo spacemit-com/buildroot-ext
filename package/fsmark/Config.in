@@ -1,0 +1,8 @@
+config BR2_PACKAGE_FSMARK
+	bool "fsmark"
+	help
+	  The fs_mark program is meant to give a low level bashing to file
+		systems.
+
+	  https://github.com/josefbacik/fs_mark
+

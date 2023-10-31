@@ -1,0 +1,9 @@
+config BR2_PACKAGE_STOCKFISH
+	bool "stockfish"
+
+	help
+	  Stockfish is a free and strong UCI chess engine derived from Glaurung 2.1 
+	  that analyzes chess positions and computes the optimal moves.
+
+	  https://github.com/official-stockfish/Stockfish
+

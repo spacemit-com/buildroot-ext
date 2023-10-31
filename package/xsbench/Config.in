@@ -1,0 +1,7 @@
+config BR2_PACKAGE_XSBENCH
+	bool "xsbench"
+	help
+	  XSBench is a mini-app representing a key computational kernel of the Monte Carlo neutron transport algorithm.
+
+	  https://github.com/ANL-CESAR/XSBench
+

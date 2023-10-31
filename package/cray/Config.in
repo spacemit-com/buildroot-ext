@@ -1,0 +1,8 @@
+config BR2_PACKAGE_CRAY
+	bool "cray"
+	help
+	
+	  C-ray is a research oriented, hackable, offline CPU rendering engine built for learning. 
+
+	  https://github.com/vkoskiv/c-ray
+

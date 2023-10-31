@@ -1,0 +1,57 @@
+From 2689f5b599ce50673f5b8be5380aaddc4d347b69 Mon Sep 17 00:00:00 2001
+From: max <guoqun.ma@spacemit.com>
+Date: Mon, 30 Oct 2023 20:04:05 +0800
+Subject: [PATCH] replace fopen_s with fopen
+
+---
+ c-smallpt/c-smallpt/src/imageio.h | 6 +++---
+ c-smallpt/c-smallpt/src/vector.h  | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/c-smallpt/c-smallpt/src/imageio.h b/c-smallpt/c-smallpt/src/imageio.h
+index af4d946..903768e 100644
+--- a/c-smallpt/c-smallpt/src/imageio.h
++++ b/c-smallpt/c-smallpt/src/imageio.h
+@@ -23,10 +23,10 @@
+ //-----------------------------------------------------------------------------
+ #pragma region
+ 
+-inline void write_ppm(int w, int h, const Vector3* Ls, const char* fname) {
++void write_ppm(int w, int h, const Vector3* Ls, const char* fname) {
+ 	FILE* fp;
+ 	
+-	fopen_s(&fp, fname, "w");
++	fp = fopen(fname, "w");
+ 	fprintf(fp, "P3\n%d %d\n%d\n", w, h, 255);
+ 	
+ 	for (size_t i = 0; i < w * h; ++i) {
+@@ -38,4 +38,4 @@ inline void write_ppm(int w, int h, const Vector3* Ls, const char* fname) {
+ 	fclose(fp);
+ }
+ 
+-#pragma endregion
+\ No newline at end of file
++#pragma endregion
+diff --git a/c-smallpt/c-smallpt/src/vector.h b/c-smallpt/c-smallpt/src/vector.h
+index a4c79b0..acc10de 100644
+--- a/c-smallpt/c-smallpt/src/vector.h
++++ b/c-smallpt/c-smallpt/src/vector.h
+@@ -260,7 +260,7 @@ inline double norm2s_v3(const Vector3* v) {
+ inline double norm2_v3(const Vector3* v) {
+ 	return sqrt(norm2s_v3(v));
+ }
+-inline Vector3* normalize_v3(Vector3* v) {
++Vector3* normalize_v3(Vector3* v) {
+ 	const double a = 1 / norm2_v3(v);
+ 	v->x *= a;
+ 	v->y *= a;
+@@ -272,4 +272,4 @@ inline void print_v3(const Vector3* v) {
+ 	printf("[%f %f, %f]", v->x, v->y, v->z);
+ }
+ 
+-#pragma endregion
+\ No newline at end of file
++#pragma endregion
+-- 
+2.25.1
+

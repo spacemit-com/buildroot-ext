@@ -1,0 +1,12 @@
+config BR2_PACKAGE_DCRAW
+	bool "dcraw"
+	select BR2_PACKAGE_JASPER
+	select BR2_PACKAGE_JPEG
+	select BR2_PACKAGE_LCMS2
+	help
+	  Modified to handle the JPEG+RAW files that can be generated 
+	  by the Raspberry Pi camera modules, or just the raw file with Broadcom header 
+	  passing data on raw format and resolution
+
+	  https://github.com/6by9/dcraw
+

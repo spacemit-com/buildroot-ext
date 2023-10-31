@@ -1,0 +1,10 @@
+config BR2_PACKAGE_TSCP
+	bool "tscp"
+
+	help
+	  Tom Kerrigan’s Simple Chess Program (TSCP) is a small, 
+	  open-source chess engine that I made in 1997.
+	  It’s a tutorial engine, i.e., it’s designed to teach people how chess engines work.
+
+	  https://github.com/search?q=TSCP
+

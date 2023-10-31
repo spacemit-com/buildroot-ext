@@ -1,0 +1,6 @@
+config BR2_PACKAGE_NCNN
+	bool "ncnn"
+	help
+	ncnn is a high-performance neural network inference computing framework 
+	optimized for mobile platforms.
+	https://github.com/Tencent/ncnn

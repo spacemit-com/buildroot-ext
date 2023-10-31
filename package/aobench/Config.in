@@ -1,0 +1,7 @@
+config BR2_PACKAGE_AOBENCH
+	bool "aobench"
+
+	help
+	  aobench is a bench code for web
+
+	  https://github.com/syoyo/aobench

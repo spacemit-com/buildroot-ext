@@ -1,0 +1,217 @@
+diff --git a/office/sphinx/src/libsphinx2/blk_cdcn_norm.c b/office/sphinx/src/libsphinx2/blk_cdcn_norm.c
+index 5a9c98f..d351fdb 100755
+--- a/office/sphinx/src/libsphinx2/blk_cdcn_norm.c
++++ b/office/sphinx/src/libsphinx2/blk_cdcn_norm.c
+@@ -53,13 +53,14 @@
+  *   Dummy routine to convert from suitcase to sane varibles
+  ***************************************************************************/
+ 
++static void block_actual_cdcn_norm();
+ void block_cdcn_norm (float z[][NUM_COEFF+1],  /* The input cepstrum */
+ 		      int num_frames,          /* Number of frames in utterance */
+ 		      CDCN_type *cdcn_variables)
+ {
+     /* Multidimensional arrays in C suck, so we have to
+        forward-declare-hack this. */
+-    static void block_actual_cdcn_norm();
++    //static void block_actual_cdcn_norm();
+     float *variance, *prob, *tilt, *noise, *codebook, *corrbook;
+     int    num_codes;
+ 
+diff --git a/office/sphinx/src/libsphinx2/cdcn_norm.c b/office/sphinx/src/libsphinx2/cdcn_norm.c
+index 0ffd20f..a1aaac8 100755
+--- a/office/sphinx/src/libsphinx2/cdcn_norm.c
++++ b/office/sphinx/src/libsphinx2/cdcn_norm.c
+@@ -52,11 +52,12 @@
+  *   Dummy routine to convert from suitcase to sane varibles
+  ***************************************************************************/
+ 
++static void actual_cdcn_norm();
+ void cdcn_norm (float z[NUM_COEFF+1], /* The input cepstrum */
+ 		CDCN_type *cdcn_variables)
+ {
+     /* Multidimensional arrays, yuck. */
+-    static void actual_cdcn_norm();
++    //static void actual_cdcn_norm();
+     float *variance, *prob, *tilt, *noise, *codebook, *corrbook;
+     int num_codes;
+ 
+diff --git a/office/sphinx/src/libsphinx2/cdcn_update.c b/office/sphinx/src/libsphinx2/cdcn_update.c
+index 97978e2..b494b6b 100755
+--- a/office/sphinx/src/libsphinx2/cdcn_update.c
++++ b/office/sphinx/src/libsphinx2/cdcn_update.c
+@@ -60,63 +60,10 @@
+  *
+  *************************************************************************/
+ 
+-float
+-cdcn_update (float *z,		/* The observed cepstrum vectors */
+-	     int num_frames,	/* Number of frames in utterance */
+-	     CDCN_type *cdcn_variables)
+-{	
+-    float       distortion;
+-    float	*noise, *tilt, *codebook, *prob, *variance, *corrbook;
+-    int 	num_codes;
+-    /* Multidimensional arrays, gar gar gar */
+-    static float initialize (float *, int, float *, float *, float,
+-			     float *, float *, float *, int);
+-    static void correction(float *, float *, float *, float *, int);
+-    static float max_q (float *, float *, float *, float *, float *,
++static void correction(float *, float *, float *, float *, int);
++static float max_q (float *, float *, float *, float *, float *,
+ 			float *, int, float *, int);
+ 
+-    /*
+-     * If error, dont bother
+-     */
+-    if (!cdcn_variables->run_cdcn)
+-        return(-1e+30);
+-        
+-    /*
+-     * Open suitcase
+-     */
+-
+-    noise	= cdcn_variables->noise;
+-    tilt	= cdcn_variables->tilt;
+-    codebook 	= cdcn_variables->means;
+-    prob	= cdcn_variables->probs;
+-    variance	= cdcn_variables->variance;
+-    corrbook	= cdcn_variables->corrbook;
+-    num_codes	= cdcn_variables->num_codes;
+-
+-    /*
+-     * Initialize if this is the first time the routine is being called
+-     */
+-    if (cdcn_variables->firstcall)
+-    {
+-        /* Get initial estimates for noise, tilt, x, y */
+-        initialize (z,num_frames,noise,tilt,SPEECH_THRESHOLD,codebook,
+-						     prob,variance,num_codes);
+-        correction (tilt, noise, codebook, corrbook, num_codes);
+-        cdcn_variables->firstcall = FALSE;
+-    }
+-
+-    /*
+-     * Compute the correction terms for the means 
+-     * Perform one iteration of the estimation of n and q
+-     */ 
+-    distortion = max_q (variance, prob, noise, tilt, codebook, corrbook, 
+-			num_codes, z, num_frames);
+-
+-    correction (tilt, noise, codebook, corrbook, num_codes);  
+-    return (distortion);
+-}
+-
+-
+ /*************************************************************************
+  *
+  * initialize finds an estimate of the noise vector as the average of all
+@@ -206,6 +153,64 @@ initialize (float data[][NUM_COEFF+1],	/* The observation cepstrum vectors */
+     return (speech_power);
+ }
+ 
++float
++cdcn_update (float *z,		/* The observed cepstrum vectors */
++	     int num_frames,	/* Number of frames in utterance */
++	     CDCN_type *cdcn_variables)
++{	
++    float       distortion;
++    float	*noise, *tilt, *codebook, *prob, *variance, *corrbook;
++    int 	num_codes;
++    /* Multidimensional arrays, gar gar gar */
++    /*
++    static float initialize (float *, int, float *, float *, float,
++			     float *, float *, float *, int);
++    static void correction(float *, float *, float *, float *, int);
++    static float max_q (float *, float *, float *, float *, float *,
++			float *, int, float *, int);
++    */
++
++    /*
++     * If error, dont bother
++     */
++    if (!cdcn_variables->run_cdcn)
++        return(-1e+30);
++        
++    /*
++     * Open suitcase
++     */
++
++    noise	= cdcn_variables->noise;
++    tilt	= cdcn_variables->tilt;
++    codebook 	= cdcn_variables->means;
++    prob	= cdcn_variables->probs;
++    variance	= cdcn_variables->variance;
++    corrbook	= cdcn_variables->corrbook;
++    num_codes	= cdcn_variables->num_codes;
++
++    /*
++     * Initialize if this is the first time the routine is being called
++     */
++    if (cdcn_variables->firstcall)
++    {
++        /* Get initial estimates for noise, tilt, x, y */
++        initialize (z,num_frames,noise,tilt,SPEECH_THRESHOLD,codebook,
++						     prob,variance,num_codes);
++        correction (tilt, noise, codebook, corrbook, num_codes);
++        cdcn_variables->firstcall = FALSE;
++    }
++
++    /*
++     * Compute the correction terms for the means 
++     * Perform one iteration of the estimation of n and q
++     */ 
++    distortion = max_q (variance, prob, noise, tilt, codebook, corrbook, 
++			num_codes, z, num_frames);
++
++    correction (tilt, noise, codebook, corrbook, num_codes);  
++    return (distortion);
++}
++
+ 
+ /*************************************************************************
+  *
+diff --git a/office/sphinx/src/libsphinx2/linklist.c b/office/sphinx/src/libsphinx2/linklist.c
+index b0c44bc..3dba0fc 100755
+--- a/office/sphinx/src/libsphinx2/linklist.c
++++ b/office/sphinx/src/libsphinx2/linklist.c
+@@ -127,7 +127,7 @@ void *listelem_alloc (int32 elem_size)
+ 	cpp = list[i].freelist = (void **) malloc (list[i].n_malloc * elem_size);
+ 	cp = (void *) cpp;
+ 	for (j = list[i].n_malloc-1; j > 0; --j) {
+-	    (char*)cp += elem_size;
++	    cp += elem_size;
+ 	    *cpp = cp;
+ 	    cpp = (void **)cp;
+ 	}
+diff --git a/office/sphinx/src/libsphinx2/search.c b/office/sphinx/src/libsphinx2/search.c
+index ff0b194..6b1470b 100755
+--- a/office/sphinx/src/libsphinx2/search.c
++++ b/office/sphinx/src/libsphinx2/search.c
+@@ -2256,6 +2256,8 @@ search_one_ply_fwd (void)
+     lm_next_frame ();
+ }
+ 
++static search_hyp_t *fwdtree_pscr_path ( void );
++static void compute_phone_perplexity( void );
+ void
+ search_finish_fwd (void)
+ {
+@@ -2265,7 +2267,7 @@ search_finish_fwd (void)
+     CHAN_T *hmm, /* *thmm,*/ **acl;
+     /* int32 bp, bestbp, bestscore; */
+     /* int32 l_scr; */
+-    static void compute_phone_perplexity( void );
++    //static void compute_phone_perplexity( void );
+     
+     if ((CurrentFrame > 0) && (topsen_window > 1)) {
+ 	/* Wind up remaining frames */
+@@ -2326,7 +2328,7 @@ search_finish_fwd (void)
+     /* Get pscr-score for fwdtree recognition */
+     {
+ 	search_hyp_t *pscrpath;
+-	static search_hyp_t *fwdtree_pscr_path ( void );
++	//static search_hyp_t *fwdtree_pscr_path ( void );
+ 	
+ 	if (query_phone_conf ()) {
+ 	    pscrpath = fwdtree_pscr_path ();

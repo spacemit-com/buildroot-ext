@@ -1,0 +1,13 @@
+diff --git a/office/ghostscript/src/Makefile b/office/ghostscript/src/Makefile
+index 0df482f..ce4c964 100755
+--- a/office/ghostscript/src/Makefile
++++ b/office/ghostscript/src/Makefile
+@@ -5457,7 +5457,7 @@ $(ANSI2KNR_XE): ansi2knr.c
+ 	$(CCA2K) $(O)$(ANSI2KNR_XE) ansi2knr.c
+ 
+ $(ECHOGS_XE): echogs.c $(AK)
+-	$(CCAUX) $(O)$(ECHOGS_XE) echogs.c
++	#$(CCAUX) $(O)$(ECHOGS_XE) echogs.c
+ 
+ # On the RS/6000 (at least), compiling genarch.c with gcc with -O
+ # produces a buggy executable.

@@ -1,0 +1,6 @@
+config BR2_PACKAGE_NBENCH
+    bool "nbench"
+    help
+      Linux/Unix nbench (previously known as BYTE's Native Mode Benchmarks)
+
+      https://github.com/toshsan/nbench

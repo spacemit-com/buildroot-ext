@@ -1,0 +1,109 @@
+From f57d21dc5e8ef41ce9046170b885aa11f3380dd1 Mon Sep 17 00:00:00 2001
+From: max <guoqun.ma@spacemit.com>
+Date: Mon, 30 Oct 2023 17:53:27 +0800
+Subject: [PATCH 3/3] fix security pgp rijndael sha makefile and leaks inc file
+
+---
+ security/pgp/src/Makefile  | 6 +++++-
+ security/pgp/src/armor.c   | 6 +++---
+ security/rijndael/Makefile | 3 ++-
+ security/rijndael/aesxam.c | 2 ++
+ security/sha/Makefile      | 2 +-
+ 5 files changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/security/pgp/src/Makefile b/security/pgp/src/Makefile
+index 337dc1f..78b0564 100755
+--- a/security/pgp/src/Makefile
++++ b/security/pgp/src/Makefile
+@@ -56,7 +56,7 @@ CFLAGS= -O -DUNIX -DPORTABLE $(BYTEORDER)
+ # BYTEORDER= -DHIGHFIRST
+ 
+ CC      = cc
+-LD      = cc            # Link command
++LD      = $(CC)            # Link command
+ LDFLAGS = 
+ CPP     = $(CC) -E
+ DBG     = -O
+@@ -171,6 +171,10 @@ arm-linux:
+ 	$(MAKE) all CC=arm-linux-gcc LD=arm-linux-gcc OBJS_EXT="" \
+ 	CFLAGS="$(RSAINCDIR) -O2 -g0 -DUNIX -DLINUX -DIDEA32 -DPORTABLE"
+ 
++riscv64-linux:
++	$(MAKE) all OBJS_EXT="" \
++	CFLAGS="$(RSAINCDIR) -O2 -g0 -DUNIX -DLINUX -DIDEA32 -DPORTABLE"
++
+ linux-68k:
+ 	$(MAKE) all CC=gcc LD=gcc \
+ 	CFLAGS="$(RSAINCDIR) -O2 -DHIGHFIRST -DUNIX -DPORTABLE -DIDEA32"
+diff --git a/security/pgp/src/armor.c b/security/pgp/src/armor.c
+index 0785b50..7497745 100755
+--- a/security/pgp/src/armor.c
++++ b/security/pgp/src/armor.c
+@@ -343,7 +343,7 @@ copyline(FILE * in, FILE * out)
+  * idea.
+  */
+ static int
+-getline(char *buf, int n, FILE * f)
++lgetline(char *buf, int n, FILE * f)
+ {
+     int state;
+     char *p;
+@@ -547,7 +547,7 @@ armor_file(char *infilename, char *outfilename, char *filename,
+ 	    return 1;
+ 	}
+ 	fprintf(outFile, "-----BEGIN PGP SIGNED MESSAGE-----\n\n");
+-	while ((i = getline(buffer, sizeof buffer, clearFile)) >= 0) {
++	while ((i = lgetline(buffer, sizeof buffer, clearFile)) >= 0) {
+ 	    /* Quote lines beginning with '-' as per RFC1113;
+ 	     * Also quote lines beginning with "From "; this is
+ 	     * for Unix mailers which add ">" to such lines.
+@@ -1231,7 +1231,7 @@ LANG("\n\007Unable to write ciphertext output file '%s'.\n"), litfile);
+ 	for (;;) {
+ 	    ++infile_line;
+ 	    nline = status;
+-	    status = getline(buf, sizeof buf, in);
++	    status = lgetline(buf, sizeof buf, in);
+ 	    if (status < 0) {
+ 		fprintf(pgpout,
+ LANG("ERROR: ASCII armor decode input ended unexpectedly!\n"));
+diff --git a/security/rijndael/Makefile b/security/rijndael/Makefile
+index 885046f..3aad8cf 100755
+--- a/security/rijndael/Makefile
++++ b/security/rijndael/Makefile
+@@ -1,5 +1,6 @@
++CC=gcc
+ rijndael: aes.c aes.h aestab.h aesxam.c Makefile
+-	gcc -static -O3 -o rijndael aes.c aesxam.c
++	$(CC) -static -O3 -o rijndael aes.c aesxam.c
+ 
+ clean:
+ 	rm -rf rijndael output*
+diff --git a/security/rijndael/aesxam.c b/security/rijndael/aesxam.c
+index 6118e07..506fffa 100755
+--- a/security/rijndael/aesxam.c
++++ b/security/rijndael/aesxam.c
+@@ -97,6 +97,8 @@ void fillrand(char *buf, int len)
+ 
+ int encfile(FILE *fin, FILE *fout, aes *ctx, char* fn)
+ {   char            inbuf[16], outbuf[16];
++ #undef fpos_t
++ typedef long fpos_t;
+     fpos_t          flen;
+     unsigned long   i=0, l=0;
+ 
+diff --git a/security/sha/Makefile b/security/sha/Makefile
+index 121bfd2..8db91f3 100755
+--- a/security/sha/Makefile
++++ b/security/sha/Makefile
+@@ -8,7 +8,7 @@ CFLAGS = -O3 -Wall
+ 
+ sha:	sha_driver.o sha.o
+ 	$(CC) -o $@ sha_driver.o sha.o
+-	strip $@
++
+ 
+ clean:
+ 	rm -rf *.o sha output*
+-- 
+2.25.1
+

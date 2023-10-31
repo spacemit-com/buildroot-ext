@@ -1,0 +1,7 @@
+config BR2_PACKAGE_STREAM
+    bool "stream"
+    help
+      STREAM is the de facto industry standard benchmark
+      for measuring sustained memory bandwidth.
+
+      http://www.cs.virginia.edu/stream/ref.html

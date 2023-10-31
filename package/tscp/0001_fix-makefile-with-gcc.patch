@@ -1,0 +1,22 @@
+diff --git a/makefile b/makefile
+index 720f00c..7c3249f 100644
+--- a/makefile
++++ b/makefile
+@@ -6,13 +6,15 @@ OBJECT_FILES = \
+ 	main.o \
+ 	search.o
+ 
++CC ?= gcc
++
+ all: tscp
+ 
+ tscp: $(OBJECT_FILES)
+-	g++ -O3 -o tscp $(OBJECT_FILES)
++	$(CC) -O3 -o tscp $(OBJECT_FILES)
+ 
+ %.o: %.cpp data.h defs.h protos.h
+-	g++ -O3 -c $< -o $@
++	$(CC) -O3 -c $< -o $@
+ 
+ clean:
+ 	rm -f *.o

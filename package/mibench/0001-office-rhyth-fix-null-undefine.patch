@@ -1,0 +1,12 @@
+diff --git a/office/rsynth/darray.h b/office/rsynth/darray.h
+index b725ffb..1d62664 100755
+--- a/office/rsynth/darray.h
++++ b/office/rsynth/darray.h
+@@ -2,6 +2,7 @@
+ */
+ #if !defined(DARRAY_H)
+ #define DARRAY_H
++#include <stdio.h>
+ typedef struct
+  {char     *data;          /* the items */
+   unsigned items;          /* number of slots used */

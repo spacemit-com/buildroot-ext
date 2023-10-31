@@ -1,0 +1,7 @@
+config BR2_PACKAGE_PRIMESIEVE
+	bool "primesieve"
+	help
+	  primesieve is a command-line program and C/C++ library for quickly generating prime numbers.
+
+	  https://github.com/kimwalisch/primesieve
+

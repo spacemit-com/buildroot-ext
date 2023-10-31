@@ -1,0 +1,8 @@
+config BR2_PACKAGE_SWETEST
+	bool "swetest"
+	help
+	  The Swiss Ephemeris is the high precision ephemeris developed by Astrodienst, 
+	  largely based upon the DExxx ephemerides from NASA's JPL. 
+
+	  https://github.com/kunjara/swetest
+

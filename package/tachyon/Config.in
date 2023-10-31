@@ -1,0 +1,7 @@
+config BR2_PACKAGE_TACHYON
+	bool "tachyon"
+	help
+	  Tachyon is an efficient, parallelised raytracer
+
+	  https://github.com/thesketh/Tachyon
+

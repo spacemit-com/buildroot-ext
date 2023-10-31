@@ -1,0 +1,8 @@
+config BR2_PACKAGE_MIBENCH
+	bool "mibench"
+
+	help
+	  MiBench: A free, commercially representative embedded benchmark suite
+
+	  https://github.com/embecosm/mibench
+
