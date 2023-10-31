@@ -10,6 +10,7 @@ SMALLPT_SITE_METHOD = git
 SMALLPT_INSTALL_TARGET = YES
 
 define SMALLPT_BUILD_CMDS
+    cp $(TOPDIR)/../buildroot-ext/package/smallpt/*.h $(@D)/c-smallpt/c-smallpt/src/
 	(cd $(@D)/c-smallpt/c-smallpt/src;$(TARGET_MAKE_ENV) $(TARGET_CC)\
 	 -O3 c-smallpt.c -I. -lm -o smallpt;)
 endef
