@@ -1,0 +1,24 @@
+config BR2_TARGET_BOOTFS
+	bool "boot partition image with ext4 filesystem"
+	depends on BR2_LINUX_KERNEL && BR2_TARGET_ROOTFS_CPIO
+	help
+        Integrate the linux kernel image、initrd and some tools inside the boot partition image. 
+        This integration will take place automatically.
+
+if BR2_TARGET_BOOTFS
+
+config BR2_TARGET_BOOTFS_LABEL
+	string "filesystem label"
+	default "bootfs"
+
+config BR2_TARGET_BOOTFS_SIZE
+	string "exact size"
+	default "292M"
+	help
+	  The size of the filesystem image. If it does not have a
+	  suffix, it is interpreted as power-of-two kilobytes. If it is
+	  suffixed by 'k', 'm', 'g', 't' (either upper-case or
+	  lower-case), then it is interpreted in power-of-two kilobytes,
+	  megabytes, gigabytes, terabytes, etc.
+
+endif #BR2_TARGET_BOOTFS
