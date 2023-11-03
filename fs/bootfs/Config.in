@@ -1,11 +1,27 @@
 config BR2_TARGET_BOOTFS
-	bool "boot partition image with ext4 filesystem"
+	bool "boot filesystem"
 	depends on BR2_LINUX_KERNEL && BR2_TARGET_ROOTFS_CPIO
 	help
         Integrate the linux kernel image、initrd and some tools inside the boot partition image. 
         This integration will take place automatically.
 
 if BR2_TARGET_BOOTFS
+
+choice
+    prompt "fs type"
+    default BR2_TARGET_BOOTFS_TYPE_VFAT
+
+config BR2_TARGET_BOOTFS_TYPE_VFAT
+    bool "vfat"
+    help
+        Do image the boot partition with vfat.
+
+config BR2_TARGET_BOOTFS_TYPE_EXT4
+    bool "ext4"
+    help
+        Do image the boot partition with ext4.
+
+endchoice
 
 config BR2_TARGET_BOOTFS_LABEL
 	string "filesystem label"

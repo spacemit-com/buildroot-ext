@@ -2,9 +2,11 @@
 set -e
 rm -rf /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs
 mkdir -p /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs
+rm -f /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs.img
+dd if=/dev/zero of=/media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs.img count=1 bs=292M
+mkfs.vfat /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs.img
 cp -f /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/uEnv.txt /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs/ 
 cp -f /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/Image /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs/ 
 cp -f /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/k1-x_fpga.dtb /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs/ 
 cp -f /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/rootfs.cpio.gz /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs/initramfs-generic.img
-rm -f /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs.ext4
-/media/max/max-ssd/workspace/bianbu-linux/output/k1-x/host/sbin/mkfs.ext4 -d /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs -r 1 -L bootfs -I 256 /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs.ext4 292M || { ret=0; echo *** Maybe you need to increase the bootfs filesystem size BR2_TARGET_BOOTFS_SIZE 1>&2; exit ; } 
+mcopy -i /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs.img /media/max/max-ssd/workspace/bianbu-linux/output/k1-x/images/bootfs/* ::
