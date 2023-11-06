@@ -2,6 +2,7 @@
 menu "Bianbu config"
 
 source "$BR2_EXTERNAL_Bianbu_PATH/fs/bootfs/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/uboot-env-custom/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/tcm/Config.in"
 
 source "$BR2_EXTERNAL_Bianbu_PATH/package/linpack/Config.in"

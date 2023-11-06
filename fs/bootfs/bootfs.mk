@@ -19,13 +19,11 @@ BOOTFS_IMG = $(IMAGE_OUT_PATH)/bootfs.img
 KERNEL_IMAGE_FILE = $(IMAGE_OUT_PATH)/Image
 KERNEL_DTB_NAME = k1-x_fpga.dtb
 KERNEL_DTB_FILE = $(IMAGE_OUT_PATH)/$(KERNEL_DTB_NAME)
-UENV_FILE = $(IMAGE_OUT_PATH)/uEnv.txt
+UENV_SRC_FILE = $(call qstrip, $(BR2_PACKAGE_UBOOT_ENV_CUSTOM_FILE))
+UENV_BIN_FILE = $(IMAGE_OUT_PATH)/env.bin
 
 INITRAMFS_FILE = $@$(ROOTFS_CPIO_COMPRESS_EXT)
 FAKE_ROOT_FILE = ../buildroot-ext/fs/bootfs/fakeroot
-MKIMAGE_BIN = $(IMAGE_OUT_PATH)/../build/uboot/tools/mkimage
-
-
 BOOTFS_LABEL = $(subst ",,$(BR2_TARGET_BOOTFS_LABEL))
 BOOTFS_EXT4_OPTS = \
 	-d $(BOOTFS_DIR) \
@@ -40,12 +38,15 @@ define BOOTFS_GEN
 	@echo -e "\n"
 	@echo "start to make bootfs ..............................."
 	@chmod 777 $(FAKE_ROOT_FILE)
+	@rm -f ${UENV_BIN_FILE}
+	@mkenvimage -s 0x4000 -o ${UENV_BIN_FILE} ${UENV_SRC_FILE}
+
 	echo "#!/bin/sh" > $(FAKE_ROOT_FILE)
 	echo "set -e" >> $(FAKE_ROOT_FILE)
 	echo "rm -rf $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE)
 	echo "mkdir -p $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE) 
 
-	echo "cp -f $(UENV_FILE) $(BOOTFS_DIR)/ " >> $(FAKE_ROOT_FILE)
+	echo "cp -f $(UENV_BIN_FILE) $(BOOTFS_DIR)/ " >> $(FAKE_ROOT_FILE)
 	echo "cp -f $(KERNEL_IMAGE_FILE) $(BOOTFS_DIR)/ " >> $(FAKE_ROOT_FILE)
 	echo "cp -f $(KERNEL_DTB_FILE) $(BOOTFS_DIR)/ " >> $(FAKE_ROOT_FILE)
 	echo "cp -f $(INITRAMFS_FILE) $(BOOTFS_DIR)/initramfs-generic.img" >> $(FAKE_ROOT_FILE)
@@ -68,7 +69,10 @@ define BOOTFS_GEN
 	@echo -e "\n"
 	@echo "start to make bootfs ..............................."
 	@chmod 777 $(FAKE_ROOT_FILE)
-	
+
+	@rm -f ${UENV_BIN_FILE}
+	@mkenvimage -s 0x4000 -o ${UENV_BIN_FILE} ${UENV_SRC_FILE}
+
 	echo "#!/bin/sh" > $(FAKE_ROOT_FILE)
 	echo "set -e" >> $(FAKE_ROOT_FILE)
 	echo "rm -rf $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE)
@@ -78,7 +82,7 @@ define BOOTFS_GEN
 	echo "dd if=/dev/zero of=$(BOOTFS_IMG) count=1 bs=$(BOOTFS_SIZE)" >> $(FAKE_ROOT_FILE)
 	echo "mkfs.vfat $(BOOTFS_IMG)" >> $(FAKE_ROOT_FILE)
 	
-	echo "cp -f $(UENV_FILE) $(BOOTFS_DIR)/ " >> $(FAKE_ROOT_FILE)
+	echo "cp -f $(UENV_BIN_FILE) $(BOOTFS_DIR)/ " >> $(FAKE_ROOT_FILE)
 	echo "cp -f $(KERNEL_IMAGE_FILE) $(BOOTFS_DIR)/ " >> $(FAKE_ROOT_FILE)
 	echo "cp -f $(KERNEL_DTB_FILE) $(BOOTFS_DIR)/ " >> $(FAKE_ROOT_FILE)
 	echo "cp -f $(INITRAMFS_FILE) $(BOOTFS_DIR)/initramfs-generic.img" >> $(FAKE_ROOT_FILE)
