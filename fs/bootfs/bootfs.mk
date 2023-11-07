@@ -36,9 +36,8 @@ define BOOTFS_GEN
 
 	@echo -e "\n"
 	@echo "start to make bootfs ..............................."
-	@chmod 777 $(FAKE_ROOT_FILE)
 
-	echo "#!/bin/sh" > $(FAKE_ROOT_FILE)
+	echo "#!/bin/sh" >> $(FAKE_ROOT_FILE)
 	echo "set -e" >> $(FAKE_ROOT_FILE)
 	echo "rm -rf $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE)
 	echo "mkdir -p $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE) 
@@ -55,6 +54,7 @@ define BOOTFS_GEN
 		exit $$ret; \
 	} " >> $(FAKE_ROOT_FILE)
 		
+	@chmod 777 $(FAKE_ROOT_FILE)
 	FAKEROOTDONTTRYCHOWN=1 $(HOST_DIR)/bin/fakeroot -- $(FAKE_ROOT_FILE)
 	@echo "make bootfs success..............................."
 	@echo -e "\n"
@@ -65,9 +65,8 @@ else
 define BOOTFS_GEN
 	@echo -e "\n"
 	@echo "start to make bootfs ..............................."
-	@chmod 777 $(FAKE_ROOT_FILE)
 
-	echo "#!/bin/sh" > $(FAKE_ROOT_FILE)
+	echo "#!/bin/sh" >> $(FAKE_ROOT_FILE)
 	echo "set -e" >> $(FAKE_ROOT_FILE)
 	echo "rm -rf $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE)
 	echo "mkdir -p $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE) 
@@ -82,6 +81,7 @@ define BOOTFS_GEN
 	echo "cp -f $(INITRAMFS_FILE) $(BOOTFS_DIR)/initramfs-generic.img" >> $(FAKE_ROOT_FILE)
 	echo "mcopy -i $(BOOTFS_IMG) $(BOOTFS_DIR)/* ::" >> $(FAKE_ROOT_FILE)
 
+	@chmod 777 $(FAKE_ROOT_FILE)
 	FAKEROOTDONTTRYCHOWN=1 $(HOST_DIR)/bin/fakeroot -- $(FAKE_ROOT_FILE)
 	@echo "make bootfs success..............................."
 	@echo -e "\n"
