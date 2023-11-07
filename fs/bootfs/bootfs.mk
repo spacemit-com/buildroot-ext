@@ -19,8 +19,7 @@ BOOTFS_IMG = $(IMAGE_OUT_PATH)/bootfs.img
 KERNEL_IMAGE_FILE = $(IMAGE_OUT_PATH)/Image
 KERNEL_DTB_NAME = k1-x_fpga.dtb
 KERNEL_DTB_FILE = $(IMAGE_OUT_PATH)/$(KERNEL_DTB_NAME)
-UENV_SRC_FILE = $(call qstrip, $(BR2_PACKAGE_UBOOT_ENV_CUSTOM_FILE))
-UENV_BIN_FILE = $(IMAGE_OUT_PATH)/env.bin
+UENV_BIN_FILE = $(IMAGE_OUT_PATH)/uboot-env.bin
 
 INITRAMFS_FILE = $@$(ROOTFS_CPIO_COMPRESS_EXT)
 FAKE_ROOT_FILE = ../buildroot-ext/fs/bootfs/fakeroot
@@ -38,8 +37,6 @@ define BOOTFS_GEN
 	@echo -e "\n"
 	@echo "start to make bootfs ..............................."
 	@chmod 777 $(FAKE_ROOT_FILE)
-	@rm -f ${UENV_BIN_FILE}
-	@mkenvimage -s 0x4000 -o ${UENV_BIN_FILE} ${UENV_SRC_FILE}
 
 	echo "#!/bin/sh" > $(FAKE_ROOT_FILE)
 	echo "set -e" >> $(FAKE_ROOT_FILE)
@@ -69,9 +66,6 @@ define BOOTFS_GEN
 	@echo -e "\n"
 	@echo "start to make bootfs ..............................."
 	@chmod 777 $(FAKE_ROOT_FILE)
-
-	@rm -f ${UENV_BIN_FILE}
-	@mkenvimage -s 0x4000 -o ${UENV_BIN_FILE} ${UENV_SRC_FILE}
 
 	echo "#!/bin/sh" > $(FAKE_ROOT_FILE)
 	echo "set -e" >> $(FAKE_ROOT_FILE)
