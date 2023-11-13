@@ -37,7 +37,7 @@ define BOOTFS_GEN
 	@echo -e "\n"
 	@echo "start to make bootfs ..............................."
 
-	echo "#!/bin/sh" >> $(FAKE_ROOT_FILE)
+	echo "#!/bin/sh" > $(FAKE_ROOT_FILE)
 	echo "set -e" >> $(FAKE_ROOT_FILE)
 	echo "rm -rf $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE)
 	echo "mkdir -p $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE) 
@@ -66,7 +66,7 @@ define BOOTFS_GEN
 	@echo -e "\n"
 	@echo "start to make bootfs ..............................."
 
-	echo "#!/bin/sh" >> $(FAKE_ROOT_FILE)
+	echo "#!/bin/sh" > $(FAKE_ROOT_FILE)
 	echo "set -e" >> $(FAKE_ROOT_FILE)
 	echo "rm -rf $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE)
 	echo "mkdir -p $(BOOTFS_DIR)" >> $(FAKE_ROOT_FILE) 
