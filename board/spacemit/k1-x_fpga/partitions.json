@@ -1,0 +1,33 @@
+{
+    "version": "1",
+    "format": "gpt",
+    "partitions": [
+        {
+            "name": "fsbl_0",
+            "hidden": true,
+            "offset": "128K",
+            "size": "192K",
+            "image": "FSBL.bin"
+        },
+        {
+            "name": "opensbi",
+            "size": "256K",
+            "image": "opensbi.itb"
+        },
+        {
+            "name": "uboot",
+            "size": "2M",
+            "image": "u-boot.itb"
+        },
+        {
+            "name": "bootfs",
+            "size": "128M",
+            "image": "bootfs.img"
+        },
+        {
+            "name": "rootfs",
+            "size": "-",
+            "image": "rootfs.ext4"
+        }
+    ]
+}
