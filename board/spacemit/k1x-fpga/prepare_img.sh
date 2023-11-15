@@ -27,7 +27,7 @@ fi
 #rm ${IMGS_DIR}/fsbl.yml
 
 #copy uboot its file and mk itb
-rm ${IMGS_DIR}/u-boot.itb
+rm -f ${IMGS_DIR}/u-boot.itb
 cp -f ${UBOOT_FIT_FILE} ${IMGS_DIR}/uboot_fit.its
 $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot_fit.its -r ${IMGS_DIR}/u-boot.itb
 rm ${IMGS_DIR}/uboot_fit.its
@@ -39,7 +39,7 @@ rm ${IMGS_DIR}/uboot_fit.its
 #rm ${IMGS_DIR}/opensbi-fit.its
 
 
-rm ${IMGS_DIR}/uImage.itb
+rm -f ${IMGS_DIR}/uImage.itb
 cp -f ${UBOOT_FIT_FILE} ${IMGS_DIR}/kernel_fdt.its
 $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/kernel_fdt.its -r ${IMGS_DIR}/uImage.itb
 rm ${IMGS_DIR}/kernel_fdt.its

@@ -25,19 +25,19 @@ if [ -f "$OVERRIDE_ROOTFS_FILE" ]; then
 fi
 
 #create header for uboot-spl.bin and rename to FSBL.bin
-rm ${IMGS_DIR}/FSBL.bin
+rm -f ${IMGS_DIR}/FSBL.bin
 cp -f ${FSBL_YML_FILE} ${IMGS_DIR}/
 python3 ../scripts/build_binary_file.py -c ${IMGS_DIR}/fsbl.yml -o ${IMGS_DIR}/FSBL.bin
 rm ${IMGS_DIR}/fsbl.yml
 
 #copy uboot its file and mk itb
-rm ${IMGS_DIR}/u-boot.itb
+rm -f ${IMGS_DIR}/u-boot.itb
 cp -f ${UBOOT_FIT_FILE} ${IMGS_DIR}/uboot_fit.its
 $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot_fit.its -r ${IMGS_DIR}/u-boot.itb
 rm ${IMGS_DIR}/uboot_fit.its
 
 #copy opensbi its file and mk itb
-rm ${IMGS_DIR}/opensbi.itb
+rm -f ${IMGS_DIR}/opensbi.itb
 cp -f ${OPENSBI_FIT_FILE} ${IMGS_DIR}/opensbi_fit.its
 $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/opensbi_fit.its -r ${IMGS_DIR}/opensbi.itb
 rm ${IMGS_DIR}/opensbi_fit.its
