@@ -12,6 +12,8 @@ OVERRIDE_ROOTFS_FILE="$CFG_DIR/rootfs.ext4"
 FSBL_YML_FILE="$CFG_DIR/fsbl.yml"
 UBOOT_FIT_FILE="$CFG_DIR/uboot_fit.its"
 OPENSBI_FIT_FILE="$CFG_DIR/opensbi_fit.its"
+PARTITIONS_FILE="$CFG_DIR/partitions.json"
+GENIMAGE_CFG_FILE="$CFG_DIR/sd-genimage.cfg"
 
 TARGET_ROOTFS_FILE="$IMGS_DIR/rootfs.ext2"
 TARGET_BOOTFS_FILE="$IMGS_DIR/bootfs.img"
@@ -40,4 +42,6 @@ cp -f ${OPENSBI_FIT_FILE} ${IMGS_DIR}/opensbi_fit.its
 $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/opensbi_fit.its -r ${IMGS_DIR}/opensbi.itb
 rm ${IMGS_DIR}/opensbi_fit.its
 
-
+#update sd-geimage.cfg
+../scripts/gen_imgcfg.py  ${PARTITIONS_FILE}
+mv ./genimage.cfg ${GENIMAGE_CFG_FILE}
