@@ -4,11 +4,8 @@
 #
 ################################################################################
 
-# Not using the rootfs infra, so fake the variables
-BOOTFS_SIZE = $(call qstrip, $(BR2_TARGET_BOOTFS_SIZE))
-ifeq ($(BR2_TARGET_BOOTFS_SIZE)-$(BOOTFS_SIZE),y-)
-$(error BR2_TARGET_BOOTFS_SIZE cannot be empty)
-endif
+# get bootfs size from partitions json file
+BOOTFS_SIZE = $$(jq '.partitions[] | select(.name == "bootfs") | .size' $(BR2_PACKAGE_PARTITIONS))
 
 #rootfs-cpio depend on linux
 BOOTFS_DEPENDENCIES = rootfs-cpio host-e2fsprogs
