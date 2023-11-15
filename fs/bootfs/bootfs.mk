@@ -5,7 +5,7 @@
 ################################################################################
 
 # get bootfs size from partitions json file
-BOOTFS_SIZE = $$(jq '.partitions[] | select(.name == "bootfs") | .size' $(BR2_PACKAGE_PARTITIONS))
+BOOTFS_SIZE = $$($(HOST_DIR)/bin/jq '.partitions[] | select(.name == "bootfs") | .size' $(BR2_PACKAGE_PARTITIONS))
 
 #rootfs-cpio depend on linux
 BOOTFS_DEPENDENCIES = rootfs-cpio host-e2fsprogs
