@@ -10,7 +10,7 @@ OVERRIDE_ROOTFS_FILE="$CFG_DIR/rootfs.ext4"
 FSBL_YML_FILE="$CFG_DIR/fsbl.yml"
 UBOOT_FIT_FILE="$CFG_DIR/uboot_fit.its"
 KERNEL_FIT_FILE="$CFG_DIR/kernel_fdt.its"
-OPENSBI_FIT_FILE="$CFG_DIR/opensbi-fit.its"
+OPENSBI_FIT_FILE="$CFG_DIR/opensbi_fit.its"
 
 TARGET_ROOTFS_FILE="$IMGS_DIR/rootfs.ext2"
 
@@ -34,12 +34,11 @@ rm ${IMGS_DIR}/uboot_fit.its
 
 #copy opensbi its file and mk itb
 #rm ${IMGS_DIR}/opensbi.itb
-#cp -f ${OPENSBI_FIT_FILE} ${IMGS_DIR}/opensbi-fit.its
-#$IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/opensbi-fit.its -r ${IMGS_DIR}/opensbi.itb
-#rm ${IMGS_DIR}/opensbi-fit.its
-
+#cp -f ${OPENSBI_FIT_FILE} ${IMGS_DIR}/opensbi_fit.its
+#$IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/opensbi_fit.its -r ${IMGS_DIR}/opensbi.itb
+#rm ${IMGS_DIR}/opensbi_fit.its
 
 rm -f ${IMGS_DIR}/uImage.itb
-cp -f ${UBOOT_FIT_FILE} ${IMGS_DIR}/kernel_fdt.its
+cp -f ${KERNEL_FIT_FILE} ${IMGS_DIR}/kernel_fdt.its
 $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/kernel_fdt.its -r ${IMGS_DIR}/uImage.itb
 rm ${IMGS_DIR}/kernel_fdt.its
