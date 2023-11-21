@@ -10,3 +10,4 @@
 LINUX_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/linux-6.1
 UBOOT_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/uboot-2022.10
 OPENSBI_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/opensbi
+MESA3D_OVERRIDE_SRCDIR = $(TOPDIR)/../buildroot-ext/patches/mesa3d/mesa3d-22.3.5
