@@ -1,8 +1,0 @@
-config BR2_PACKAGE_M_QUEENS
-	bool "m-queens"
-
-	help
-	  Multi-queens, a very fast solver for the general eight queens problem with OpenMP support.
-
-	  https://github.com/sudden6/m-queens
-

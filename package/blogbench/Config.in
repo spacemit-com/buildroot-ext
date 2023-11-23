@@ -1,7 +1,0 @@
-config BR2_PACKAGE_BLOGBENCH
-	bool "blogbench"
-	help
-      Blogbench is a portable filesystem benchmark that tries to reproduce the load
-      of a real-word busy file server.
-
-      https://github.com/jedisct1/Blogbench

@@ -1,8 +1,0 @@
-config BR2_PACKAGE_LZBENCH
-	bool "lzbench"
-	help
-	
-	  lzbench is an in-memory benchmark of open-source LZ77/LZSS/LZMA compressors.
-
-	  https://github.com/inikep/lzbench
-

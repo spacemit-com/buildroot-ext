@@ -1,7 +1,0 @@
-config BR2_PACKAGE_TIOBENCH
-	bool "tiobench"
-	help
-	  The tiobench is a Threaded I/O bench for Linux
-
-	  https://github.com/mkuoppal/tiobench
-

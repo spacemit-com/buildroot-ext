@@ -1,9 +1,0 @@
-config BR2_PACKAGE_CLOMP
-	bool "clomp"
-	help
-	  CLOMP is the C version of the Livermore OpenMP benchmark developed to
-		measure OpenMP overheads and other performance impacts due to threading
-		in order to influence future system designs. 
-		this version Without MP
-	  https://github.com/sonjoyp/Clomp-Without-MP
-

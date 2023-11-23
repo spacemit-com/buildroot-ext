@@ -1,6 +1,0 @@
-config BR2_PACKAGE_AOM_AV1_PSY
-	bool "aom-av1-psy"
-	help
-	  aom-av1-psy encoding library.
-
-	  https://github.com/BlueSwordM/aom-av1-psy

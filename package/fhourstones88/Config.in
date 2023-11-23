@@ -1,9 +1,0 @@
-config BR2_PACKAGE_FHOURSTONES88
-	bool "fhourstones88"
-	help
-	  This version of Fhourstones supports bitboards beyond 64-bits, 
-	  as needed for the 8x8 size popular on littlegolem.net and itsyourturn.com.
-
-	  https://github.com/tromp/fhourstones88
-
-comment "fhourstones88"

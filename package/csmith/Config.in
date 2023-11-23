@@ -1,8 +1,0 @@
-config BR2_PACKAGE_CSMITH
-	bool "csmith"
-	help
-	  csmith is a random generator of C programs to test compiler bug.
-
-	  http://github.com/csmith-project/csmith
-
-comment "csmith "

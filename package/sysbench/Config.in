@@ -1,7 +1,0 @@
-config BR2_PACKAGE_SYSBENCH
-    bool "sysbench"
-    depends on BR2_PACKAGE_CK
-    help
-      Scriptable database and system performance benchmark
-
-      https://github.com/akopytov/sysbench

@@ -1,7 +1,0 @@
-config BR2_PACKAGE_SMALLPT
-	bool "smallpt"
-	help
-	  C modification of Kevin Baeson's 99 line C path tracer
-
-	  https://github.com/matt77hias/c-smallpt
-

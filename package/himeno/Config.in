@@ -1,8 +1,0 @@
-config BR2_PACKAGE_HIMENO
-	bool "himeno"
-	select BR2_PACKAGE_OPENMPI
-	help
-	  C + MPI, dynamic allocate version
-
-	  https://github.com/calorie/himeno_benchmark
-

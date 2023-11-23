@@ -1,7 +1,0 @@
-config BR2_PACKAGE_MAFFT
-	bool "mafft"
-	help
-	  MAFFT: a multiple sequence alignment program 
-
-	  http://mafft.cbrc.jp/alignment/software/
-
