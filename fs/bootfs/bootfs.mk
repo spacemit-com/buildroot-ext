@@ -14,7 +14,9 @@ IMAGE_OUT_PATH = $(patsubst %/,%,$(dir $(@)))
 BOOTFS_DIR = $(IMAGE_OUT_PATH)/bootfs
 BOOTFS_IMG = $(IMAGE_OUT_PATH)/bootfs.img
 KERNEL_IMAGE_FILE = $(IMAGE_OUT_PATH)/Image
-KERNEL_DTB_NAME = k1-x_fpga.dtb
+
+KERNEL_DTB := $(subst ",,$(BR2_LINUX_KERNEL_INTREE_DTS_NAME))
+KERNEL_DTB_NAME = $(patsubst %,%,$(notdir $(KERNEL_DTB))).dtb
 KERNEL_DTB_FILE = $(IMAGE_OUT_PATH)/$(KERNEL_DTB_NAME)
 UENV_BIN_FILE = $(IMAGE_OUT_PATH)/uboot-env.bin
 
