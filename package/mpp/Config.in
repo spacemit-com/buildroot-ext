@@ -1,0 +1,6 @@
+comment "mpp package"
+
+config BR2_PACKAGE_MPP
+	bool "mpp"
+	help
+	  mpp package
