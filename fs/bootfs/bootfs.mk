@@ -3,6 +3,7 @@
 # integrate initrd and kernel into boot image with fat32 filesystem.
 #
 ################################################################################
+ifdef BR2_TARGET_BOOTFS
 
 # get bootfs size from partitions json file
 BOOTFS_SIZE = $$($(HOST_DIR)/bin/jq '.partitions[] | select(.name == "bootfs") | .size' $(BR2_PACKAGE_PARTITIONS))
@@ -88,5 +89,13 @@ define BOOTFS_GEN
 endef
 endif
 
+ifdef BR2_TARGET_ROOTFS_INITRAMFS
+#do not support gen bootfs img when rootfs.cpio builtin kernel Image
+#TODO
+else
 #when rootfs-cpio done, generate bootfs img
 ROOTFS_CPIO_POST_GEN_HOOKS += BOOTFS_GEN
+
+endif
+
+endif
