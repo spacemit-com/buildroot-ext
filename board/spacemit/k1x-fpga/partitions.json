@@ -3,16 +3,29 @@
     "format": "gpt",
     "partitions": [
         {
-            "name": "fsbl_0",
+            "name": "bootinfo",
             "hidden": true,
+            "offset": "0k",
+            "size": "512",
+            "image": "bootinfo_sd.bin",
+            "holes": "{\"(68;512)\"}"
+        },
+        {
+            "name": "fsbl",
+            "hidden": false,
             "offset": "128K",
             "size": "192K",
             "image": "FSBL.bin"
         },
         {
+            "name": "env",
+            "size": "128k",
+            "image": "env.bin"
+        },
+        {
             "name": "opensbi",
             "size": "256K",
-            "image": "opensbi.itb"
+            "image": "fw_dynamic.itb"
         },
         {
             "name": "uboot",
@@ -21,7 +34,7 @@
         },
         {
             "name": "bootfs",
-            "size": "128M",
+            "size": "256M",
             "image": "bootfs.img"
         },
         {
