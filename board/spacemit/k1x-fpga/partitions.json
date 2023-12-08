@@ -11,7 +11,7 @@
             "holes": "{\"(68;512)\"}"
         },
         {
-            "name": "fsbl",
+            "name": "fsbl_1",
             "hidden": false,
             "offset": "128K",
             "size": "192K",
