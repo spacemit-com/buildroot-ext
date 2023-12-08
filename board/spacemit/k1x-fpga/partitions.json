@@ -8,7 +8,7 @@
             "offset": "0k",
             "size": "512",
             "image": "bootinfo_sd.bin",
-            "holes": "{\"(68;512)\"}"
+            "holes": "{\"(80;512)\"}"
         },
         {
             "name": "fsbl_1",
