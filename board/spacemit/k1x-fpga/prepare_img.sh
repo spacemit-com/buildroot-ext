@@ -88,10 +88,10 @@ gen_sub_images() {
     rm ${IMGS_DIR}/env_k1-x.txt
 
     #copy uboot its file and gen itb
-    rm -f ${IMGS_DIR}/u-boot.itb
-    cp -f ${UBOOT_FIT_FILE} ${IMGS_DIR}/uboot_fit.its
-    $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot_fit.its -r ${IMGS_DIR}/u-boot.itb
-    rm ${IMGS_DIR}/uboot_fit.its
+    #rm -f ${IMGS_DIR}/u-boot.itb
+    #cp -f ${UBOOT_FIT_FILE} ${IMGS_DIR}/uboot_fit.its
+    #$IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot_fit.its -r ${IMGS_DIR}/u-boot.itb
+    #rm ${IMGS_DIR}/uboot_fit.its
 
     #copy opensbi its file and gen itb
     #rm -f ${IMGS_DIR}/opensbi.itb
