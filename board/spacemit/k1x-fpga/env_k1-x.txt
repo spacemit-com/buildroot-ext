@@ -1,7 +1,7 @@
 # Common parameter
 earlycon=smh
 console=ttyAMA0,115200n8
-init=/init.tmp
+init=/init
 bootdelay=3
 baudrate=115200
 
@@ -23,6 +23,8 @@ mmc_rootfstype=ext4
 
 ## Get "rootfs" partition number in decimal, and set var "mmc_root"
 ## Variable "boot_devnum" is set during board_lat_init()
+# tmp set
+rootfs_part=6
 set_mmc_root=part number mmc ${boot_devnum} rootfs rootfs_part; \
              setexpr rootfs_part ${rootfs_part} + 0; \
              setenv mmc_root "/dev/mmcblk${boot_devnum}p${rootfs_part}";
@@ -85,7 +87,10 @@ mmc_loaddtb=run mmc_dtb_env; mmc read ${dtb_addr} ${dtb_lba} ${dtb_size};
 
 ## Do mmc boot
 mmc_boot=echo "Try to boot from MMC..."; \
+         run commonargs; \
+         run set_mmc_root; \
          run mmc_loadknl; \
+         run set_mmc_args; \
          bootm ${knl_addr};
 
 # NFS boot args
