@@ -30,7 +30,7 @@ KERNEL_DTB_FILE="$IMGS_DIR/$KERNEL_DTB_NAME"
 KERNEL_IMAGE_FILE="$IMGS_DIR/uImage.itb"
 
 
-FAKE_ROOT_FILE=/tmp/fakeroot
+FAKE_ROOT_FILE=/tmp/$(whoami)-fakeroot
 
 #pack kernel Image and initramfs
 gen_bootfs_vfat() {
