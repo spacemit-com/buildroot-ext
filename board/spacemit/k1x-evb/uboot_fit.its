@@ -7,7 +7,7 @@
 	images {
 		firmware {
 			description = "u-boot";
-			data = /incbin/("./u-boot-nodtb.bin");
+			data = /incbin/("./u-boot.bin");
 			type = "firmware";
 			arch = "riscv";
 			os = "u-boot";
@@ -15,36 +15,13 @@
 			entry = <0x0 0x00100000>;
 			compression = "none";
 		};
-		fdt {
-			description = "u-boot dtb";
-			data = /incbin/("./u-boot.dtb");
-			type = "flat_dt";
-			arch = "riscv";
-			load = <0x0 0x46100000>;
-			compression = "none";
-		};
-
-		fdt1 {
-			description = "u-boot dtb";
-			data = /incbin/("./u-boot.dtb");
-			type = "flat_dt";
-			arch = "riscv";
-			load = <0x0 0x46100000>;
-			compression = "none";
-		};
 	};
 
 	configurations {
-		default = "deconfig";
-		deconfig {
-			description = "U-boot FIT config for k1x";
-			firmware = "firmware";
-			fdt = "fdt";
-		};
+		default = "config-1";
 		config-1 {
 			description = "U-boot FIT config for k1x";
 			firmware = "firmware";
-			fdt = "fdt1";
 		};
 	};
 };
