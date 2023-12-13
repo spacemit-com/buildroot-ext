@@ -87,7 +87,6 @@ mmc_loaddtb=run mmc_dtb_env; mmc read ${dtb_addr} ${dtb_lba} ${dtb_size};
 
 ## Do mmc boot
 mmc_boot=echo "Try to boot from MMC..."; \
-         run commonargs; \
          run set_mmc_root; \
          run mmc_loadknl; \
          run set_mmc_args; \
