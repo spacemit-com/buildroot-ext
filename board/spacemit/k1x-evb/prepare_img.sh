@@ -100,6 +100,7 @@ gen_sub_images() {
     #cp -f ${OPENSBI_FIT_FILE} ${IMGS_DIR}/opensbi_fit.its
     #$IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/opensbi_fit.its -r ${IMGS_DIR}/opensbi.itb
     #rm ${IMGS_DIR}/opensbi_fit.its
+    cp -f ${IMGS_DIR}/fw_dynamic.itb ${IMGS_DIR}/opensbi.itb
 
     #maybe gen kernel Image dtb here
     rm -f ${IMGS_DIR}/uImage.itb
@@ -130,7 +131,7 @@ pack_image_zip() {
     cp -f ${DEVICE_DIR}/partition_universal.json ${IMGS_DIR}/
     cd ${IMGS_DIR}
     zip ${TARGET_IMAGE_ZIP} \
-        fw_dynamic.itb \
+        opensbi.itb \
         u-boot.itb \
         bootfs.img \
         rootfs.ext4 \

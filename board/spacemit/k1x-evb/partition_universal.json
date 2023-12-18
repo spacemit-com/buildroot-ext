@@ -25,7 +25,7 @@
         {
             "name": "opensbi",
             "size": "256K",
-            "image": "fw_dynamic.itb"
+            "image": "opensbi.itb"
         },
         {
             "name": "uboot",
