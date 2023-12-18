@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "format": "mtd",
+  "partitions": [
+    {
+      "name": "bootinfo",
+      "offset": "0",
+      "size": "512B",
+      "image": "factory/bootinfo_nor.bin"
+    },
+    {
+      "name": "fsbl_1",
+      "offset": "128K",
+      "size": "256K",
+      "image": "factory/FSBL.bin"
+    },
+    {
+      "name": "env",
+      "offset": "512K",
+      "size": "128K"
+    },
+    {
+      "name": "opensbi",
+      "offset": "1M",
+      "size": "1M",
+      "image": "opensbi.itb"
+    },
+    {
+      "name": "uboot",
+      "offset": "2M",
+      "size": "2M",
+      "image": "u-boot.itb"
+    }
+  ]
+}

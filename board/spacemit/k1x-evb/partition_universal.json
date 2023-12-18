@@ -1,5 +1,5 @@
 {
-    "version": "1",
+    "version": "1.0",
     "format": "gpt",
     "partitions": [
         {
@@ -7,7 +7,7 @@
             "hidden": true,
             "offset": "0k",
             "size": "512",
-            "image": "bootinfo_sd.bin",
+            "image": "factory/bootinfo_sd.bin",
             "holes": "{\"(80;512)\"}"
         },
         {
@@ -15,7 +15,7 @@
             "hidden": false,
             "offset": "128K",
             "size": "192K",
-            "image": "FSBL.bin"
+            "image": "factory/FSBL.bin"
         },
         {
             "name": "env",

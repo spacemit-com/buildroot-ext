@@ -1,9 +1,10 @@
 # Common parameter
-earlycon=smh
-console=ttyAMA0,115200n8
-init=/init
-bootdelay=3
+earlycon=sbi
+console=ttyS0,115200
+init=/init.tmp
+bootdelay=0
 baudrate=115200
+loglevel=loglevel=8
 
 #partitions/mtdparts/mtdids would set while flashing env.bin
 partitions=
@@ -23,8 +24,6 @@ mmc_rootfstype=ext4
 
 ## Get "rootfs" partition number in decimal, and set var "mmc_root"
 ## Variable "boot_devnum" is set during board_lat_init()
-# tmp set
-rootfs_part=6
 set_mmc_root=part number mmc ${boot_devnum} rootfs rootfs_part; \
              setexpr rootfs_part ${rootfs_part} + 0; \
              setenv mmc_root "/dev/mmcblk${boot_devnum}p${rootfs_part}";
@@ -49,7 +48,7 @@ nfs_root=
 nfs_bootfile=
 
 # Common boot args
-commonargs=setenv bootargs earlycon=${earlycon} earlyprintk console=${console} rdinit=${init}
+commonargs=setenv bootargs earlycon=${earlycon} earlyprintk console=${console} ${loglevel} rdinit=${init}
 
 # Nand boot
 nand_args=run nand_mtdargs; \
@@ -86,11 +85,27 @@ mmc_dtb_env=part start mmc ${boot_devnum} dtb dtb_lba; \
 mmc_loaddtb=run mmc_dtb_env; mmc read ${dtb_addr} ${dtb_lba} ${dtb_size};
 
 ## Do mmc boot
+# define bootargs, load kernel method and bootm method
+define_mmc_commonargs=setenv bootargs earlycon=sbi earlyprintk console=ttyS0,115200 loglevel=8 rdinit=/init.tmp root=/dev/mmcblk1p6 rootwait rootfstype=ext4
+define_mmc_loadknl=fatload mmc ${boot_devnum}:${bootfs_part} ${knl_addr} ${knl_name};
+define_mmc_runknl=bootm ${knl_addr};
+
 mmc_boot=echo "Try to boot from MMC..."; \
+         run define_mmc_commonargs; \
+         run define_mmc_loadknl; \
+         run define_mmc_runknl;\
+         echo "############# boot kernel failed, check your boot config ##################"
+
+mmc_boot_default=echo "Try to boot from MMC..."; \
+         run commonargs; \
          run set_mmc_root; \
+         run set_mmc_args;
          run mmc_loadknl; \
-         run set_mmc_args; \
-         bootm ${knl_addr};
+         bootm ${knl_addr};\
+         echo "########### boot kernel failed by default config, check your boot config #############"
+
+try_mmc=run mmc_boot; \
+        run mmc_boot_default;
 
 # NFS boot args
 nfs_args=run commonargs; setenv bootargs ${bootargs} root=/dev/nfs nfsroot=${serverip}:${nfs_root},${nfsopts}
@@ -104,7 +119,7 @@ autoboot=if test ${boot_device} = nand; then \
         elif test ${boot_device} = nor; then \
                 run nor_boot; \
         elif test ${boot_device} = mmc; then \
-                run mmc_boot; \
+                run try_mmc; \
         fi; \
         run nfs_boot;
 bootcmd=run autoboot; echo "run autoboot"
