@@ -95,6 +95,11 @@ gen_sub_images() {
     $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot_fit.its -r ${IMGS_DIR}/u-boot.itb
     rm ${IMGS_DIR}/uboot_fit.its
 
+    rm -f ${IMGS_DIR}/u-boot-opensbi.itb
+    cp -f ${DEVICE_DIR}/uboot-opensbi.its ${IMGS_DIR}/
+    $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot-opensbi.its -r ${IMGS_DIR}/u-boot-opensbi.itb
+    rm ${IMGS_DIR}/uboot-opensbi.its
+    
     #copy opensbi its file and gen itb
     #rm -f ${IMGS_DIR}/opensbi.itb
     #cp -f ${OPENSBI_FIT_FILE} ${IMGS_DIR}/opensbi_fit.its
