@@ -90,10 +90,10 @@ gen_sub_images() {
     rm ${IMGS_DIR}/env_k1-x.txt
 
     #copy uboot its file and gen itb
-    rm -f ${IMGS_DIR}/u-boot.itb
-    cp -f ${UBOOT_FIT_FILE} ${IMGS_DIR}/uboot_fit.its
-    $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot_fit.its -r ${IMGS_DIR}/u-boot.itb
-    rm ${IMGS_DIR}/uboot_fit.its
+    #rm -f ${IMGS_DIR}/u-boot.itb
+    #cp -f ${UBOOT_FIT_FILE} ${IMGS_DIR}/uboot_fit.its
+    #$IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot_fit.its -r ${IMGS_DIR}/u-boot.itb
+    #rm ${IMGS_DIR}/uboot_fit.its
 
     rm -f ${IMGS_DIR}/u-boot-opensbi.itb
     cp -f ${DEVICE_DIR}/uboot-opensbi.its ${IMGS_DIR}/
@@ -145,9 +145,9 @@ pack_image_zip() {
         fastboot.yaml \
         -r factory
     
-    rm -f partition_2M.json \
-        partition_universal.json \
-        fastboot.yaml
+    rm -f fastboot.yaml \
+        partition_2M.json
+    #    partition_universal.json \
     cd - >/dev/null
     
     echo "Success to pack images into ${TARGET_IMAGE_ZIP}"
