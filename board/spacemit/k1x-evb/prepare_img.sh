@@ -138,6 +138,7 @@ pack_image_zip() {
     zip ${TARGET_IMAGE_ZIP} \
         opensbi.itb \
         u-boot.itb \
+        env.bin \
         bootfs.img \
         rootfs.ext4 \
         partition_2M.json \
