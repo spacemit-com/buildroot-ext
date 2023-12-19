@@ -86,14 +86,14 @@ mmc_loaddtb=run mmc_dtb_env; mmc read ${dtb_addr} ${dtb_lba} ${dtb_size};
 
 ## Do mmc boot
 # define bootargs, load kernel method and bootm method
-define_mmc_commonargs=setenv bootargs earlycon=sbi earlyprintk console=ttyS0,115200 loglevel=8 rdinit=/init.tmp root=/dev/mmcblk1p6 rootwait rootfstype=ext4
-define_mmc_loadknl=fatload mmc ${boot_devnum}:${bootfs_part} ${knl_addr} ${knl_name};
-define_mmc_runknl=bootm ${knl_addr};
+custom_mmc_commonargs=setenv bootargs earlycon=sbi earlyprintk console=ttyS0,115200 loglevel=8 clk_ignore_unused rdinit=/init.tmp root=/dev/mmcblk1p6 rootwait rootfstype=ext4
+custom_mmc_loadknl=fatload mmc ${boot_devnum}:${bootfs_part} ${knl_addr} ${knl_name};
+custom_mmc_runknl=bootm ${knl_addr};
 
 mmc_boot=echo "Try to boot from MMC..."; \
-         run define_mmc_commonargs; \
-         run define_mmc_loadknl; \
-         run define_mmc_runknl;\
+         run custom_mmc_commonargs; \
+         run custom_mmc_loadknl; \
+         run custom_mmc_runknl;\
          echo "############# boot kernel failed, check your boot config ##################"
 
 mmc_boot_default=echo "Try to boot from MMC..."; \
