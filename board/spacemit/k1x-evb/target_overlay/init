@@ -52,6 +52,7 @@ else
 		let cnt++
 	done
     e2fsck -y $ROOT
+    resize2fs $ROOT
 	mount $ROOT /rootfs/
 	if [ ! -e /rootfs/dev/console ]; then
 		/bin/mknod /rootfs/dev/console c 5 1
