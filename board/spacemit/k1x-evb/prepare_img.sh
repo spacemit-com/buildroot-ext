@@ -16,7 +16,14 @@ PARTITIONS_FILE="$DEVICE_DIR/partition_universal.json"
 GENIMAGE_CFG_FILE="$DEVICE_DIR/sd-genimage.cfg"
 UENV_TXT_FILE="$DEVICE_DIR/env_k1-x.txt"
 
-TARGET_IMAGE_ZIP="$IMGS_DIR/spacemit_bianbu_linux_k1-x_evb_emmc_pack_image.zip"
+#give a chance for ci
+if [ -z "$BIANBU_LINUX_ARCHIVE" ]; then
+    TARGET_IMAGE_ZIP="$IMGS_DIR/spacemit_bianbu_linux_k1-x_evb_emmc_pack_image.zip"
+else
+    TARGET_IMAGE_ZIP="$BIANBU_LINUX_ARCHIVE.zip"
+fi
+
+echo $TARGET_IMAGE_ZIP
 TARGET_ROOTFS_FILE="$IMGS_DIR/rootfs.ext2"
 TARGET_BOOTFS_FILE="$IMGS_DIR/bootfs.img"
 TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.*")
@@ -145,12 +152,17 @@ pack_image_zip() {
         partition_universal.json \
         fastboot.yaml \
         -r factory
-    
+
+    #give a chance for CI
+    if [ -n "$BIANBU_LINUX_ARCHIVE_LATEST" ]; then
+        ln -sf ${TARGET_IMAGE_ZIP} $BIANBU_LINUX_ARCHIVE_LATEST
+    fi
+
     rm -f fastboot.yaml \
         partition_2M.json
     #    partition_universal.json \
     cd - >/dev/null
-    
+ 
     echo "Success to pack images into ${TARGET_IMAGE_ZIP}"
     echo -e "\n"
 }
