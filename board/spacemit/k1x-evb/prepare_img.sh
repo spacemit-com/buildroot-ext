@@ -21,7 +21,6 @@ else
     TARGET_IMAGE_ZIP="$BIANBU_LINUX_ARCHIVE.zip"
 fi
 
-echo $TARGET_IMAGE_ZIP
 TARGET_ROOTFS_FILE="$IMGS_DIR/rootfs.ext2"
 TARGET_BOOTFS_FILE="$IMGS_DIR/bootfs.img"
 TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.*")
@@ -108,12 +107,15 @@ gen_sub_images() {
 
 }
 
-gen_sdcard_img() {
+update_genimage_cfg() {
     #update sd-geimage.cfg
-    echo "Generating sdcard.img..............................."
     $PWD/../scripts/gen_imgcfg.py  ${PARTITIONS_FILE}
     mv $PWD/./genimage.cfg ${GENIMAGE_CFG_FILE}
     cp -f ${GENIMAGE_CFG_FILE}  ${IMGS_DIR}/genimage.cfg
+}
+
+gen_sdcard_img() {
+    echo "Generating sdcard.img..............................."
     $PWD/support/scripts/genimage.sh -c ${IMGS_DIR}/genimage.cfg
 }
 
@@ -136,6 +138,7 @@ pack_image_zip() {
         partition_2M.json \
         partition_universal.json \
         fastboot.yaml \
+        genimage.cfg \
         -r factory
 
     #give a chance for CI
@@ -156,6 +159,7 @@ cp_flash_scripts() {
     cp -f ${DEVICE_DIR}/fastboot_load.sh ${IMGS_DIR}/
     cp -f ${DEVICE_DIR}/fastboot_load.bat ${IMGS_DIR}/
 }
+
 #FSBL opensbi uboot uImage
 gen_sub_images
 
@@ -164,6 +168,9 @@ gen_bootfs_vfat
 
 #for Debian or Ubuntu rootfs override
 override_rootfs_img
+
+#update genimage cfg, because pack_image_zip depend on it
+update_genimage_cfg
 
 #pack image in zip
 pack_image_zip
