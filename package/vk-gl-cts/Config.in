@@ -1,0 +1,6 @@
+comment "vk-gl-cts package"
+
+config BR2_PACKAGE_VK_GL_CTS
+	bool "vk-gl-cts"
+	help
+	  vk-gl-cts package

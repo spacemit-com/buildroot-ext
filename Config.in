@@ -11,5 +11,6 @@ source "$BR2_EXTERNAL_Bianbu_PATH/package/v2d-test/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/k1x-vpu-test/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/k1x-vpu-firmware/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/k1x-jpu/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/vk-gl-cts/Config.in"
 
 endmenu
