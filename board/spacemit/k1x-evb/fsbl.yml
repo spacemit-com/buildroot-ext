@@ -12,6 +12,7 @@ image:
       - pubkey:
           name: rsakeypair0
           algorithm: RSA2048
+          source: key/rsakeypair0_prv.key
           align: 256
   - module: image_header
     data:
@@ -23,7 +24,7 @@ image:
         - version, 1, 1
         - secure, 0, 1
         - reserved, 0, 2
-        - imgsize, 0, 8
+        - imgsize, 0x1000, 8
         - load_addr, 0, 8
         - pad, 0xA5, 8
   - module: image_config
@@ -62,18 +63,22 @@ image:
         - pubkey:
             name: spl_pubkey
             algorithm: RSA2048
+            source: key/spl_pubkey_prv.key
             align: 256
         - pubkey:
             name: uboot_pubkey
             algorithm: RSA2048
+            source: key/uboot_pubkey_pub.key
             align: 256
         - pubkey:
             name: kernel_pubkey
             algorithm: RSA2048
+            source: key/kernel_pubkey_pub.key
             align: 256
         - pubkey:
             name: rootfs_pubkey
             algorithm: RSA2048
+            source: key/rootfs_pubkey_pub.key
             align: 256
         - reserved, 0, 1024
   - module: cert0
