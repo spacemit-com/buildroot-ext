@@ -1,6 +1,6 @@
-comment "mpp package"
+comment "spacemit mpp package"
 
 config BR2_PACKAGE_MPP
-	bool "mpp"
+	bool "spacemit mpp"
 	help
-	  mpp package
+	  spacemit mpp package
