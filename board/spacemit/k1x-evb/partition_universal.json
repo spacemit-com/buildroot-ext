@@ -34,11 +34,13 @@
         },
         {
             "name": "bootfs",
+            "offset": "4M",
             "size": "256M",
             "image": "bootfs.img"
         },
         {
             "name": "rootfs",
+            "offset": "260M",
             "size": "-",
             "image": "rootfs.ext4"
         }
