@@ -23,7 +23,8 @@ fi
 
 TARGET_ROOTFS_FILE="$IMGS_DIR/rootfs.ext2"
 TARGET_BOOTFS_FILE="$IMGS_DIR/bootfs.img"
-TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.gz")
+#TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.gz")
+TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.uboot")
 
 BOOTFS_SIZE=$($IMGS_DIR/../host/bin/jq '.partitions[] | select(.name == "bootfs") | .size' "$PARTITIONS_FILE")
 BOOTFS_DIR="$IMGS_DIR/bootfs"
