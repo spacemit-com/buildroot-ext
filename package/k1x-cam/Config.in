@@ -1,0 +1,4 @@
+config BR2_PACKAGE_K1X_CAM
+	bool "k1x-cam"
+	help
+	  Spacemit k1x cam demo and test.
