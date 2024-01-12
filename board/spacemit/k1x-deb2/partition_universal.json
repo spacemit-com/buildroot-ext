@@ -5,7 +5,7 @@
         {
             "name": "bootinfo",
             "hidden": true,
-            "offset": "0k",
+            "offset": "0K",
             "size": "512",
             "image": "factory/bootinfo_sd.bin",
             "holes": "{\"(80;512)\"}"
@@ -13,14 +13,14 @@
         {
             "name": "fsbl",
             "hidden": false,
-            "offset": "128K",
+            "offset": "256K",
             "size": "256K",
             "image": "factory/FSBL.bin"
         },
         {
             "name": "env",
             "offset":"512K",
-            "size": "128k",
+            "size": "128K",
             "image": "env.bin"
         },
         {
