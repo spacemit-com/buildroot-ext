@@ -30,8 +30,8 @@ BOOTFS_SIZE=$($IMGS_DIR/../host/bin/jq '.partitions[] | select(.name == "bootfs"
 BOOTFS_DIR="$IMGS_DIR/bootfs"
 BOOTFS_IMG_FILE="$IMGS_DIR/bootfs.img"
 
-KERNEL_DTB=$(sed 's/"//g' <<< "k1-x_evb")
-KERNEL_DTB_NAME="$(basename "$KERNEL_DTB").dtb"
+KERNEL_DTB=$(sed 's/"//g' <<< "k1-x_deb2")
+KERNEL_DTB_NAME="k1-x*.dtb"
 KERNEL_DTB_FILE="$IMGS_DIR/$KERNEL_DTB_NAME"
 KERNEL_IMAGE_FILE="$IMGS_DIR/uImage.itb"
 
