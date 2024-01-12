@@ -9,7 +9,7 @@
       "image": "factory/bootinfo_nor.bin"
     },
     {
-      "name": "fsbl_1",
+      "name": "fsbl",
       "offset": "128K",
       "size": "256K",
       "image": "factory/FSBL.bin"
