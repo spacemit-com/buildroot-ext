@@ -11,10 +11,10 @@
             "holes": "{\"(80;512)\"}"
         },
         {
-            "name": "fsbl_1",
+            "name": "fsbl",
             "hidden": false,
             "offset": "128K",
-            "size": "192K",
+            "size": "256K",
             "image": "factory/FSBL.bin"
         },
         {
