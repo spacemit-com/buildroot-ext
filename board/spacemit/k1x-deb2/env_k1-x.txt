@@ -29,7 +29,7 @@ set_mmc_root=part number mmc ${boot_devnum} rootfs rootfs_part; \
              setenv mmc_root "/dev/mmcblk${boot_devnum}p${rootfs_part}";
 
 # NFS device
-ethaddr=00:00:23:34:45:66
+#ethaddr=00:00:23:34:45:66
 ipaddr=192.168.1.15
 netmask=255.255.255.0
 serverip=192.168.1.2
@@ -40,7 +40,7 @@ knl_addr=0x40000000
 ramdisk_addr=0x50000000
 knl_name=uImage.itb
 ramdisk_name=initramfs-generic.img
-dtb_name=k1-x_deb2.dtb
+dtb_name=k1-x_evb.dtb
 dtb_addr=0x28000000
 mdio_intf=
 phyaddr0=1
@@ -83,16 +83,26 @@ mmc_loadknl=echo "load kernel ...";fatload mmc ${boot_devnum}:${bootfs_part} ${k
             fatload mmc ${boot_devnum}:${bootfs_part} ${ramdisk_addr} ${ramdisk_name}; \
             fatload mmc ${boot_devnum}:${bootfs_part} ${dtb_addr} ${dtb_name};
 
-## Get "dtb" partition start lba and partition size, and load dtb image
-mmc_dtb_env=part start mmc ${boot_devnum} dtb dtb_lba; \
-            part size mmc ${boot_devnum} dtb dtb_size;
+#detect product_name from env and select dtb file to load
+mmc_dtb_env=if test -n "${product_name}"; then \
+                if test "${product_name}" = k1_evb; then \
+                    setenv dtb_name k1-x_evb.dtb; \
+                elif test "${product_name}" = k1_deb1; then \
+                    setenv dtb_name k1-x_deb1.dtb; \
+                elif test "${product_name}" = k1_deb2; then \
+                    setenv dtb_name k1-x_deb2.dtb; \
+                else \
+                    echo "Unknow product_name: ${product_name}, loads default dtb: ${dtb_name}"; \
+                fi; \
+            fi;
 
-mmc_loaddtb=run mmc_dtb_env; mmc read ${dtb_addr} ${dtb_lba} ${dtb_size};
+mmc_detect_dtb=echo "product_name: ${product_name}"; run mmc_dtb_env; echo "detect dtb_name: ${dtb_name}";
 
 mmc_boot=echo "Try to boot from MMC..."; \
          run commonargs; \
          run set_mmc_root; \
          run set_mmc_args; \
+         run mmc_detect_dtb; \
          run mmc_loadknl; \
          bootm ${knl_addr} ${ramdisk_addr} ${dtb_addr};\
          echo "########### boot kernel failed by default config, check your boot config #############"
