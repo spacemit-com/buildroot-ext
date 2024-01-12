@@ -29,7 +29,10 @@ set_mmc_root=part number mmc ${boot_devnum} rootfs rootfs_part; \
              setenv mmc_root "/dev/mmcblk${boot_devnum}p${rootfs_part}";
 
 # NFS device
-#ethaddr=00:00:23:34:45:66
+#override here, otherwise gen random addr and save to eeprom by uboot 
+#ethaddr=fe:fe:fe:22:22:01
+#eth1addr=fe:fe:fe:22:22:02
+
 ipaddr=192.168.1.15
 netmask=255.255.255.0
 serverip=192.168.1.2
