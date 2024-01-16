@@ -158,10 +158,6 @@ pack_image_zip() {
     echo -e "\n"
 }
 
-cp_flash_scripts() {
-    cp -f ${DEVICE_DIR}/fastboot_load.sh ${IMGS_DIR}/
-    cp -f ${DEVICE_DIR}/fastboot_load.bat ${IMGS_DIR}/
-}
 
 #FSBL opensbi uboot uImage
 gen_sub_images
@@ -180,6 +176,4 @@ pack_image_zip
 
 #Gen sdcard.img if need
 gen_sdcard_img
-
-cp_flash_scripts
 
