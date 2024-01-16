@@ -11,7 +11,6 @@ SRC_ROOTFS_FILE="$DEVICE_DIR/rootfs.ext4"
 FSBL_YML_FILE="$DEVICE_DIR/fsbl.yml"
 KERNEL_FIT_FILE="$DEVICE_DIR/kernel_fdt.its"
 PARTITIONS_FILE="$DEVICE_DIR/partition_universal.json"
-GENIMAGE_CFG_FILE="$DEVICE_DIR/sd-genimage.cfg"
 UENV_TXT_FILE="$DEVICE_DIR/env_k1-x.txt"
 
 #Give a chance to CI
@@ -109,8 +108,7 @@ gen_sub_images() {
 update_genimage_cfg() {
     #Update sd-geimage.cfg
     $PWD/../scripts/gen_imgcfg.py  ${PARTITIONS_FILE}
-    mv $PWD/./genimage.cfg ${GENIMAGE_CFG_FILE}
-    cp -f ${GENIMAGE_CFG_FILE}  ${IMGS_DIR}/genimage.cfg
+    mv $PWD/./genimage.cfg ${IMGS_DIR}/genimage.cfg
 }
 
 gen_sdcard_img() {
