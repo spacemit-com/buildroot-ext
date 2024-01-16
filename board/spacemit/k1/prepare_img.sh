@@ -95,11 +95,6 @@ gen_sub_images() {
     $IMGS_DIR/../host/bin/mkenvimage -s 0x4000 -o ${IMGS_DIR}/env.bin ${IMGS_DIR}/env_k1-x.txt
     rm ${IMGS_DIR}/env_k1-x.txt
 
-    rm -f ${IMGS_DIR}/u-boot-opensbi.itb
-    cp -f ${DEVICE_DIR}/uboot-opensbi.its ${IMGS_DIR}/
-    $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot-opensbi.its -r ${IMGS_DIR}/u-boot-opensbi.itb
-    rm ${IMGS_DIR}/uboot-opensbi.its
-    
     #Rename to opensbi.itb for the partition file
     cp -f ${IMGS_DIR}/fw_dynamic.itb ${IMGS_DIR}/opensbi.itb
 
