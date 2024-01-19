@@ -46,8 +46,6 @@ setup()
     mkdir /dev/usb-ffs
     mkdir /dev/usb-ffs/adb
     mount -o uid=2000,gid=2000 -t functionfs adb /dev/usb-ffs/adb/
-    mkdir /dev/pts
-    mount -t devpts -o defaults,mode=644,ptmxmode=666 devpts /dev/pts
     adbd &
 }
 udc()

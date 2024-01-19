@@ -24,7 +24,7 @@ mount -t devtmpfs -o nosuid,mode=0755 devtmpfs /dev
 
 mkdir -p /dev/pts
 mkdir -p /dev/shm
-mount -t devpts devpts /dev/pts
+mount -t devpts -o defaults,mode=644,ptmxmode=666 devpts /dev/pts
 mount -t tmpfs tmpfs /dev/shm
 mount -t tmpfs tmpfs /tmp
 mount -t tmpfs tmpfs /run
