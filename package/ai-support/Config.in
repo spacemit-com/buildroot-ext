@@ -1,0 +1,5 @@
+config BR2_PACKAGE_AI_SUPPORT
+	bool "k1 ai support"
+	select BR2_PACKAGE_ONNX_RUNTIME
+	help
+	  Spacemit k1 AI support lib and demo.
