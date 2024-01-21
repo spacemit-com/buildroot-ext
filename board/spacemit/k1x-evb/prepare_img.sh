@@ -11,7 +11,6 @@ SRC_ROOTFS_FILE="$DEVICE_DIR/rootfs.ext4"
 FSBL_YML_FILE="$DEVICE_DIR/fsbl.yml"
 KERNEL_FIT_FILE="$DEVICE_DIR/kernel_fdt.its"
 PARTITIONS_FILE="$DEVICE_DIR/partition_universal.json"
-GENIMAGE_CFG_FILE="$DEVICE_DIR/sd-genimage.cfg"
 UENV_TXT_FILE="$DEVICE_DIR/env_k1-x.txt"
 
 #Give a chance to CI
@@ -30,7 +29,6 @@ BOOTFS_SIZE=$($IMGS_DIR/../host/bin/jq '.partitions[] | select(.name == "bootfs"
 BOOTFS_DIR="$IMGS_DIR/bootfs"
 BOOTFS_IMG_FILE="$IMGS_DIR/bootfs.img"
 
-KERNEL_DTB=$(sed 's/"//g' <<< "k1-x_deb2")
 KERNEL_DTB_NAME="k1-x*.dtb"
 KERNEL_DTB_FILE="$IMGS_DIR/$KERNEL_DTB_NAME"
 KERNEL_IMAGE_FILE="$IMGS_DIR/uImage.itb"
@@ -96,11 +94,6 @@ gen_sub_images() {
     $IMGS_DIR/../host/bin/mkenvimage -s 0x4000 -o ${IMGS_DIR}/env.bin ${IMGS_DIR}/env_k1-x.txt
     rm ${IMGS_DIR}/env_k1-x.txt
 
-    rm -f ${IMGS_DIR}/u-boot-opensbi.itb
-    cp -f ${DEVICE_DIR}/uboot-opensbi.its ${IMGS_DIR}/
-    $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/uboot-opensbi.its -r ${IMGS_DIR}/u-boot-opensbi.itb
-    rm ${IMGS_DIR}/uboot-opensbi.its
-    
     #Rename to opensbi.itb for the partition file
     cp -f ${IMGS_DIR}/fw_dynamic.itb ${IMGS_DIR}/opensbi.itb
 
@@ -115,8 +108,7 @@ gen_sub_images() {
 update_genimage_cfg() {
     #Update sd-geimage.cfg
     $PWD/../scripts/gen_imgcfg.py  ${PARTITIONS_FILE}
-    mv $PWD/./genimage.cfg ${GENIMAGE_CFG_FILE}
-    cp -f ${GENIMAGE_CFG_FILE}  ${IMGS_DIR}/genimage.cfg
+    mv $PWD/./genimage.cfg ${IMGS_DIR}/genimage.cfg
 }
 
 gen_sdcard_img() {
@@ -166,10 +158,6 @@ pack_image_zip() {
     echo -e "\n"
 }
 
-cp_flash_scripts() {
-    cp -f ${DEVICE_DIR}/fastboot_load.sh ${IMGS_DIR}/
-    cp -f ${DEVICE_DIR}/fastboot_load.bat ${IMGS_DIR}/
-}
 
 #FSBL opensbi uboot uImage
 gen_sub_images
@@ -188,6 +176,4 @@ pack_image_zip
 
 #Gen sdcard.img if need
 gen_sdcard_img
-
-cp_flash_scripts
 
