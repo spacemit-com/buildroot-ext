@@ -16,8 +16,8 @@
 			arch = "riscv";
 			os = "linux";
 			compression = "none";
-			load = <0x0 0x400000>;
-			entry = <0x0 0x400000>;
+			load = <0x0 0x1400000>;
+			entry = <0x0 0x1400000>;
 		};
 	};
 
