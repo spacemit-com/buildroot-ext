@@ -1,6 +1,6 @@
-ONNX_RUNTIME_VERSION:=v1.0.0
-ONNX_RUNTIME_SITE=$(TOPDIR)/../buildroot-ext/patches/onnx-runtime
-ONNX_RUNTIME_SITE_METHOD=file
+ONNX_RUNTIME_VERSION:=v1.0.3
+ONNX_RUNTIME_SITE=https://nexus.bianbu.xyz/repository/bianbu-ai/onnxruntime
+ONNX_RUNTIME_SITE_METHOD=wget
 ONNX_RUNTIME_SOURCE=spacemit-ort.rv64.$(ONNX_RUNTIME_VERSION).tar.gz
 
 ONNX_RUNTIME_INSTALL_STAGING = YES
@@ -12,7 +12,7 @@ define ONNX_RUNTIME_INSTALL_STAGING_CMDS
 endef
 
 define ONNX_RUNTIME_INSTALL_TARGET_CMDS
-	cp -rdpf $(@D)/lib/* $(TARGET_DIR)/lib/
+	cp -rdpf $(@D)/lib/* $(TARGET_DIR)/usr/lib/
 	cp -rdpf $(@D)/bin/* $(TARGET_DIR)/usr/bin/
 endef
 
