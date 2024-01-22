@@ -1,12 +1,14 @@
-AI_SUPPORT_VERSION:=1.0.1
+AI_SUPPORT_VERSION:=1.0.4
 AI_SUPPORT_SITE = $(BR2_EXTERNAL_Bianbu_PATH)/../package-src/ai-support
 AI_SUPPORT_SITE_METHOD = local
-AI_SUPPORT_DEPENDENCIES += onnx-runtime
+AI_SUPPORT_DEPENDENCIES += onnx-runtime opencv4
 
-AI_SUPPORT_CONF_OPTS = -DCMAKE_BUILD_TYPE=Debug  \
-                        -DTEST=OFF \
-                        -DDEMO=ON \
-                        -DORT_HOME=$(STAGING_DIR)/lib 
+# CMAKE_BUILD_TYPE is driven by BR2_ENABLE_RUNTIME_DEBUG
+AI_SUPPORT_CONF_OPTS = -DTEST=OFF \
+                       -DORT_HOME=$(STAGING_DIR)/usr
+
+ifeq ($(BR2_PACKAGE_AI_SUPPORT_DEMO),y)
+AI_SUPPORT_CONF_OPTS += -DDEMO=ON
 
 define AI_SUPPORT_POST_BUILD
     mkdir -p $(TARGET_DIR)/usr/share/ai-support/config
@@ -22,5 +24,6 @@ define AI_SUPPORT_POST_BUILD
 endef
 AI_SUPPORT_POST_BUILD_HOOKS += AI_SUPPORT_POST_BUILD
 
+endif # BR2_PACKAGE_AI_SUPPORT_DEMO
 
 $(eval $(cmake-package))
