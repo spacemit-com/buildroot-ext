@@ -75,18 +75,6 @@ override_rootfs_img() {
 }
 
 gen_sub_images() {
-    #bootinfo_*.bin
-    #rm -f ${IMGS_DIR}/bootinfo_sd.bin
-    #cp -f ${FSBL_YML_FILE} ${IMGS_DIR}/
-    #python3 $PWD/../scripts/build_binary_file.py -c ${IMGS_DIR}/fsbl.yml -o ${IMGS_DIR}/FSBL.bin
-    #rm ${IMGS_DIR}/fsbl.yml
-    #cp -f ${DEVICE_DIR}/bootinfo_sd.bin ${IMGS_DIR}/
-
-    #Create header for uboot-spl.bin and rename to FSBL.bin
-    rm -f ${IMGS_DIR}/FSBL.bin
-    cp -f ${FSBL_YML_FILE} ${IMGS_DIR}/
-    python3 $PWD/../scripts/build_binary_file.py -c ${IMGS_DIR}/fsbl.yml -o ${IMGS_DIR}/FSBL.bin
-    rm ${IMGS_DIR}/fsbl.yml
 
     #env.bin
     rm -f ${IMGS_DIR}/env_k1-x.txt
@@ -126,8 +114,10 @@ pack_image_zip() {
     rm -f ${TARGET_IMAGE_ZIP}
     rm -rf ${IMGS_DIR}/factory
 
-    cp -rf ${DEVICE_DIR}/factory ${IMGS_DIR}/
-    mv ${IMGS_DIR}/FSBL.bin ${IMGS_DIR}/factory/
+    mkdir -p ${IMGS_DIR}/factory
+    cp -f ${IMGS_DIR}/FSBL.bin ${IMGS_DIR}/factory/
+    cp -f ${IMGS_DIR}/bootinfo_*.bin ${IMGS_DIR}/factory/
+    
     cp -f ${DEVICE_DIR}/fastboot.yaml ${IMGS_DIR}/
     cp -f ${DEVICE_DIR}/partition_2M.json ${IMGS_DIR}/
     cp -f ${DEVICE_DIR}/partition_universal.json ${IMGS_DIR}/
