@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "format": "mtd",
+  "partitions": [
+    {
+      "name": "bootinfo",
+      "offset": "0",
+      "size": "64K",
+      "image": "factory/bootinfo_spinor.bin"
+    },
+    {
+      "name": "fsbl",
+      "offset": "64K",
+      "size": "256K",
+      "image": "factory/FSBL.bin"
+    },
+    {
+      "name": "env",
+      "offset": "512K",
+      "size": "128K"
+    },
+    {
+      "name": "opensbi",
+      "offset": "640K",
+      "size": "384K",
+      "image": "opensbi.itb"
+    },
+    {
+      "name": "uboot",
+      "offset": "1M",
+      "size": "1M",
+      "image": "u-boot.itb"
+    }
+  ]
+}

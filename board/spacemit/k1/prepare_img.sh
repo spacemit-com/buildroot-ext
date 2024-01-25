@@ -119,8 +119,8 @@ pack_image_zip() {
     cp -f ${IMGS_DIR}/bootinfo_*.bin ${IMGS_DIR}/factory/
     
     cp -f ${DEVICE_DIR}/fastboot.yaml ${IMGS_DIR}/
-    cp -f ${DEVICE_DIR}/partition_2M.json ${IMGS_DIR}/
-    cp -f ${DEVICE_DIR}/partition_universal.json ${IMGS_DIR}/
+    cp -f ${DEVICE_DIR}/partition_*.json ${IMGS_DIR}/
+    #cp -f ${DEVICE_DIR}/partition_universal.json ${IMGS_DIR}/
     cd ${IMGS_DIR}
     zip ${TARGET_IMAGE_ZIP} \
         opensbi.itb \
@@ -128,8 +128,7 @@ pack_image_zip() {
         env.bin \
         bootfs.img \
         rootfs.ext4 \
-        partition_2M.json \
-        partition_universal.json \
+        partition_*.json \
         fastboot.yaml \
         genimage.cfg \
         -r factory
@@ -139,8 +138,8 @@ pack_image_zip() {
         ln -sf ${TARGET_IMAGE_ZIP} $BIANBU_LINUX_ARCHIVE_LATEST
     fi
 
-    rm -f fastboot.yaml \
-        partition_2M.json
+    #rm -f fastboot.yaml \
+    #    partition_2M.json
     #    partition_universal.json \
     cd - >/dev/null
  
