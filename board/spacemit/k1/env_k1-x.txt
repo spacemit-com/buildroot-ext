@@ -56,38 +56,8 @@ nfs_bootfile=
 # Common boot args
 commonargs=setenv bootargs earlycon=${earlycon} earlyprintk console=${console} ${loglevel} clk_ignore_unused rdinit=${init}
 
-# Nand boot
-nand_args=run nand_mtdargs; \
-          run commonargs; \
-          setenv bootargs ${bootargs} mtdparts=${mtdparts} ubi.mtd=6 root=${nand_root} rootfstype=${nand_rootfstype}
-
-nand_boot=echo "Try to boot from nand flash..."; \
-          run nand_args; \
-          ubi part kernel && ubi read ${knl_addr} kernel && mtd read dtb ${dtb_addr}; \
-          bootm ${knl_addr} - ${dtb_addr};
-
-# Nor boot
-nor_args=run nor_mtdargs; \
-         run commonargs; \
-         setenv bootargs ${bootargs} mtdparts=${mtdparts} root=${flashroot} rootfstype=${flashrootfstype}
-
-nor_boot=echo "Try to boot from nor flash..."; \
-         sf probe; \
-         run nor_args; \
-         mtd read kernel ${knl_addr} && mtd read dtb ${dtb_addr}; \
-         bootm ${knl_addr} - ${dtb_addr};
-
-###############################################################################
-# eMMC/SDCard boot
-###############################################################################
-set_mmc_args=setenv bootargs "${bootargs}" root=${mmc_root} rootwait rootfstype=${mmc_rootfstype};
-
-mmc_loadknl=echo "load kernel ...";fatload mmc ${boot_devnum}:${bootfs_part} ${knl_addr} ${knl_name}; \
-            fatload mmc ${boot_devnum}:${bootfs_part} ${ramdisk_addr} ${ramdisk_name}; \
-            fatload mmc ${boot_devnum}:${bootfs_part} ${dtb_addr} ${dtb_name};
-
 #detect product_name from env and select dtb file to load
-mmc_dtb_env=if test -n "${product_name}"; then \
+dtb_env=if test -n "${product_name}"; then \
                 if test "${product_name}" = k1_evb; then \
                     setenv dtb_name k1-x_evb.dtb; \
                 elif test "${product_name}" = k1_deb1; then \
@@ -99,15 +69,58 @@ mmc_dtb_env=if test -n "${product_name}"; then \
                 fi; \
             fi;
 
-mmc_detect_dtb=echo "product_name: ${product_name}"; run mmc_dtb_env; echo "detect dtb_name: ${dtb_name}";
+detect_dtb=echo "product_name: ${product_name}"; run dtb_env; echo "detect dtb_name: ${dtb_name}";
+
+# spinand_ubifs boot
+ubifs_list= mtd list; \
+             ubifsls;
+ubifs_loadimg=  echo " ubifsload uImage.itb..."; \
+                ubifsload ${knl_addr} ${knl_name};
+
+ubifs_boot=echo "Trying to boot from UBIFS..."; \
+           run ubifs_loadimg; \
+           bootm ${knl_addr};
+
+# Nand boot
+nand_boot=echo "Try to boot from nand flash..."; \
+		  run ubifs_list; \
+		  run ubifs_loadimg; \
+		  bootm ${knl_addr};
+
+# Nor boot
+nor_args=run commonargs; \
+         setenv bootargs ${bootargs} mtdparts=${mtdparts} root=/dev/nvme0n1p6 rootfstype=ext4
+
+nor_loadknl=echo "Loading kernel ... from ${bootfs_devname} ${boot_devnum}"; \
+            fatload ${bootfs_devname} ${boot_devnum}:5 ${knl_addr} ${knl_name}; \
+            fatload ${bootfs_devname} ${boot_devnum}:5 ${ramdisk_addr} ${ramdisk_name}; \
+            fatload ${bootfs_devname} ${boot_devnum}:5 ${dtb_addr} ${dtb_name};
+
+nor_boot=echo "Try to boot from blk device ..."; \
+         run nor_args; \
+         run detect_dtb; \
+         run nor_loadknl; \
+         bootm ${knl_addr} ${ramdisk_addr} ${dtb_addr}; \
+         echo "########### boot kernel failed by default config, check your boot config #############"
+
+###############################################################################
+# eMMC/SDCard boot
+###############################################################################
+set_mmc_args=setenv bootargs "${bootargs}" root=${mmc_root} rootwait rootfstype=${mmc_rootfstype};
+
+mmc_loadknl=echo "Loading kernel ..."; \
+            fatload mmc ${boot_devnum}:${bootfs_part} ${knl_addr} ${knl_name}; \
+            fatload mmc ${boot_devnum}:${bootfs_part} ${ramdisk_addr} ${ramdisk_name}; \
+            fatload mmc ${boot_devnum}:${bootfs_part} ${dtb_addr} ${dtb_name};
+
 
 mmc_boot=echo "Try to boot from MMC..."; \
          run commonargs; \
          run set_mmc_root; \
          run set_mmc_args; \
-         run mmc_detect_dtb; \
+         run detect_dtb; \
          run mmc_loadknl; \
-         bootm ${knl_addr} ${ramdisk_addr} ${dtb_addr};\
+         bootm ${knl_addr} ${ramdisk_addr} ${dtb_addr}; \
          echo "########### boot kernel failed by default config, check your boot config #############"
 
 # NFS boot args
