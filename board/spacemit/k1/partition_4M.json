@@ -28,7 +28,7 @@
     {
       "name": "uboot",
       "offset": "1M",
-      "size": "1M",
+      "size": "2M",
       "image": "u-boot.itb"
     }
   ]
