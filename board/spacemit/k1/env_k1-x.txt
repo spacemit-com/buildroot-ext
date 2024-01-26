@@ -28,6 +28,10 @@ set_mmc_root=part number mmc ${boot_devnum} rootfs rootfs_part; \
              setexpr rootfs_part ${rootfs_part} + 0; \
              setenv mmc_root "/dev/mmcblk${boot_devnum}p${rootfs_part}";
 
+set_nvme_root=part number nvme ${boot_devnum} rootfs rootfs_part; \
+             setexpr rootfs_part ${rootfs_part} + 0; \
+             setenv nvme_root "/dev/nvme${boot_devnum}n1p${rootfs_part}";
+
 # NFS device
 #override here, otherwise gen random addr and save to eeprom by uboot 
 #ethaddr=fe:fe:fe:22:22:01
@@ -54,7 +58,7 @@ nfs_root=
 nfs_bootfile=
 
 # Common boot args
-commonargs=setenv bootargs earlycon=${earlycon} earlyprintk console=${console} ${loglevel} clk_ignore_unused rdinit=${init}
+commonargs=setenv bootargs earlycon=${earlycon} earlyprintk console=tty1 console=${console} ${loglevel} clk_ignore_unused rdinit=${init}
 
 #detect product_name from env and select dtb file to load
 dtb_env=if test -n "${product_name}"; then \
@@ -88,8 +92,7 @@ nand_boot=echo "Try to boot from nand flash..."; \
 		  bootm ${knl_addr};
 
 # Nor boot
-nor_args=run commonargs; \
-         setenv bootargs ${bootargs} mtdparts=${mtdparts} root=/dev/nvme0n1p6 rootfstype=ext4
+set_nor_args=setenv bootargs ${bootargs} mtdparts=${mtdparts} root=${nvme_root} rootfstype=ext4
 
 nor_loadknl=echo "Loading kernel ... from ${bootfs_devname} ${boot_devnum}"; \
             fatload ${bootfs_devname} ${boot_devnum}:5 ${knl_addr} ${knl_name}; \
@@ -97,7 +100,9 @@ nor_loadknl=echo "Loading kernel ... from ${bootfs_devname} ${boot_devnum}"; \
             fatload ${bootfs_devname} ${boot_devnum}:5 ${dtb_addr} ${dtb_name};
 
 nor_boot=echo "Try to boot from blk device ..."; \
-         run nor_args; \
+         run commonargs; \
+         run set_nvme_root; \
+         run set_nor_args; \
          run detect_dtb; \
          run nor_loadknl; \
          bootm ${knl_addr} ${ramdisk_addr} ${dtb_addr}; \
