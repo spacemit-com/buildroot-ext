@@ -8,8 +8,8 @@ loglevel=loglevel=8
 
 #partitions/mtdparts/mtdids would set while flashing env.bin
 partitions=
-mtdparts=
-mtdids=
+mtdids=nor0=spi-dev
+mtdparts=spi-dev:64K@0K(bootinfo),256K@64K(fsbl),128K@512K(env),384K@640K(opensbi),1M@1024K(uboot)
 
 # Nand flash rootfs device
 nand_root=ubi0:rootfs
@@ -58,7 +58,7 @@ nfs_root=
 nfs_bootfile=
 
 # Common boot args
-commonargs=setenv bootargs earlycon=${earlycon} earlyprintk console=tty1 console=${console} ${loglevel} clk_ignore_unused rdinit=${init}
+commonargs=setenv bootargs earlycon=${earlycon} earlyprintk console=${console} ${loglevel} clk_ignore_unused rdinit=${init}
 
 #detect product_name from env and select dtb file to load
 dtb_env=if test -n "${product_name}"; then \
@@ -94,12 +94,12 @@ nand_boot=echo "Try to boot from nand flash..."; \
 # Nor boot
 set_nor_args=setenv bootargs ${bootargs} mtdparts=${mtdparts} root=${nvme_root} rootfstype=ext4
 
-nor_loadknl=echo "Loading kernel ... from ${bootfs_devname} ${boot_devnum}"; \
-            fatload ${bootfs_devname} ${boot_devnum}:5 ${knl_addr} ${knl_name}; \
-            fatload ${bootfs_devname} ${boot_devnum}:5 ${ramdisk_addr} ${ramdisk_name}; \
-            fatload ${bootfs_devname} ${boot_devnum}:5 ${dtb_addr} ${dtb_name};
+nor_loadknl=echo "Loading kernel..."; \
+            fatload ${bootfs_devname} ${boot_devnum}:${bootfs_part} ${knl_addr} ${knl_name}; \
+            fatload ${bootfs_devname} ${boot_devnum}:${bootfs_part} ${ramdisk_addr} ${ramdisk_name}; \
+            fatload ${bootfs_devname} ${boot_devnum}:${bootfs_part} ${dtb_addr} ${dtb_name};
 
-nor_boot=echo "Try to boot from blk device ..."; \
+nor_boot=echo "Try to boot from NVMe ..."; \
          run commonargs; \
          run set_nvme_root; \
          run set_nor_args; \
@@ -119,7 +119,7 @@ mmc_loadknl=echo "Loading kernel ..."; \
             fatload mmc ${boot_devnum}:${bootfs_part} ${dtb_addr} ${dtb_name};
 
 
-mmc_boot=echo "Try to boot from MMC..."; \
+mmc_boot=echo "Try to boot from MMC${boot_devnum} ..."; \
          run commonargs; \
          run set_mmc_root; \
          run set_mmc_args; \
