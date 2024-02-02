@@ -5,7 +5,7 @@
     {
       "name": "bootinfo",
       "offset": "0",
-      "size": "4K",
+      "size": "64K",
       "image": "factory/bootinfo_spinor.bin"
     },
     {
