@@ -19,7 +19,7 @@ define AI_SUPPORT_POST_BUILD
     $(INSTALL) -D -m 0644 $(@D)/data/config/* $(TARGET_DIR)/usr/share/ai-support/config/
     $(INSTALL) -D -m 0644 $(@D)/data/imgs/* $(TARGET_DIR)/usr/share/ai-support/imgs/
     $(INSTALL) -D -m 0644 $(@D)/data/labels/* $(TARGET_DIR)/usr/share/ai-support/labels/
-    $(INSTALL) -D -m 0644 $(@D)/share/models/* $(TARGET_DIR)/usr/share/ai-support/models/
+    $(INSTALL) -D -m 0644 $(@D)/rootfs/usr/share/models/* $(TARGET_DIR)/usr/share/ai-support/models/
 
 endef
 AI_SUPPORT_POST_BUILD_HOOKS += AI_SUPPORT_POST_BUILD
