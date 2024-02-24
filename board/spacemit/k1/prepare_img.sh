@@ -12,6 +12,7 @@ FSBL_YML_FILE="$DEVICE_DIR/fsbl.yml"
 KERNEL_FIT_FILE="$DEVICE_DIR/kernel_fdt.its"
 PARTITIONS_FILE="$DEVICE_DIR/partition_universal.json"
 UENV_TXT_FILE="$DEVICE_DIR/env_k1-x.txt"
+UBOOT_LOGO_FILE="$DEVICE_DIR/k1-x.bmp"
 
 #Give a chance to CI
 if [ -z "$BIANBU_LINUX_ARCHIVE" ]; then
@@ -50,6 +51,7 @@ gen_bootfs_vfat() {
     echo "mkfs.vfat $BOOTFS_IMG_FILE" >> "$FAKE_ROOT_FILE"
 
     echo "cp -f $UENV_TXT_FILE $BOOTFS_DIR/" >> "$FAKE_ROOT_FILE"
+    echo "cp -f $UBOOT_LOGO_FILE $BOOTFS_DIR/" >> "$FAKE_ROOT_FILE"
     echo "cp -f $KERNEL_IMAGE_FILE $BOOTFS_DIR/" >> "$FAKE_ROOT_FILE"
     echo "cp -f $KERNEL_DTB_FILE $BOOTFS_DIR/" >> "$FAKE_ROOT_FILE"
     echo "cp -f $TARGET_INITRAMFS_FILE $BOOTFS_DIR/initramfs-generic.img" >> "$FAKE_ROOT_FILE"
