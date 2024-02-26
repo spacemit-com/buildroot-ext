@@ -5,7 +5,7 @@ K1X_CAM_SITE_METHOD = local
 K1X_CAM_CONF_OPTS = -DRUN_PLATFORM="RISCV" \
                         -DCI_LOG_LEVEL=4 \
                         -DARCH_RISCV="Y" \
-                        -DCMAKE_INSTALL_PREFIX="/" \
+                        -DCMAKE_INSTALL_PREFIX="/usr" \
 
 define K1X_CAM_POST_RSYNC
     $(INSTALL) -D -m 0644 $(@D)/libs/lib64/libcpp.so $(STAGING_DIR)/lib64/libcpp.so
