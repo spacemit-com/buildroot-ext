@@ -1,6 +1,0 @@
-config BR2_PACKAGE_TCM
-	bool "tcm"
-	help
-	  tcm test cases.
-
-
