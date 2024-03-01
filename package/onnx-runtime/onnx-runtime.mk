@@ -1,5 +1,5 @@
 ONNX_RUNTIME_VERSION:=v1.0.3
-ONNX_RUNTIME_SITE=https://nexus.bianbu.xyz/repository/bianbu-ai/onnxruntime
+ONNX_RUNTIME_SITE=http://archive.spacemit.com/spacemit-ai/onnxruntime
 ONNX_RUNTIME_SITE_METHOD=wget
 ONNX_RUNTIME_SOURCE=spacemit-ort.rv64.$(ONNX_RUNTIME_VERSION).tar.gz
 
