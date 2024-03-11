@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "format": "gpt",
+  "partitions": [
+    {
+      "name": "bootinfo",
+      "offset": "0",
+      "size": "80B",
+      "image": "factory/bootinfo_sd.bin"
+    },
+    {
+      "name": "fsbl",
+      "offset": "256K",
+      "size": "256K",
+      "image": "factory/FSBL.bin"
+    },
+    {
+      "name": "env",
+      "offset": "512K",
+      "size": "128K"
+    },
+    {
+      "name": "opensbi",
+      "offset": "1M",
+      "size": "1M",
+      "image": "opensbi.itb"
+    },
+    {
+      "name": "uboot",
+      "offset": "2M",
+      "size": "2M",
+      "image": "u-boot.itb"
+    },
+    {
+      "name": "bootfs",
+      "type": "FAT32",
+      "offset": "4M",
+      "size": "-",
+      "image": ["factory/bootinfo_emmc.bin",
+                "factory/bootinfo_spinand.bin",
+                "factory/bootinfo_spinor.bin",
+                "factory/FSBL.bin",
+                "opensbi.itb",
+                "u-boot.itb",
+                "bootfs.img",
+                "rootfs.ext4",
+                "/partition_.+.json$/"]
+    }
+  ]
+}
