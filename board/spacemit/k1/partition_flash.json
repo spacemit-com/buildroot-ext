@@ -44,6 +44,7 @@
                 "u-boot.itb",
                 "bootfs.img",
                 "rootfs.ext4",
+                "env.bin",
                 "/partition_.+.json$/"]
     }
   ]
