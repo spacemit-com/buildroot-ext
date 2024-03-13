@@ -32,7 +32,7 @@ BOOTFS_IMG_FILE="$IMGS_DIR/bootfs.img"
 
 KERNEL_DTB_NAME="k1-x*.dtb"
 KERNEL_DTB_FILE="$IMGS_DIR/$KERNEL_DTB_NAME"
-KERNEL_IMAGE_FILE="$IMGS_DIR/uImage.itb"
+KERNEL_IMAGE_FILE="$IMGS_DIR/Image.itb"
 
 FAKE_ROOT_FILE=/tmp/$(whoami)-fakeroot
 
@@ -88,9 +88,9 @@ gen_sub_images() {
     cp -f ${IMGS_DIR}/fw_dynamic.itb ${IMGS_DIR}/opensbi.itb
 
     #Gen kernel Image dtb here
-    rm -f ${IMGS_DIR}/uImage.itb
+    rm -f ${IMGS_DIR}/Image.itb
     cp -f ${KERNEL_FIT_FILE} ${IMGS_DIR}/kernel_fdt.its
-    $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/kernel_fdt.its -r ${IMGS_DIR}/uImage.itb
+    $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/kernel_fdt.its -r ${IMGS_DIR}/Image.itb
     rm ${IMGS_DIR}/kernel_fdt.its
 
 }
@@ -150,7 +150,7 @@ pack_image_zip() {
 }
 
 
-#FSBL opensbi uboot uImage
+#include env and Image
 gen_sub_images
 
 #Gen bootfs

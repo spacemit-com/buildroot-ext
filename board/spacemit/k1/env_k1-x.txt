@@ -45,7 +45,7 @@ gatewayip=192.168.1.1
 preboot=
 knl_addr=0x40000000
 ramdisk_addr=0x50000000
-knl_name=uImage.itb
+knl_name=Image.itb
 ramdisk_name=initramfs-generic.img
 dtb_name=k1-x_evb.dtb
 dtb_addr=0x28000000
@@ -78,7 +78,7 @@ detect_dtb=echo "product_name: ${product_name}"; run dtb_env; echo "detect dtb_n
 # spinand_ubifs boot
 ubifs_list= mtd list; \
              ubifsls;
-ubifs_loadimg=  echo " ubifsload uImage.itb..."; \
+ubifs_loadimg=  echo " ubifsload Image.itb..."; \
                 ubifsload ${knl_addr} ${knl_name};
 
 ubifs_boot=echo "Trying to boot from UBIFS..."; \
