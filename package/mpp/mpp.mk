@@ -18,6 +18,7 @@ define MPP_INSTALL_STAGING_CMDS
 	cp -rdpf $(@D)/utils/include/* $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/al/include/* $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/buildroot-build/mpi/libspacemit_mpp.so* $(STAGING_DIR)/usr/lib/
+	cp -rdpf $(@D)/buildroot-build/spacemit_mpp.pc $(STAGING_DIR)/usr/lib/pkgconfig/
 endef
 
 $(eval $(cmake-package))
