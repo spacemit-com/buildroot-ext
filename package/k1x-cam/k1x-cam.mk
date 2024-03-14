@@ -18,12 +18,12 @@ K1X_CAM_CONF_OPTS = -DRUN_PLATFORM="RISCV" \
 #K1X_CAM_POST_RSYNC_HOOKS += K1X_CAM_POST_RSYNC
 
 define K1X_CAM_POST_BUILD
-    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libcpp.so $(TARGET_DIR)/usr/lib/libcpp.so
-    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libcppfw-2.0.so $(TARGET_DIR)/usr/lib/libcppfw-2.0.so
-    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libisp.so $(TARGET_DIR)/usr/lib/libisp.so
-    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libispeagle.so $(TARGET_DIR)/usr/lib/libispeagle.so
-    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libtuningtools.so $(TARGET_DIR)/usr/lib/libtuningtools.so
-    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libvi.so $(TARGET_DIR)/usr/lib/libvi.so
+    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libcpp.so $(STAGING_DIR)/usr/lib/libcpp.so
+    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libcppfw-2.0.so $(STAGING_DIR)/usr/lib/libcppfw-2.0.so
+    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libisp.so $(STAGING_DIR)/usr/lib/libisp.so
+    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libispeagle.so $(STAGING_DIR)/usr/lib/libispeagle.so
+    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libtuningtools.so $(STAGING_DIR)/usr/lib/libtuningtools.so
+    $(INSTALL) -D -m 0755 $(@D)/libs/lib64/libvi.so $(STAGING_DIR)/usr/lib/libvi.so
     $(INSTALL) -D -m 0644 $(@D)/sensors/libcam_sensors.so $(STAGING_DIR)/usr/lib/libcam_sensors.so
     $(INSTALL) -D -m 0644 $(@D)/demo/libsdkcam.so $(STAGING_DIR)/usr/lib/libsdkcam.so
     cp -rdpf $(@D)/demo/*.h $(STAGING_DIR)/usr/include/
