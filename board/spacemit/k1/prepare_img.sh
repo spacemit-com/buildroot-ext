@@ -12,7 +12,7 @@ FSBL_YML_FILE="$DEVICE_DIR/fsbl.yml"
 KERNEL_FIT_FILE="$DEVICE_DIR/kernel_fdt.its"
 PARTITIONS_FILE="$DEVICE_DIR/partition_universal.json"
 UENV_TXT_FILE="$DEVICE_DIR/env_k1-x.txt"
-UBOOT_LOGO_FILE="$DEVICE_DIR/k1-x.bmp"
+UBOOT_LOGO_FILE="$DEVICE_DIR/bianbu.bmp"
 
 #Give a chance to CI
 if [ -z "$BIANBU_LINUX_ARCHIVE" ]; then
