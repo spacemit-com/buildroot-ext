@@ -23,7 +23,7 @@
       "name": "opensbi",
       "offset": "1M",
       "size": "1M",
-      "image": "opensbi.itb"
+      "image": "fw_dynamic.itb"
     },
     {
       "name": "uboot",

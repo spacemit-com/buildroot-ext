@@ -84,9 +84,6 @@ gen_sub_images() {
     $IMGS_DIR/../host/bin/mkenvimage -s 0x4000 -o ${IMGS_DIR}/env.bin ${IMGS_DIR}/env_k1-x.txt
     rm ${IMGS_DIR}/env_k1-x.txt
 
-    #Rename to opensbi.itb for the partition file
-    cp -f ${IMGS_DIR}/fw_dynamic.itb ${IMGS_DIR}/opensbi.itb
-
     #Gen kernel Image dtb here
     rm -f ${IMGS_DIR}/Image.itb
     cp -f ${KERNEL_FIT_FILE} ${IMGS_DIR}/kernel_fdt.its
@@ -125,7 +122,7 @@ pack_image_zip() {
     #cp -f ${DEVICE_DIR}/partition_universal.json ${IMGS_DIR}/
     cd ${IMGS_DIR}
     zip ${TARGET_IMAGE_ZIP} \
-        opensbi.itb \
+        fw_dynamic.itb \
         u-boot.itb \
         env.bin \
         bootfs.img \
