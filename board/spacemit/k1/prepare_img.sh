@@ -8,8 +8,6 @@ IMGS_DIR=$1
 DEVICE_DIR=$(dirname $0)
 
 SRC_ROOTFS_FILE="$DEVICE_DIR/rootfs.ext4"
-FSBL_YML_FILE="$DEVICE_DIR/fsbl.yml"
-KERNEL_FIT_FILE="$DEVICE_DIR/kernel_fdt.its"
 PARTITIONS_FILE="$DEVICE_DIR/partition_universal.json"
 UENV_TXT_FILE="$DEVICE_DIR/env_k1-x.txt"
 UBOOT_LOGO_FILE="$DEVICE_DIR/bianbu.bmp"
@@ -83,12 +81,6 @@ gen_sub_images() {
     cp -f ${UENV_TXT_FILE} ${IMGS_DIR}/
     $IMGS_DIR/../host/bin/mkenvimage -s 0x4000 -o ${IMGS_DIR}/env.bin ${IMGS_DIR}/env_k1-x.txt
     rm ${IMGS_DIR}/env_k1-x.txt
-
-    #Gen kernel Image dtb here
-    rm -f ${IMGS_DIR}/Image.itb
-    cp -f ${KERNEL_FIT_FILE} ${IMGS_DIR}/kernel_fdt.its
-    $IMGS_DIR/../host/bin/mkimage -f ${IMGS_DIR}/kernel_fdt.its -r ${IMGS_DIR}/Image.itb
-    rm ${IMGS_DIR}/kernel_fdt.its
 
 }
 
