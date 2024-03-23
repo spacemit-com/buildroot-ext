@@ -1,4 +1,4 @@
-K1X_CAM_VERSION:=1.0.0
+K1X_CAM_VERSION:=0.0.11
 K1X_CAM_SITE = $(BR2_EXTERNAL_Bianbu_PATH)/../package-src/k1x-cam
 K1X_CAM_SITE_METHOD = local
 
