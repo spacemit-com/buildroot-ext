@@ -1,4 +1,4 @@
-K1X_JPU_VERSION:=1.0.0
+K1X_JPU_VERSION:=0.0.3
 K1X_JPU_SITE = $(BR2_EXTERNAL_Bianbu_PATH)/../package-src/k1x-jpu
 K1X_JPU_SITE_METHOD = local
 
