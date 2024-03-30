@@ -13,14 +13,14 @@
         {
             "name": "fsbl",
             "hidden": false,
-            "offset": "256K",
+            "offset": "128K",
             "size": "256K",
             "image": "factory/FSBL.bin"
         },
         {
             "name": "env",
-            "offset":"512K",
-            "size": "128K",
+            "offset":"384K",
+            "size": "64K",
             "image": "env.bin"
         },
         {

@@ -5,30 +5,30 @@
     {
       "name": "bootinfo",
       "offset": "0",
-      "size": "64K",
+      "size": "128K",
       "image": "factory/bootinfo_spinor.bin"
     },
     {
       "name": "fsbl",
-      "offset": "64K",
+      "offset": "128K",
       "size": "256K",
       "image": "factory/FSBL.bin"
     },
     {
       "name": "env",
-      "offset": "512K",
-      "size": "128K"
+      "offset": "384K",
+      "size": "64K"
     },
     {
       "name": "opensbi",
-      "offset": "640K",
-      "size": "384K",
+      "offset": "448K",
+      "size": "192K",
       "image": "fw_dynamic.itb"
     },
     {
       "name": "uboot",
-      "offset": "1M",
-      "size": "1M",
+      "offset": "640K",
+      "size": "-",
       "image": "u-boot.itb"
     }
   ]
