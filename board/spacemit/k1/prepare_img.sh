@@ -3,7 +3,7 @@
 ######################## Prepare sub-iamges and pack ####################
 #$0 is this file path
 #$1 is buildroot output images dir
-
+set -e
 IMGS_DIR=$1
 DEVICE_DIR=$(dirname $0)
 
@@ -21,8 +21,8 @@ fi
 
 TARGET_ROOTFS_FILE="$IMGS_DIR/rootfs.ext2"
 TARGET_BOOTFS_FILE="$IMGS_DIR/bootfs.img"
-#TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.gz")
-TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.uboot")
+TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.gz")
+#TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.uboot")
 
 BOOTFS_SIZE=$($IMGS_DIR/../host/bin/jq '.partitions[] | select(.name == "bootfs") | .size' "$PARTITIONS_FILE")
 BOOTFS_DIR="$IMGS_DIR/bootfs"
@@ -77,10 +77,7 @@ override_rootfs_img() {
 gen_sub_images() {
 
     #env.bin
-    rm -f ${IMGS_DIR}/env_k1-x.txt
-    cp -f ${UENV_TXT_FILE} ${IMGS_DIR}/
-    $IMGS_DIR/../host/bin/mkenvimage -s 0x4000 -o ${IMGS_DIR}/env.bin ${IMGS_DIR}/env_k1-x.txt
-    rm ${IMGS_DIR}/env_k1-x.txt
+    cp -f ${IMGS_DIR}/u-boot-env-default.bin ${IMGS_DIR}/env.bin
 
 }
 
