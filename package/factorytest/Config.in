@@ -1,0 +1,4 @@
+config BR2_PACKAGE_FACTORYTEST
+bool "factorytest"
+help
+  Product line test suit.

@@ -13,3 +13,4 @@ OPENSBI_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/opensbi
 MESA3D_OVERRIDE_SRCDIR = $(TOPDIR)/../package-src/mesa3d
 IMG_GPU_POWERVR_OVERRIDE_SRCDIR = $(TOPDIR)/../package-src/img-gpu-powervr
 GLMARK2_OVERRIDE_SRCDIR = $(TOPDIR)/../package-src/glmark2
+FACTORYTEST_OVERRIDE_SRCDIR = $(TOPDIR)/../package-src/factorytest
