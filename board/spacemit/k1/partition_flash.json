@@ -40,7 +40,7 @@
                 "factory/bootinfo_spinand.bin",
                 "factory/bootinfo_spinor.bin",
                 "factory/FSBL.bin",
-                "opensbi.itb",
+                "fw_dynamic.itb",
                 "u-boot.itb",
                 "bootfs.img",
                 "rootfs.ext4",
