@@ -263,7 +263,7 @@
 		};
 	};
 
-	es8326@19{
+	es8326: es8326@19{
 		compatible = "everest,es8326";
 		reg = <0x19>;
 		#sound-dai-cells = <0>;
@@ -877,9 +877,18 @@
 };
 
 &frontsensor {
+	af_2v8-supply = <&ldo_3>;
 	avdd_2v8-supply = <&ldo_2>;
 	dovdd_1v8-supply = <&ldo_7>;
 	dvdd_1v2-supply = <&ldo_6>;
+
+	clocks = <&ccu CLK_CAMM1>;
+	clock-names = "cam_mclk1";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_camera1>;
+
+	pwdn-gpios = <&gpio 114 0>;
+	reset-gpios = <&gpio 112 0>;
 
 	status = "disabled";
 };
@@ -957,12 +966,19 @@
 	temperature = <115000>;
 };
 
-&spacemit_i2s {
+&i2s0 {
         pinctrl-names = "default";
         pinctrl-0 = <&pinctrl_sspa0_0>;
         status = "okay";
 };
 
+&sound_hdmi {
+	status = "okay";
+};
+
 &sound_es8326 {
 	status = "okay";
+	simple-audio-card,codec {
+		sound-dai = <&es8326>;
+	};
 };
