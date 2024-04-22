@@ -237,7 +237,7 @@
 &i2c1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c1>;
-	status = "okay";
+	status = "disabled";
 };
 
 &i2c2 {
@@ -252,7 +252,7 @@
 		#size-cells = <1>;
 
 		power-domains = <&power K1X_PMU_DUMMY_PWR_DOMAIN>;
-		status = "disabled";
+		status = "okay";
 
 		mac_address0: mac_address0@0 {
 			reg = <0x0 6>;
@@ -291,7 +291,7 @@
 &i2c6 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c6_2>;
-	status = "disabled";
+	status = "okay";
 
 	gt9xx@5d {
 		compatible = "goodix,gt9xx";
@@ -308,7 +308,7 @@
 		touchscreen-max-p = <512>;
 
 		goodix,int-sync = <1>;
-		status = "disabled";
+		status = "okay";
 	};
 
 };
