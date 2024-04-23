@@ -1,0 +1,29 @@
+#!/bin/sh
+
+still()
+{
+	cam-test /opt/factorytest/res/camtest_sensor0_mode0.json > /dev/null
+}
+
+stop()
+{
+	echo "do nothing"
+}
+
+case "$1" in
+	start)
+		still
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		still
+		;;
+	*)
+		echo "Usage $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit 0
