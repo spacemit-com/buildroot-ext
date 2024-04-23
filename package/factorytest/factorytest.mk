@@ -3,6 +3,7 @@ FACTORYTEST_SITE = $(BR2_EXTERNAL_Bianbu_PATH)/../package-src/factorytest
 FACTORYTEST_SITE = local
 
 define FACTORYTEST_INSTALL_TARGET_CMDS
+	rm -rf $(TARGET_DIR)/opt/factorytest
 	cp -r $(@D) $(TARGET_DIR)/opt/factorytest
 endef
 
