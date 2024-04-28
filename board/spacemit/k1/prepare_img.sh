@@ -17,8 +17,10 @@ solution_name=$(echo "$IMGS_DIR" | awk -F'/' '{print $(NF-1)}')
 #Give a chance to CI
 if [ -z "$BIANBU_LINUX_ARCHIVE" ]; then
     TARGET_IMAGE_ZIP="$IMGS_DIR/bianbu-linux-${solution_name}.zip"
+    SDCARD_IMAGE="bianbu-linux-${solution_name}-sdcard.img"
 else
     TARGET_IMAGE_ZIP="$BIANBU_LINUX_ARCHIVE.zip"
+    SDCARD_IMAGE="$BIANBU_LINUX_ARCHIVE-sdcard.img"
 fi
 
 TARGET_ROOTFS_FILE="$IMGS_DIR/rootfs.ext2"
@@ -85,18 +87,17 @@ gen_sub_images() {
 
 update_genimage_cfg() {
     #Update sd-geimage.cfg
-    $PWD/../scripts/gen_imgcfg.py  ${PARTITIONS_FILE}
-    mv $PWD/./genimage.cfg ${IMGS_DIR}/genimage.cfg
+    $PWD/../scripts/gen_imgcfg.py -i ${PARTITIONS_FILE} -n ${SDCARD_IMAGE} -o ${IMGS_DIR}/genimage.cfg
 }
 
 gen_sdcard_img() {
-    echo "Generating sdcard.img..................................."
+    echo "Generating sdcard image..................................."
     $PWD/support/scripts/genimage.sh -c ${IMGS_DIR}/genimage.cfg
     if [ $? -ne 0 ]; then
-        echo "Generating bootfs failed. Please check for errors..............."
+        echo "Generating failed. Please check for errors..............."
         exit 1
     fi
-    echo "sdcard.img successfully generated at ${IMGS_DIR}/sdcard.img"
+    echo "Successfully generated at ${IMGS_DIR}/${SDCARD_IMAGE}"
 }
 
 pack_image_zip() {
