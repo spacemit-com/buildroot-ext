@@ -49,4 +49,5 @@ actions: # 刷机操作的定义
   - multi_flash:
       timeout:
         minutes: 10
+      retry: 3
       relate_partition: ['partition_{size0}.json', 'partition_{size1}.json']
