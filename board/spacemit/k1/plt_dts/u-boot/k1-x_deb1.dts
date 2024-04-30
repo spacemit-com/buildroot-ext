@@ -268,11 +268,11 @@
 &hdmi {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_hdmi_0>;
-	status = "disabled";
+	status = "okay";
 };
 
 &mipi_dsi {
-	status = "okay";
+	status = "disabled";
 };
 
 &panel {
@@ -280,5 +280,5 @@
 	dcn-gpios = <&gpio 83 0>;
 	bl-gpios = <&gpio 44 0>;
 	reset-gpios = <&gpio 81 0>;
-	status = "okay";
+	status = "disabled";
 };
