@@ -4,6 +4,7 @@ PRODUC_ID="0x0008"
 SERNUM_STR="20211102"
 MANUAF_STR="Spacemit"
 PRODUC_STR="K1 ADB"
+DEFAULT_UDC="c0900100.udc"
 USBDEVICE_SERNUM=`sed 's/://g' /sys/class/net/eth0/address`
 [ $USBDEVICE_SERNUM ] && SERNUM_STR=$USBDEVICE_SERNUM
 
@@ -50,7 +51,7 @@ setup()
 }
 udc()
 {
-    echo `ls /sys/class/udc` > /sys/kernel/config/usb_gadget/g1/UDC
+    echo `ls /sys/class/udc | grep ${DEFAULT_UDC}` > /sys/kernel/config/usb_gadget/g1/UDC
 }
 noudc()
 {
