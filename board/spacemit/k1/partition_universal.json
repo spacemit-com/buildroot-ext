@@ -37,13 +37,15 @@
             "name": "bootfs",
             "offset": "4M",
             "size": "256M",
-            "image": "bootfs.img"
+            "image": "bootfs.img",
+            "compress": "gzip-5"
         },
         {
             "name": "rootfs",
             "offset": "260M",
             "size": "-",
-            "image": "rootfs.ext4"
+            "image": "rootfs.ext4",
+            "compress": "gzip-5"
         }
     ]
 }
