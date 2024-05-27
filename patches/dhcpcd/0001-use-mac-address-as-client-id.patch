@@ -1,0 +1,31 @@
+From ffa118c4b4d9b91ee5673bde1cf44a9704ae5a0f Mon Sep 17 00:00:00 2001
+From: maguoqun <guoqun.ma@spacemit.com>
+Date: Mon, 27 May 2024 17:56:32 +0800
+Subject: [PATCH] use mac address as client id
+
+---
+ src/dhcpcd.conf | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/dhcpcd.conf b/src/dhcpcd.conf
+index 916e82d..e141299 100644
+--- a/src/dhcpcd.conf
++++ b/src/dhcpcd.conf
+@@ -8,12 +8,12 @@
+ #hostname
+ 
+ # Use the hardware address of the interface for the Client ID.
+-#clientid
++clientid
+ # or
+ # Use the same DUID + IAID as set in DHCPv6 for DHCPv4 ClientID as per RFC4361.
+ # Some non-RFC compliant DHCP servers do not reply with this set.
+ # In this case, comment out duid and enable clientid above.
+-duid
++#duid
+ 
+ # Persist interface configuration when dhcpcd exits.
+ persistent
+-- 
+2.34.1
+
