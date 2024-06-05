@@ -17,7 +17,8 @@
     {
       "name": "env",
       "offset": "384K",
-      "size": "64K"
+      "size": "64K",
+      "image": "env.bin"
     },
     {
       "name": "opensbi",
