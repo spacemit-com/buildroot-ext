@@ -67,8 +67,6 @@ mount -n -o move /sys /rootfs/sys
 mount -n -o move /run /rootfs/run
 mount -n -o move /tmp /rootfs/tmp
 mount -n -o move /dev /rootfs/dev
-mount -n -o move /dev/shm /rootfs/dev/shm
-mount -n -o move /dev/pts /rootfs/dev/pts
 mount -t debugfs debugfs /rootfs/sys/kernel/debug
 
 exec run-init /rootfs "${init}" "$@" <"/rootfs/dev/console" >"/rootfs/dev/console" 2>&1
