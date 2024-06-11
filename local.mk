@@ -6,8 +6,8 @@
 #XXX_OVERRIDE_SRCDIR = /path/to/xxx/dir
 #XXX_OVERRIDE_SRCDIR_RSYNC_EXCLUSIONS = --exclude unittests --exclude test.txt  --include .git
 
-
-LINUX_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/linux-6.1
+# please config linux dir in menuconfig
+# LINUX_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/linux-6.1
 UBOOT_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/uboot-2022.10
 OPENSBI_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/opensbi
 MESA3D_OVERRIDE_SRCDIR = $(TOPDIR)/../package-src/mesa3d
