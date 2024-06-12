@@ -1,4 +1,4 @@
-ONNX_RUNTIME_VERSION:=1.1.1
+ONNX_RUNTIME_VERSION:=1.1.4
 ONNX_RUNTIME_SITE=http://archive.spacemit.com/spacemit-ai/onnxruntime
 ONNX_RUNTIME_SITE_METHOD=wget
 ONNX_RUNTIME_SOURCE=spacemit-ort.riscv64.$(ONNX_RUNTIME_VERSION).tar.gz
