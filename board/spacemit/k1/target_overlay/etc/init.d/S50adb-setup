@@ -5,8 +5,11 @@ SERNUM_STR="20211102"
 MANUAF_STR="Spacemit"
 PRODUC_STR="K1 ADB"
 DEFAULT_UDC="c0900100.udc"
-USBDEVICE_SERNUM=`sed 's/://g' /sys/class/net/eth0/address`
-[ $USBDEVICE_SERNUM ] && SERNUM_STR=$USBDEVICE_SERNUM
+
+[ -e  /sys/class/net/eth0 ] && ADB_MAC_SN=$(sed 's/://g' /sys/class/net/eth0/address)
+[ "$ADB_MAC_SN" ] && SERNUM_STR=$ADB_MAC_SN
+[ "$ADB_BOARD_SN" ] || ADB_BOARD_SN=$(cat /proc/cmdline | tr ' ' '\n' | grep '^sn=' | cut -d'=' -f2)
+[ "$ADB_BOARD_SN" ] && SERNUM_STR=$ADB_BOARD_SN
 
 config_gadget()
 {
@@ -63,8 +66,6 @@ clean()
     rm -f /sys/kernel/config/usb_gadget/g1/configs/c.1/ffs.adb
     rmdir /sys/kernel/config/usb_gadget/g1/functions/ffs.adb
     umount /dev/usb-ffs/adb/
-    umount /dev/pts
-    rmdir /dev/pts
     rmdir /dev/usb-ffs/adb
     rmdir /dev/usb-ffs
 }
