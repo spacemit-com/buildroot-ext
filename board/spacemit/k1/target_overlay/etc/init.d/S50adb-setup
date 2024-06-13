@@ -8,7 +8,7 @@ DEFAULT_UDC="c0900100.udc"
 
 [ -e  /sys/class/net/eth0 ] && ADB_MAC_SN=$(sed 's/://g' /sys/class/net/eth0/address)
 [ "$ADB_MAC_SN" ] && SERNUM_STR=$ADB_MAC_SN
-[ "$ADB_BOARD_SN" ] || ADB_BOARD_SN=$(cat /proc/cmdline | tr ' ' '\n' | grep '^sn=' | cut -d'=' -f2)
+[ "$ADB_BOARD_SN" ] || ADB_BOARD_SN=$(cat /proc/device-tree/serial-number)
 [ "$ADB_BOARD_SN" ] && SERNUM_STR=$ADB_BOARD_SN
 
 config_gadget()
