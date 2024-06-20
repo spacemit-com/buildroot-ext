@@ -11,7 +11,7 @@
 
 / {
 	model = "spacemit k1-x MINI-PC board";
-	modules_usrload = "8852bs";
+	modules_usrload = "8852be";
 
 	cpus: cpus {
 		#address-cells = <1>;
