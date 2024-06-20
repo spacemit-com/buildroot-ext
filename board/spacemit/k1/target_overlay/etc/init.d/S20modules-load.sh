@@ -4,7 +4,8 @@ setup()
 {
     modules_usrload=$(cat /sys/firmware/devicetree/base/modules_usrload)
     if [ -z "$modules_usrload" ]; then
-        modules_usrload="8852bs"
+        echo "no module defined"
+        return
     fi
 
     echo "$modules_usrload" | tr ',' '\n' | while IFS= read -r i; do
