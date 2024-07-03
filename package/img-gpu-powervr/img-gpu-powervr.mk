@@ -34,6 +34,7 @@ define IMG_GPU_POWERVR_INSTALL_TARGET_CMDS
 	cp -rdpf $(@D)/target/usr/local/share/pvr/shaders/* $(TARGET_DIR)/usr/local/share/pvr/shaders/
 	cp -rdpf $(@D)/target/lib/* $(TARGET_DIR)/lib/
 	cp -rdpf $(@D)/target/usr/* $(TARGET_DIR)/usr/
+	cp -rdpf $(@D)/target/etc/powervr.ini $(TARGET_DIR)/etc/
 endef
 
 $(eval $(generic-package))
