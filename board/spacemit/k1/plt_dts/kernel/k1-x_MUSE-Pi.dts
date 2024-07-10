@@ -4,6 +4,7 @@
 /dts-v1/;
 
 #include "spacemit/k1-x.dtsi"
+#include "spacemit/k1-x-efuse.dtsi"
 #include "spacemit/k1-x_pinctrl.dtsi"
 #include "spacemit/lcd/lcd_gx09inx101_mipi.dtsi"
 #include "spacemit/k1-x-hdmi.dtsi"
@@ -1013,20 +1014,35 @@
 };
 
 &cpu_0 {
-	clst0-supply = <&dcdc_1>;
-	vin-supply-names = "clst0";
+	clst-supply = <&dcdc_1>;
 };
 
-&clst0_core_opp_table {
-	opp1600000000 {
-		opp-microvolt = <1050000>;
-	};
+&cpu_1 {
+	clst-supply = <&dcdc_1>;
 };
 
-&clst1_core_opp_table {
-	opp1600000000 {
-		opp-microvolt = <1050000>;
-	};
+&cpu_2 {
+	clst-supply = <&dcdc_1>;
+};
+
+&cpu_3 {
+	clst-supply = <&dcdc_1>;
+};
+
+&cpu_4 {
+	clst-supply = <&dcdc_1>;
+};
+
+&cpu_5 {
+	clst-supply = <&dcdc_1>;
+};
+
+&cpu_6 {
+	clst-supply = <&dcdc_1>;
+};
+
+&cpu_7 {
+	clst-supply = <&dcdc_1>;
 };
 
 &rcpu {
