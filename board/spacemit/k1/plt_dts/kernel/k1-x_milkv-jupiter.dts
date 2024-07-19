@@ -1098,14 +1098,6 @@
 	};
 };
 
-&cls0_trip2 {
-	temperature = <115000>;
-};
-
-&cls1_trip2 {
-	temperature = <115000>;
-};
-
 &i2s0 {
         pinctrl-names = "default";
         pinctrl-0 = <&pinctrl_sspa0_0>;
