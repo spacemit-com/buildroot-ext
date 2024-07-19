@@ -12,7 +12,6 @@
         },
         {
             "name": "fsbl",
-            "hidden": false,
             "offset": "128K",
             "size": "256K",
             "image": "factory/FSBL.bin"
