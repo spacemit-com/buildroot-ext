@@ -10,6 +10,7 @@ DEFAULT_UDC="c0900100.udc"
 [ "$ADB_MAC_SN" ] && SERNUM_STR=$ADB_MAC_SN
 [ "$ADB_BOARD_SN" ] || ADB_BOARD_SN=$(cat /proc/device-tree/serial-number)
 [ "$ADB_BOARD_SN" ] && SERNUM_STR=$ADB_BOARD_SN
+[ "$ADB_UDC" ] && DEFAULT_UDC=$ADB_UDC
 
 config_gadget()
 {
