@@ -89,6 +89,7 @@ case "$1" in
         clean_gadget
         config_gadget
         setup
+	sleep 1
         udc
         ;;
     *)
