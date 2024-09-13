@@ -1,0 +1,7 @@
+config BR2_PACKAGE_USB_GADGET
+	bool "usb-gadget"
+	default n
+	help
+	  usb gadget, include uvc,rndis,mass storage,uas,adb functions
+
+
