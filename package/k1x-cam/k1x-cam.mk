@@ -26,6 +26,7 @@ define K1X_CAM_POST_BUILD
 	$(INSTALL) -D -m 0755 $(@D)/libs/lib64/libispeagle.so $(STAGING_DIR)/usr/lib/libispeagle.so
 	$(INSTALL) -D -m 0755 $(@D)/libs/lib64/libtuningtools.so $(STAGING_DIR)/usr/lib/libtuningtools.so
 	$(INSTALL) -D -m 0755 $(@D)/libs/lib64/libvi.so $(STAGING_DIR)/usr/lib/libvi.so
+	$(INSTALL) -D -m 0755 $(@D)/libs/lib64/libccic.so $(STAGING_DIR)/usr/lib/libccic.so
 	$(INSTALL) -D -m 0644 $(@D)/sensors/libcam_sensors.so $(STAGING_DIR)/usr/lib/libcam_sensors.so
 	cp -rdpf $(@D)/demo/*.h $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/libs/include/*.h $(STAGING_DIR)/usr/include/
@@ -33,6 +34,7 @@ define K1X_CAM_POST_BUILD
 	cp -rdpf $(@D)/demo/include/*.h $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/demo/include/dmabufheap/*.h $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/demo/utils/*.h $(STAGING_DIR)/usr/include/
+	cp -rdpf $(@D)/demo/gst_api/*.h $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/demo/extern/*.h $(STAGING_DIR)/usr/include/
 endef
 K1X_CAM_POST_BUILD_HOOKS += K1X_CAM_POST_BUILD
