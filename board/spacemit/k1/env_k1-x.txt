@@ -2,6 +2,5 @@
 console=ttyS0,115200
 init=/init
 bootdelay=0
-loglevel=8
 
 
