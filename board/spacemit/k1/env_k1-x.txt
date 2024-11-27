@@ -2,5 +2,5 @@
 console=ttyS0,115200
 init=/init
 bootdelay=0
-
+knl_name=Image.gz
 
