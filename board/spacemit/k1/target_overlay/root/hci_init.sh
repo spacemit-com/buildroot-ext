@@ -17,7 +17,7 @@ start_hci_attach()
 
 	reset_bluetooth_power
 
-	"$bt_hciattach" -n -s 115200 ttyS1 rtk_h5 >/dev/null 2>&1 &
+	"$bt_hciattach" -n -s 115200 ttyS2 rtk_h5 >/dev/null 2>&1 &
 
 	wait_hci0_count=0
 	while true
