@@ -31,6 +31,7 @@ define K1X_CAM_POST_BUILD
 	cp -rdpf $(@D)/demo/*.h $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/libs/include/*.h $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/sensors/include/*.h $(STAGING_DIR)/usr/include/
+	cp -rdpf $(@D)/sensors/*.h $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/demo/include/*.h $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/demo/include/dmabufheap/*.h $(STAGING_DIR)/usr/include/
 	cp -rdpf $(@D)/demo/utils/*.h $(STAGING_DIR)/usr/include/
