@@ -26,8 +26,34 @@ set_lan_led() {
         done
 }
 
-sleep 10
-model=`cat /sys/firmware/devicetree/base/model | grep -a MUSE-Pi-Pro`
-if [ -n "$model" ]; then
-        set_lan_led || true
-fi
+setup()
+{
+        sleep 10
+        model=`cat /sys/firmware/devicetree/base/model | grep -a MUSE-Pi-Pro`
+        if [ -n "$model" ]; then
+                set_lan_led || true
+        fi
+}
+
+clean()
+{
+        echo "lan led nothing to do for clean"
+}
+
+OPT=$1
+case "$1" in
+    start)
+        setup
+        ;;
+    stop)
+        clean
+        ;;
+    restart|reload)
+        clean
+        setup
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|reload}"
+        exit 1
+esac
+exit $?

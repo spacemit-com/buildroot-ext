@@ -8,10 +8,13 @@ define DRM_TEST_BUILD_CMDS
 endef
 
 define DRM_TEST_INSTALL_TARGET_CMDS
+	$(INSTALL) -D -m 0755 $(@D)/res/1920_1080_nv12.yuv $(TARGET_DIR)/usr/share/drm-test/1920_1080_nv12.yuv
 	$(INSTALL) -D -m 0755 $(@D)/modeset-single-buffer $(TARGET_DIR)/usr/bin/
 	$(INSTALL) -D -m 0755 $(@D)/modeset-double-buffer $(TARGET_DIR)/usr/bin/
 	$(INSTALL) -D -m 0755 $(@D)/modeset-vsync $(TARGET_DIR)/usr/bin/
 	$(INSTALL) -D -m 0755 $(@D)/modeset-atomic $(TARGET_DIR)/usr/bin/
+	$(INSTALL) -D -m 0755 $(@D)/modeset-dmabuf $(TARGET_DIR)/usr/bin/
+
 
 endef
 
