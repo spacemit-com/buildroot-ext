@@ -3,6 +3,10 @@
 mount -t proc proc /proc
 ROOT=
 NFSROOT=
+UBI_MTD=
+UBI_DEV=
+UBI_VOL=
+ROOTFSTYPE=
 export init=/sbin/init
 mount -t sysfs sysfs /sys
 mount -t devtmpfs -o nosuid,mode=0755 devtmpfs /dev
@@ -16,8 +20,22 @@ for x in $(cat /proc/cmdline); do
 			ROOT=${x#root=UUID=}
 			ROOT=$(blkid | grep "$ROOT" | awk -F ':' '{print $1}')
 			;;
+		root=ubi*)
+			# Parse parameters like root=ubi0:rootfs
+			UBI_ROOT=${x#root=}
+			UBI_DEV=$(echo $UBI_ROOT | cut -d ':' -f 1)
+			UBI_VOL=$(echo $UBI_ROOT | cut -d ':' -f 2)
+			UBI_DEV=${UBI_DEV#ubi}
+			ROOT="ubi"
+			;;
 		root=*)
 			ROOT=${x#root=}
+			;;
+		rootfstype=*)
+			ROOTFSTYPE=${x#rootfstype=}
+			;;
+		ubi.mtd=*)
+			UBI_MTD=${x#ubi.mtd=}
 			;;
 		nfsroot=*)
 			NFSROOT=${x#nfsroot=}
@@ -42,6 +60,26 @@ mkdir /rootfs
 if [ $ROOT == "/dev/nfs" ] && [ "x${NFSROOT}" != "x" ];then
 	/sbin/ifup -a
 	mount -t nfs -o nolock $NFSROOT /rootfs
+elif [ $ROOT == "ubi" ] && [ "x${UBI_MTD}" != "x" ] && [ "x${UBI_DEV}" != "x" ] && [ "x${UBI_VOL}" != "x" ];then
+	echo "Mounting UBI/UBIFS filesystem"
+	# Attach UBI device if not already attached
+	if [ ! -e /dev/ubi${UBI_DEV} ]; then
+		echo "Attaching UBI device: mtd${UBI_MTD} -> ubi${UBI_DEV}"
+		ubiattach -m ${UBI_MTD} -d ${UBI_DEV}
+		sleep 1
+	fi
+
+	# Mount UBIFS
+	echo "Mounting UBIFS volume: ubi${UBI_DEV}:${UBI_VOL} -> /rootfs"
+	mount -t ubifs ubi${UBI_DEV}:${UBI_VOL} /rootfs
+
+	# Create basic device nodes if needed
+	if [ ! -e /rootfs/dev/console ]; then
+		/bin/mknod /rootfs/dev/console c 5 1
+	fi
+	if [ ! -e /rootfs/dev/null ]; then
+		/bin/mknod /rootfs/dev/null c 1 3
+	fi
 else
 	cnt=0
 	while [ $cnt -lt 100 ]
