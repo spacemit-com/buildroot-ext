@@ -96,8 +96,8 @@
 
 		linux,cma {
 			compatible = "shared-dma-pool";
-			/* alloc memory from 0x40000000~0x80000000 */
-			alloc-ranges = <0 0x40000000 0 0x40000000>;
+			/* alloc memory from 0x40000000~0x70000000 */
+			alloc-ranges = <0 0x40000000 0 0x30000000>;
 			/* size of cma buffer is 384MByte */
 			size = <0 0x18000000>;
 			/* start address is 1Mbyte aligned */
@@ -116,7 +116,7 @@
 	};
 
 	chosen {
-		bootargs = "earlycon=sbi console=ttyS0,115200n8 debug loglevel=8 swiotlb=65536 rdinit=/init";
+		bootargs = "earlycon=sbi console=ttyS0,115200n8 loglevel=4 swiotlb=65536 rdinit=/init";
 		stdout-path = "serial0:115200n8";
 	};
 
@@ -150,8 +150,11 @@
 
 		wlan_pwrseq: wlan-pwrseq {
 			compatible = "spacemit,wlan-pwrseq";
-			regon-gpios     = <&gpio 116 0>;
-			hostwake-gpios  = <&gpio 66 0>;
+			regon-gpios = <&gpio 116 0>;
+			interrupt-parent = <&pinctrl>;
+			interrupts = <268>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_wlan_wakeup>;
 		};
 
 		bt_pwrseq: bt-pwrseq {
@@ -170,6 +173,14 @@
 			default-state = "on";
 			status = "okay";
 		};
+	};
+
+	fan: pwm-fan {
+		compatible = "pwm-fan";
+		pwms = <&rpwm2 10000>;
+		#cooling-cells = <2>;
+		cooling-levels = <0 64 128 192 255>;
+		status = "okay";
 	};
 };
 
@@ -236,13 +247,6 @@
 	pinctrl-0 = <&pinctrl_i2c0>;
 	spacemit,i2c-fast-mode;
 	status = "okay";
-};
-
-&i2c1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_i2c1>;
-	spacemit,i2c-fast-mode;
-	status = "disabled";
 };
 
 &i2c2 {
@@ -379,7 +383,6 @@
 				regulator-max-microvolt = <3300000>;
 				regulator-ramp-delay = <5000>;
 				regulator-always-on;
-
 				regulator-state-mem {
 					regulator-off-in-suspend;
 					regulator-suspend-microvolt = <3300000>;
@@ -408,8 +411,6 @@
 				regulator-min-microvolt = <500000>;
 				regulator-max-microvolt = <3400000>;
 				regulator-boot-on;
-
-				/* set the min voltage means will disable this vol in suspend for ldo */
 				regulator-state-mem {
 					regulator-off-in-suspend;
 					regulator-suspend-microvolt = <500000>;
@@ -420,7 +421,6 @@
 				regulator-name = "ldo2";
 				regulator-min-microvolt = <500000>;
 				regulator-max-microvolt = <3400000>;
-
 				regulator-state-mem {
 					regulator-off-in-suspend;
 					regulator-suspend-microvolt = <500000>;
@@ -431,7 +431,6 @@
 				regulator-name = "ldo3";
 				regulator-min-microvolt = <500000>;
 				regulator-max-microvolt = <3400000>;
-
 				regulator-state-mem {
 					regulator-off-in-suspend;
 					regulator-suspend-microvolt = <500000>;
@@ -442,7 +441,6 @@
 				regulator-name = "ldo4";
 				regulator-min-microvolt = <500000>;
 				regulator-max-microvolt = <3400000>;
-
 				regulator-state-mem {
 					regulator-off-in-suspend;
 					regulator-suspend-microvolt = <500000>;
@@ -455,7 +453,6 @@
 				regulator-min-microvolt = <500000>;
 				regulator-max-microvolt = <3400000>;
 				regulator-boot-on;
-
 				regulator-state-mem {
 					regulator-off-in-suspend;
 					regulator-suspend-microvolt = <500000>;
@@ -466,7 +463,6 @@
 				regulator-name = "ldo6";
 				regulator-min-microvolt = <500000>;
 				regulator-max-microvolt = <3400000>;
-
 				regulator-state-mem {
 					regulator-off-in-suspend;
 					regulator-suspend-microvolt = <500000>;
@@ -477,7 +473,6 @@
 				regulator-name = "ldo7";
 				regulator-min-microvolt = <500000>;
 				regulator-max-microvolt = <3400000>;
-
 				regulator-state-mem {
 					regulator-off-in-suspend;
 					regulator-suspend-microvolt = <500000>;
@@ -537,6 +532,10 @@
 		ext_rtc: rtc {
 			compatible = "pmic,rtc,spm8821";
 		};
+
+		ext_adc: adc {
+			compatible = "pmic,adc,spm8821";
+		};
 	};
 };
 
@@ -569,6 +568,13 @@
 		&range GPIO_124 1 (MUX_MODE0 | EDGE_NONE | PULL_UP   | PAD_1V8_DS2)
 		&range GPIO_125 3 (MUX_MODE0 | EDGE_NONE | PULL_DOWN | PAD_1V8_DS2)
 	>;
+
+	pinctrl_rcpu: pinctrl_rcpu_grp {
+		pinctrl-single,pins = <
+			K1X_PADCONF(GPIO_47, MUX_MODE1, (EDGE_NONE | PULL_UP | PAD_3V_DS4))	/* r_uart0_tx */
+			K1X_PADCONF(GPIO_48, MUX_MODE1, (EDGE_NONE | PULL_UP | PAD_3V_DS4))	/* r_uart0_rx */
+		>;
+	};
 
 	pinctrl_gmac0: gmac0_grp {
 		pinctrl-single,pins =<
@@ -609,6 +615,12 @@
 			K1X_PADCONF(GPIO_42,    MUX_MODE1, (EDGE_NONE | PULL_DIS | PAD_1V8_DS0))   /* gmac1_mdio */
 			K1X_PADCONF(GPIO_43,    MUX_MODE1, (EDGE_NONE | PULL_DIS | PAD_1V8_DS2))   /* gmac1_int_n */
 			K1X_PADCONF(GPIO_46,    MUX_MODE1, (EDGE_NONE | PULL_DIS | PAD_1V8_DS2))   /* gmac1_clk_ref */
+		>;
+	};
+
+	pinctrl_wlan_wakeup: wlan_wakeup_grp {
+		pinctrl-single,pins =<
+			K1X_PADCONF(GPIO_66, MUX_MODE0, (EDGE_FALL | PULL_DOWN | PAD_3V_DS2))   /* wifi edge detect */
 		>;
 	};
 };
@@ -664,7 +676,7 @@
 	spacemit,apbc_assar_reg = <0xD4015054>;
 	spacemit,rx_dline_reg = <0x0>;
 	spacemit,tx_dline_reg = <0x0>;
-	spacemit,tx_delaycode = <0x7f>;
+	spacemit,tx_delaycode = <0x5f>;
 	spacemit,rx_tuning_limit = <50>;
 	spacemit,sdh-freq = <204800000>;
 	status = "okay";
@@ -695,6 +707,7 @@
 			SDHCI_QUIRK2_BROKEN_PHY_MODULE
 			)>;
 	spacemit,rx_dline_reg = <0x0>;
+	spacemit,tx_delaycode = <0x8f 0x5f>;
 	spacemit,rx_tuning_limit = <50>;
 	spacemit,sdh-freq = <375000000>;
 	status = "okay";
@@ -805,19 +818,49 @@
 };
 
 &udc {
-	/*spacemit,udc-mode = <MV_USB_MODE_OTG>;
-	spacemit,extern-attr = <MV_USB_HAS_VBUS_IDPIN_DETECTION>;*/
+	/*spacemit,udc-mode = <MV_USB_MODE_OTG>;*/
 	spacemit,udc-mode = <MV_USB_MODE_UDC>;
 	status = "okay";
+};
+
+&ehci {
+	spacemit,reset-on-resume;
+	spacemit,udc-mode = <MV_USB_MODE_OTG>;
+	status = "disabled";
+};
+
+&otg {
+	usb-role-switch;
+	role-switch-user-control;
+	spacemit,reset-on-resume;
+	role-switch-default-mode = "peripheral";
+	vbus-gpios = <&gpio 123 0>;
+	status = "disabled";
 };
 
 &usbphy1 {
 	status = "okay";
 };
 
+&udc1 {
+	/*spacemit,udc-mode = <MV_USB_MODE_UDC>;*/
+	spacemit,udc-mode = <MV_USB_MODE_OTG>;
+	status = "disabled";
+};
+
 &ehci1 {
+	/*spacemit,udc-mode = <MV_USB_MODE_OTG>;*/
 	spacemit,reset-on-resume;
 	status = "okay";
+};
+
+&otg1 {
+	usb-role-switch;
+	role-switch-user-control;
+	spacemit,reset-on-resume;
+	role-switch-default-mode = "host";
+	vbus-gpios = <&gpio 123 0>;
+	status = "disabled";
 };
 
 &usb2phy {
@@ -833,6 +876,7 @@
 		&gpio 123 0	/* usb3 hub en */
 		&gpio 124 0>;	/* usb3 hub rst*/
 	vbus-gpios = <&gpio 97 0>;	/* gpio_97 for usb3 hub output vbus */
+	vbus_delay_ms = <200>;
 	status = "okay";
 };
 
@@ -954,6 +998,7 @@
 	status = "disabled";
 };
 &csiphy2 {
+	spacemit,bifmode-enable;
 
 	status = "okay";
 };
@@ -986,10 +1031,84 @@
 };
 
 &rcpu {
-	mboxes = <&mailbox 0>, <&mailbox 1>;
-	mbox-names = "vq0", "vq1";
-	memory-region = <&rcpu_mem_0>, <&vdev0vring0>, <&vdev0vring1>, <&vdev0buffer>, <&rsc_table>, <&rcpu_mem_snapshots>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_rcpu>;
 	status = "okay";
+};
+
+&thermal {
+	sensor_range = <0x1 0x4>;
+};
+
+&thermal_zones {
+	top_thermal {
+		polling-delay = <0>;
+		polling-delay-passive = <0>;
+		thermal-sensors = <&thermal 1>;
+
+		trips {
+			top_trip0: top-trip0 {
+				temperature = <40000>;
+				hysteresis = <5000>;
+				type = "passive";
+			};
+
+			top_trip1: top-trip1 {
+				temperature = <55000>;
+				hysteresis = <5000>;
+				type = "passive";
+			};
+
+			top_trip2: top-trip2 {
+				temperature = <70000>;
+				hysteresis = <5000>;
+				type = "passive";
+			};
+
+			top_trip3: top-trip3 {
+				temperature = <85000>;
+				hysteresis = <5000>;
+				type = "passive";
+			};
+		};
+
+		cooling-maps {
+			map0 {
+				trip = <&top_trip0>;
+				cooling-device = <&fan 0 1>;
+			};
+
+			map1 {
+				trip = <&top_trip1>;
+				cooling-device = <&fan 1 2>;
+			};
+
+			map2 {
+				trip = <&top_trip2>;
+				cooling-device = <&fan 2 3>;
+			};
+
+			map3 {
+				trip = <&top_trip3>;
+				cooling-device = <&fan 3 4>;
+			};
+		};
+	};
+
+	gpu_thermal {
+		polling-delay = <0>;
+		polling-delay-passive = <0>;
+		thermal-sensors = <&thermal 2>;
+
+		/* Just a placeholder */
+		trips {
+			gpu_trip0: gpu-trip0 {
+				temperature = <40000>;
+				hysteresis = <5000>;
+				type = "passive";
+			};
+		};
+	};
 };
 
 &i2s0 {
@@ -998,8 +1117,15 @@
         status = "okay";
 };
 
+&hdmiaudio {
+	status = "okay";
+};
+
 &sound_hdmi {
 	status = "okay";
+	simple-audio-card,cpu {
+		sound-dai = <&hdmiaudio>;
+	};
 };
 
 &sound_codec {
@@ -1009,4 +1135,10 @@
 	simple-audio-card,codec {
 		sound-dai = <&es8326>;
 	};
+};
+
+&rpwm2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_rpwm2_0>;
+	status = "okay";
 };
