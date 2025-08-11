@@ -1,0 +1,7 @@
+config BR2_PACKAGE_JDK
+	bool "jobot development kit(JDK)"
+	default n
+    select BR2_PACKAGE_MPP
+	help
+	  Spacemit jobot development kit(JDK), 
+	  Encapsulates the MPP and multimedia processing pipeline to reduce data copying and data latency.
