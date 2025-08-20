@@ -1,0 +1,5 @@
+config BR2_PACKAGE_LVGL
+    bool "LVGL support"
+    default n
+	help
+	  LVGL framwork and demo.
