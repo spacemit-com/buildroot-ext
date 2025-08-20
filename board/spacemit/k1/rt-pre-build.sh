@@ -1,6 +1,11 @@
 #!/bin/bash -e
 
-LINUX_DIR=$O/../../bsp-src/linux-6.6
+LINUX_DIR=/build/bsp-src/linux-6.6
+if [ ! -d "$LINUX_DIR" ]; then
+	LINUX_DIR=$O/../../bsp-src/linux-6.6
+fi
+
+echo "$LINUX_DIR"
 
 if [ -f $LINUX_DIR/.applied_patches_list ]; then
     echo "Linux already patched with PREEMPT_RT patch"
