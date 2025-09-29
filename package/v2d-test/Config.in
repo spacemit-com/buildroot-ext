@@ -1,0 +1,4 @@
+config BR2_PACKAGE_V2D_TEST
+	bool "v2d-test"
+	help
+	  Spacemit V2D driver test.

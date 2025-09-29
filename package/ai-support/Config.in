@@ -1,0 +1,21 @@
+config BR2_PACKAGE_AI_SUPPORT
+	bool "k1 ai support"
+	default n
+	select BR2_PACKAGE_ONNX_RUNTIME
+	select BR2_PACKAGE_OPENCV4
+	select BR2_PACKAGE_OPENCV4_LIB_IMGPROC
+	help
+	  Spacemit k1 AI support lib.
+
+if BR2_PACKAGE_AI_SUPPORT
+
+config BR2_PACKAGE_AI_SUPPORT_DEMO
+	bool "k1 ai support demo"
+	default y
+	select BR2_PACKAGE_OPENCV4_LIB_HIGHGUI
+	select BR2_PACKAGE_OPENCV4_LIB_IMGCODECS
+	select BR2_PACKAGE_OPENCV4_LIB_VIDEOIO
+	help
+	  Spacemit k1 AI support demo.
+
+endif

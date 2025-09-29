@@ -1,0 +1,5 @@
+config BR2_PACKAGE_RTK_HCIATTACH
+	bool "rtk hciattach"
+	help
+	  rtk hci attach tool to init bt and download firmware
+

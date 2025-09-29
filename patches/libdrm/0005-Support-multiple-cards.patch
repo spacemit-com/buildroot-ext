@@ -1,0 +1,64 @@
+From 8379fa57030a08cd24ad2bf8d1e31132ac339a7d Mon Sep 17 00:00:00 2001
+From: lilijun <lijun.li@spacemit.com>
+Date: Thu, 13 Jun 2024 14:01:32 +0800
+Subject: [PATCH] Support multiple cards
+
+---
+ xf86drm.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/xf86drm.c b/xf86drm.c
+index 5933e4b..24babd9 100644
+--- a/xf86drm.c
++++ b/xf86drm.c
+@@ -1036,6 +1036,14 @@ static int drmOpenByBusid(const char *busid, int type)
+     if (base < 0)
+         return -1;
+ 
++    if ((type == DRM_NODE_PRIMARY) && busid) {
++        if (strcmp("/dev/dri/card1", busid) == 0) {
++            base = 1;
++        } else if (strcmp("/dev/dri/card2", busid) == 0) {
++            base = 2;
++        }
++    }
++
+     drmMsg("drmOpenByBusid: Searching for BusID %s\n", busid);
+     for (i = base; i < base + DRM_MAX_MINOR; i++) {
+         fd = drmOpenMinor(i, 1, type);
+@@ -1089,7 +1097,7 @@ static int drmOpenByBusid(const char *busid, int type)
+  *
+  * \sa drmOpenMinor(), drmGetVersion() and drmGetBusid().
+  */
+-static int drmOpenByName(const char *name, int type)
++static int drmOpenByName(const char *name, const char *busid, int type)
+ {
+     int           i;
+     int           fd;
+@@ -1100,6 +1108,14 @@ static int drmOpenByName(const char *name, int type)
+     if (base < 0)
+         return -1;
+ 
++    if ((type == DRM_NODE_PRIMARY) && busid) {
++        if (strcmp("/dev/dri/card1", busid) == 0) {
++            base = 1;
++        } else if (strcmp("/dev/dri/card2", busid) == 0) {
++            base = 2;
++        }
++    }
++
+     /*
+      * Open the first minor number that matches the driver name and isn't
+      * already in use.  If it's in use it will have a busid assigned already.
+@@ -1216,7 +1232,7 @@ drm_public int drmOpenWithType(const char *name, const char *busid, int type)
+     }
+ 
+     if (name)
+-        return drmOpenByName(name, type);
++        return drmOpenByName(name, busid, type);
+ 
+     return -1;
+ }
+-- 
+2.25.1
+

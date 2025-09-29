@@ -1,0 +1,7 @@
+
+config BR2_PACKAGE_ONNX_RUNTIME
+        bool "ONNX Runtime"
+
+        help
+            Customized Version of ONNX Runtime
+

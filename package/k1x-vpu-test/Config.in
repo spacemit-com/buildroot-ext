@@ -1,0 +1,4 @@
+config BR2_PACKAGE_K1X_VPU_TEST
+	bool "k1x-vpu-test"
+	help
+	  Spacemit k1x vpu driver test.

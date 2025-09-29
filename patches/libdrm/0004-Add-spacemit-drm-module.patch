@@ -1,0 +1,24 @@
+From 76e5d5e6ca2cd1970d763a1ef37856a1a4af4f87 Mon Sep 17 00:00:00 2001
+From: lilijun <lijun.li@spacemit.com>
+Date: Tue, 5 Dec 2023 13:54:38 +0800
+Subject: [PATCH] Add spacemit drm module
+
+---
+ tests/util/kms.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/util/kms.c b/tests/util/kms.c
+index 39a9386..9debd40 100644
+--- a/tests/util/kms.c
++++ b/tests/util/kms.c
+@@ -124,6 +124,7 @@ const char *util_lookup_connector_type_name(unsigned int type)
+ }
+ 
+ static const char * const modules[] = {
++	"spacemit",
+ 	"i915",
+ 	"amdgpu",
+ 	"radeon",
+-- 
+2.25.1
+

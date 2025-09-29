@@ -1,0 +1,6 @@
+comment "spacemit mpp package"
+
+config BR2_PACKAGE_MPP
+	bool "spacemit mpp"
+	help
+	  spacemit mpp package

@@ -1,0 +1,24 @@
+
+menu "Bianbu config"
+
+source "$BR2_EXTERNAL_Bianbu_PATH/package/rtk-hciattach/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/mpp/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/img-gpu-powervr/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/drm-test/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/v2d-test/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/k1x-vpu-test/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/k1x-gpu-test/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/k1x-vpu-firmware/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/k1x-jpu/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/k1x-cam/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/vk-gl-cts/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/onnx-runtime/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/ai-support/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/usb-gadget/Config.in"
+
+source "$BR2_EXTERNAL_Bianbu_PATH/package/factorytest/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/jetson-utils/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/lvgl/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/jdk/Config.in"
+
+endmenu
