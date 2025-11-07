@@ -8,7 +8,7 @@ IMG_GPU_POWERVR_INSTALL_STAGING = YES
 IMG_GPU_POWERVR_LICENSE = Strictly Confidential
 IMG_GPU_POWERVR_REDISTRIBUTE = NO
 
-IMG_GPU_POWERVR_PROVIDES = libgles libopencl
+IMG_GPU_POWERVR_PROVIDES = libopencl
 IMG_GPU_POWERVR_LIB_TARGET = $(call qstrip,$(BR2_PACKAGE_IMG_GPU_POWERVR_OUTPUT))
 
 ifeq ($(IMG_GPU_POWERVR_LIB_TARGET),x11)
@@ -34,7 +34,7 @@ define IMG_GPU_POWERVR_INSTALL_TARGET_CMDS
 	cp -rdpf $(@D)/target/usr/local/share/pvr/shaders/* $(TARGET_DIR)/usr/local/share/pvr/shaders/
 	cp -rdpf $(@D)/target/lib/* $(TARGET_DIR)/lib/
 	cp -rdpf $(@D)/target/usr/* $(TARGET_DIR)/usr/
-	cp -rdpf $(@D)/target/etc/powervr.ini $(TARGET_DIR)/etc/
+	cp -rdpf $(@D)/target/etc/* $(TARGET_DIR)/etc/
 endef
 
 $(eval $(generic-package))
