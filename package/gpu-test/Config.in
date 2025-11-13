@@ -1,5 +1,5 @@
-config BR2_PACKAGE_K1X_GPU_TEST
-	bool "k1x-gpu-test"
+config BR2_PACKAGE_GPU_TEST
+	bool "gpu-test"
 	default n
 	depends on BR2_PACKAGE_HAS_LIBEGL
 	depends on BR2_PACKAGE_HAS_LIBGLES
