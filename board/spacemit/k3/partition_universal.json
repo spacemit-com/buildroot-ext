@@ -19,7 +19,7 @@
         {
             "name": "env",
             "offset":"384K",
-            "size": "256K",
+            "size": "64K",
             "image": "env.bin"
         },
         {
