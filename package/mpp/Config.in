@@ -2,5 +2,6 @@ comment "spacemit mpp package"
 
 config BR2_PACKAGE_MPP
 	bool "spacemit mpp"
+	select BR2_PACKAGE_SDL2
 	help
 	  spacemit mpp package
