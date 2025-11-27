@@ -3,6 +3,7 @@ MPP_SITE = $(TOPDIR)/../package-src/mpp
 MPP_SITE_METHOD = local
 MPP_SUPPORTS_IN_SOURCE_BUILD = NO
 MPP_INSTALL_STAGING = YES
+MPP_DEPENDENCIES = sdl2
 
 # default CMAKE_INSTALL_PREFIX is $(TARGET_DIR)/usr, change to below
 # note: not have -DCROSS_COMPILE
