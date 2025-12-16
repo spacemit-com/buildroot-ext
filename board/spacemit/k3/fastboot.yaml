@@ -1,7 +1,6 @@
 version: 1.0 # 配置文件版本
 support: # 支持的项目代号
-  - 'k1x'
-  - 'k1pro'
+  - 'k3'
 actions: # 刷机操作的定义
 
   - getvar:
