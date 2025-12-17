@@ -1,0 +1,46 @@
+From 9b3112dbb49d4ae77cdc8dd8b6150bcba997ffb2 Mon Sep 17 00:00:00 2001
+From: liuyingjie <yingjie.liu@spacemit.com>
+Date: Wed, 17 Dec 2025 10:41:46 +0800
+Subject: [PATCH] Support multiple cards
+
+
+diff --git a/xf86drm.c b/xf86drm.c
+index 6ca5626..66ad04c 100644
+--- a/xf86drm.c
++++ b/xf86drm.c
+@@ -1145,7 +1145,7 @@ static int drmOpenByBusid(const char *busid, int type)
+  *
+  * \sa drmOpenMinor(), drmGetVersion() and drmGetBusid().
+  */
+-static int drmOpenByName(const char *name, int type)
++static int drmOpenByName(const char *name, const char *busid, int type)
+ {
+     int           i;
+     int           fd;
+@@ -1156,6 +1156,14 @@ static int drmOpenByName(const char *name, int type)
+     if (base < 0)
+         return -1;
+ 
++    if ((type == DRM_NODE_PRIMARY) && busid) {
++        if (strcmp("/dev/dri/card1", busid) == 0) {
++            base = 1;
++        } else if (strcmp("/dev/dri/card2", busid) == 0) {
++            base = 2;
++        }
++    }
++
+     /*
+      * Open the first minor number that matches the driver name and isn't
+      * already in use.  If it's in use it will have a busid assigned already.
+@@ -1272,7 +1280,7 @@ drm_public int drmOpenWithType(const char *name, const char *busid, int type)
+     }
+ 
+     if (name)
+-        return drmOpenByName(name, type);
++        return drmOpenByName(name, busid, type);
+ 
+     return -1;
+ }
+-- 
+2.49.0.windows.1
+
