@@ -1,0 +1,5 @@
+config BR2_PACKAGE_ESOS
+	bool "The ESOS(Energy Service OS) of Spacemit"
+	help
+	  ESOS is an energy efficiency management system developed by Spacemit.
+
