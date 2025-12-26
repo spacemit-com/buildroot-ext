@@ -17,6 +17,7 @@ for x in $(cat /proc/cmdline); do
 			init=${x#init=}
 			;;
 		root=UUID=*)
+			sleep 1
 			ROOT=${x#root=UUID=}
 			ROOT=$(blkid | grep "$ROOT" | awk -F ':' '{print $1}')
 			;;

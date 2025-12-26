@@ -4,7 +4,6 @@ init=/init
 bootdelay=0
 knl_name=Image
 
-dtb_addr=0x120000000
 ramdisk_addr=0x130000000
 loglevel=8
 commonargs=setenv bootargs clk_ignore_unused nohlt
