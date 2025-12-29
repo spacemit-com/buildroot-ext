@@ -27,9 +27,15 @@
       "image": "factory/FSBL.bin"
     },
     {
+      "name": "bootloader",
+      "offset": "4M",
+      "size": "8M",
+      "image": "bootloader.img"
+    },
+    {
       "name": "bootfs",
       "type": "FAT32",
-      "offset": "4M",
+      "offset": "12M",
       "size": "-",
       "image": ["factory/bootinfo_block.bin",
                 "factory/bootinfo_spinand.bin",
