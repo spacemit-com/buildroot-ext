@@ -1,0 +1,6 @@
+[WiFi]
+Enable=true
+
+[Wired]
+Enable=true
+
