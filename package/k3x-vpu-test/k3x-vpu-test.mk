@@ -1,6 +1,6 @@
-K1X_VPU_TEST_VERSION:=1.0.0
-K1X_VPU_TEST_SITE = $(BR2_EXTERNAL_Bianbu_PATH)/../package-src/k1x-vpu-test
-K1X_VPU_TEST_SITE_METHOD = local
+K3X_VPU_TEST_VERSION:=0.0.2
+K3X_VPU_TEST_SITE = $(BR2_EXTERNAL_Bianbu_PATH)/../package-src/k3x-vpu-test
+K3X_VPU_TEST_SITE_METHOD = local
 
 MPP_CONF_OPTS = -DRUN_PLATFORM="RISCV" \
                         -DCI_LOG_LEVEL=4 \

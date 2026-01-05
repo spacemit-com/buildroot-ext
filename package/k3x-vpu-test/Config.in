@@ -1,0 +1,4 @@
+config BR2_PACKAGE_K3X_VPU_TEST
+	bool "k3x-vpu-test"
+	help
+	  Spacemit k3x vpu driver test.
