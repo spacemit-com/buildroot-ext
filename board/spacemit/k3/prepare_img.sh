@@ -59,7 +59,7 @@ gen_bootfs_vfat() {
 
     echo "rm -f $BOOTFS_IMG_FILE" >> "$FAKE_ROOT_FILE"
     echo "dd if=/dev/zero of=$BOOTFS_IMG_FILE count=1 bs=$BOOTFS_SIZE" >> "$FAKE_ROOT_FILE"
-    echo "mkfs.vfat $BOOTFS_IMG_FILE" >> "$FAKE_ROOT_FILE"
+    echo "mkfs.vfat -S 4096 $BOOTFS_IMG_FILE" >> "$FAKE_ROOT_FILE"
 
     echo "cp -f $UENV_TXT_FILE $BOOTFS_DIR/" >> "$FAKE_ROOT_FILE"
     echo "cp -f $UBOOT_LOGO_FILE $BOOTFS_DIR/" >> "$FAKE_ROOT_FILE"
@@ -67,6 +67,7 @@ gen_bootfs_vfat() {
     echo "cp -f $KERNEL_DTB_FILE $BOOTFS_DIR/" >> "$FAKE_ROOT_FILE"
     echo "cp -f $TARGET_INITRAMFS_FILE $BOOTFS_DIR/initramfs-generic.img" >> "$FAKE_ROOT_FILE"
     echo "mcopy -i $BOOTFS_IMG_FILE $BOOTFS_DIR/* ::" >> "$FAKE_ROOT_FILE"
+    echo "fsck.vfat -v -n $BOOTFS_IMG_FILE" >> "$FAKE_ROOT_FILE"
 
     chmod 777 "$FAKE_ROOT_FILE"
     FAKEROOTDONTTRYCHOWN=1 "$IMGS_DIR/../host/bin/fakeroot" -- "$FAKE_ROOT_FILE"
@@ -91,12 +92,13 @@ gen_bootloader_img() {
 
     echo "rm -f $BOOTLOADER_IMG_FILE" >> "$FAKE_ROOT_FILE"
     echo "dd if=/dev/zero of=$BOOTLOADER_IMG_FILE count=1 bs=$BOOTLOADER_SIZE" >> "$FAKE_ROOT_FILE"
-    echo "mkfs.vfat $BOOTLOADER_IMG_FILE" >> "$FAKE_ROOT_FILE"
+    echo "mkfs.vfat -S 4096 $BOOTLOADER_IMG_FILE" >> "$FAKE_ROOT_FILE"
 
     echo "cp -f $ESOS_ITB_FILE $BOOTLOADER_DIR/" >> "$FAKE_ROOT_FILE"
     echo "cp -f $OPENSBI_ITB_FILE $BOOTLOADER_DIR/" >> "$FAKE_ROOT_FILE"
     echo "cp -f $UBOOT_ITB_FILE $BOOTLOADER_DIR/" >> "$FAKE_ROOT_FILE"
     echo "mcopy -i $BOOTLOADER_IMG_FILE $BOOTLOADER_DIR/* ::" >> "$FAKE_ROOT_FILE"
+    echo "fsck.vfat -v -n $BOOTLOADER_IMG_FILE" >> "$FAKE_ROOT_FILE"
 
     chmod 777 "$FAKE_ROOT_FILE"
     FAKEROOTDONTTRYCHOWN=1 "$IMGS_DIR/../host/bin/fakeroot" -- "$FAKE_ROOT_FILE"
