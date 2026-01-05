@@ -1,0 +1,49 @@
+From 23e2f1d46704443f0b6213624baa5f17f84c42de Mon Sep 17 00:00:00 2001
+From: liuyingjie <yingjie.liu@spacemit.com>
+Date: Sun, 4 Jan 2026 20:15:41 +0800
+Subject: [PATCH 2/3] animation: destroy view if two consecutive timestamps are
+ equal
+
+Fix animation stuttering issue by detecting when timestamps stop
+advancing. Uses a static variable to track the last timestamp and
+forces animation destruction when two consecutive frames have the
+same timestamp.
+
+This is a cleaner solution than the previous frame counter approach
+and directly addresses the display stuttering problem.
+
+Patch from: liyeshan <yeshan.li@spacemit.com>
+Date: 2025-01-14
+---
+ libweston/animation.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/libweston/animation.c b/libweston/animation.c
+index 3d8cc7a..aa355b0 100644
+--- a/libweston/animation.c
++++ b/libweston/animation.c
+@@ -198,17 +198,20 @@ weston_view_animation_frame(struct weston_animation *base,
+ 			     struct weston_view_animation, animation);
+ 	struct weston_compositor *compositor =
+ 		animation->view->surface->compositor;
++	static int64_t last_time = -1;
+ 
+ 	if (base->frame_counter <= 1)
+ 		animation->spring.timestamp = *time;
+ 
+ 	weston_spring_update(&animation->spring, time);
+ 
+-	if (weston_spring_done(&animation->spring)) {
++	if (weston_spring_done(&animation->spring) || (last_time == timespec_to_msec(time))) {
+ 		defer_animation_destroy(animation);
+ 		return;
+ 	}
+ 
++	last_time = timespec_to_msec(time);
++
+ 	if (animation->frame)
+ 		animation->frame(animation);
+ 
+-- 
+2.49.0.windows.1
+
