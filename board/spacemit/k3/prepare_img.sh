@@ -38,7 +38,7 @@ BOOTLOADER_SIZE=$($IMGS_DIR/../host/bin/jq '.partitions[] | select(.name == "boo
 BOOTLOADER_DIR="$IMGS_DIR/bootloader"
 BOOTLOADER_IMG_FILE="$IMGS_DIR/bootloader.img"
 UBOOT_ITB_FILE="$IMGS_DIR/u-boot.itb"
-OPENSBI_ITB_FILE="$IMGS_DIR/opensbi.itb"
+OPENSBI_ITB_FILE="$IMGS_DIR/fw_dynamic.itb"
 ESOS_ITB_FILE="$IMGS_DIR/esos.itb"
 
 KERNEL_DTB_NAME="*.dtb"
@@ -80,7 +80,7 @@ gen_bootfs_vfat() {
     echo -e "\n"
 }
 
-#Pack esos.itb, opensbi.itb and u-boot.itb
+#Pack esos.itb, fw_dynamic.itb and u-boot.itb
 gen_bootloader_img() {
     echo -e "\n"
     echo "Starting to build bootloader ..............................."
@@ -121,9 +121,6 @@ override_rootfs_img() {
 
 gen_sub_images() {
 
-    # opensbi.itb
-    cp -f ${IMGS_DIR}/fw_dynamic.itb ${IMGS_DIR}/opensbi.itb
-
     #env.bin
     cp -f ${IMGS_DIR}/u-boot-env-default.bin ${IMGS_DIR}/env.bin
 
@@ -158,7 +155,7 @@ pack_image_zip() {
     #cp -f ${DEVICE_DIR}/partition_universal.json ${IMGS_DIR}/
     cd ${IMGS_DIR}
     zip ${TARGET_IMAGE_ZIP} \
-        opensbi.itb \
+        fw_dynamic.itb \
         u-boot.itb \
         esos.itb \
         env.bin \
