@@ -1,5 +1,0 @@
-config BR2_PACKAGE_JETSON_UTILS
-	bool "k1 jetson-utils lib"
-	default y
-	help
-	  Spacemit k1 jetson-utils lib.
