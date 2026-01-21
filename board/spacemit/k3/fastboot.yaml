@@ -21,6 +21,21 @@ actions: # 刷机操作的定义
       timeout:
         seconds: 1
 
+  - getvar:
+      args: 'version'
+      set: 'version'
+      skip_fail: true
+      timeout:
+        seconds: 1
+      retry: 3
+
+  - oem:
+      args: 'speed:super-speed'
+      skip_when: "not temp.version"
+      skip_fail: true
+      timeout:
+        seconds: 1
+
   - stage:
       file: 'u-boot.itb'
       skip_when: "not temp.version"
@@ -36,12 +51,14 @@ actions: # 刷机操作的定义
   - getvar:
       args: 'mtd-size'
       set_var: 'size0'
+      skip_fail: true
       timeout:
         seconds: 1
 
   - getvar:
       args: 'blk-size'
       set_var: 'size1'
+      skip_fail: true
       timeout:
         seconds: 1
 
