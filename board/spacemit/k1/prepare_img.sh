@@ -17,8 +17,8 @@ UBOOT_LOGO_FILE="$DEVICE_DIR/bianbu.bmp"
 solution_name=$(echo "$IMGS_DIR" | awk -F'/' '{print $(NF-1)}')
 #Give a chance to CI
 if [ -z "$BIANBU_LINUX_ARCHIVE" ]; then
-    TARGET_IMAGE_ZIP="$IMGS_DIR/Buildroot-${solution_name}-$(date +%Y%m%d%H%M%S).zip"
-    SDCARD_IMAGE="Buildroot-${solution_name}-$(date +%Y%m%d%H%M%S)-sdcard.img"
+    TARGET_IMAGE_ZIP="$IMGS_DIR/Buildroot-${solution_name}.zip"
+    SDCARD_IMAGE="Buildroot-${solution_name}-sdcard.img"
 else
     TARGET_IMAGE_ZIP="$BIANBU_LINUX_ARCHIVE.zip"
     SDCARD_IMAGE="$BIANBU_LINUX_ARCHIVE-sdcard.img"
