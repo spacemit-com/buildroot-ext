@@ -8,6 +8,26 @@
 
 # please config linux dir in menuconfig
 # LINUX_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/linux-6.1
+
+# Make BR2_LINUX_KERNEL_PATCH work with BR2_LINUX_KERNEL_CUSTOM_DIR
+ifeq ($(BR2_LINUX_KERNEL_CUSTOM_DIR),y)
+ifneq ($(call qstrip,$(BR2_LINUX_KERNEL_PATCH)),)
+
+define LINUX_APPLY_CUSTOM_DIR_PATCHES
+	@for p in $(call qstrip,$(BR2_LINUX_KERNEL_PATCH)) ; do \
+		[ -d "$$p" ] || continue ; \
+		for f in $$p/*.patch ; do \
+			[ -f "$$f" ] || continue ; \
+			patch -p1 -N -d $(@D) < "$$f" 2>/dev/null || true ; \
+		done; \
+	done
+endef
+
+LINUX_POST_RSYNC_HOOKS += LINUX_APPLY_CUSTOM_DIR_PATCHES
+
+endif
+endif
+
 UBOOT_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/uboot-2022.10
 OPENSBI_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/opensbi
 MESA3D_OVERRIDE_SRCDIR = $(TOPDIR)/../package-src/mesa
