@@ -26,7 +26,6 @@ fi
 
 TARGET_ROOTFS_FILE="$IMGS_DIR/rootfs.ext2"
 TARGET_BOOTFS_FILE="$IMGS_DIR/bootfs.img"
-TARGET_BOOTLOADER_FILE="$IMGS_DIR/bootloader.img"
 TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.gz")
 #TARGET_INITRAMFS_FILE=("$IMGS_DIR/rootfs.cpio.uboot")
 
@@ -34,9 +33,6 @@ BOOTFS_SIZE=$($IMGS_DIR/../host/bin/jq '.partitions[] | select(.name == "bootfs"
 BOOTFS_DIR="$IMGS_DIR/bootfs"
 BOOTFS_IMG_FILE="$IMGS_DIR/bootfs.img"
 
-BOOTLOADER_SIZE=$($IMGS_DIR/../host/bin/jq '.partitions[] | select(.name == "bootloader") | .size' "$PARTITIONS_FILE")
-BOOTLOADER_DIR="$IMGS_DIR/bootloader"
-BOOTLOADER_IMG_FILE="$IMGS_DIR/bootloader.img"
 UBOOT_ITB_FILE="$IMGS_DIR/u-boot.itb"
 OPENSBI_ITB_FILE="$IMGS_DIR/fw_dynamic.itb"
 ESOS_ITB_FILE="$IMGS_DIR/esos.itb"
@@ -80,37 +76,6 @@ gen_bootfs_vfat() {
     echo -e "\n"
 }
 
-#Pack esos.itb, fw_dynamic.itb and u-boot.itb
-gen_bootloader_img() {
-    echo -e "\n"
-    echo "Starting to build bootloader ..............................."
-
-    echo "#!/bin/sh" > "$FAKE_ROOT_FILE"
-    echo "set -e" >> "$FAKE_ROOT_FILE"
-    echo "rm -rf $BOOTLOADER_DIR" >> "$FAKE_ROOT_FILE"
-    echo "mkdir -p $BOOTLOADER_DIR" >> "$FAKE_ROOT_FILE"
-
-    echo "rm -f $BOOTLOADER_IMG_FILE" >> "$FAKE_ROOT_FILE"
-    echo "dd if=/dev/zero of=$BOOTLOADER_IMG_FILE count=1 bs=$BOOTLOADER_SIZE" >> "$FAKE_ROOT_FILE"
-    echo "mkfs.vfat -S 4096 $BOOTLOADER_IMG_FILE" >> "$FAKE_ROOT_FILE"
-
-    echo "cp -f $ESOS_ITB_FILE $BOOTLOADER_DIR/" >> "$FAKE_ROOT_FILE"
-    echo "cp -f $OPENSBI_ITB_FILE $BOOTLOADER_DIR/" >> "$FAKE_ROOT_FILE"
-    echo "cp -f $UBOOT_ITB_FILE $BOOTLOADER_DIR/" >> "$FAKE_ROOT_FILE"
-    echo "mcopy -i $BOOTLOADER_IMG_FILE $BOOTLOADER_DIR/* ::" >> "$FAKE_ROOT_FILE"
-    echo "fsck.vfat -v -n $BOOTLOADER_IMG_FILE" >> "$FAKE_ROOT_FILE"
-
-    chmod 777 "$FAKE_ROOT_FILE"
-    FAKEROOTDONTTRYCHOWN=1 "$IMGS_DIR/../host/bin/fakeroot" -- "$FAKE_ROOT_FILE"
-
-    if [ $? -ne 0 ]; then
-        echo "Building bootloader failed. Please check for errors..............."
-        exit 1
-    fi
-    echo "Bootloader build successful................................."
-    echo -e "\n"
-}
-
 override_rootfs_img() {
     #override rootfs.ext4 if needed
     if [ -f "$SRC_ROOTFS_FILE" ]; then
@@ -149,7 +114,6 @@ pack_image_zip() {
     mkdir -p ${IMGS_DIR}/factory
     cp -f ${IMGS_DIR}/FSBL.bin ${IMGS_DIR}/factory/
     cp -f ${IMGS_DIR}/bootinfo_*.bin ${IMGS_DIR}/factory/
-    
     cp -f ${DEVICE_DIR}/fastboot.yaml ${IMGS_DIR}/
     cp -f ${DEVICE_DIR}/partition_*.json ${IMGS_DIR}/
     #cp -f ${DEVICE_DIR}/partition_universal.json ${IMGS_DIR}/
@@ -159,7 +123,6 @@ pack_image_zip() {
         u-boot.itb \
         esos.itb \
         env.bin \
-        bootloader.img \
         bootfs.img \
         rootfs.ext4 \
         partition_*.json \
@@ -184,9 +147,6 @@ pack_image_zip() {
 
 #include env and Image
 gen_sub_images
-
-#Gen bootloader
-gen_bootloader_img
 
 #Gen bootfs
 gen_bootfs_vfat
