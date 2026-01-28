@@ -17,8 +17,8 @@ UBOOT_LOGO_FILE="$DEVICE_DIR/bianbu.bmp"
 solution_name=$(echo "$IMGS_DIR" | awk -F'/' '{print $(NF-1)}')
 #Give a chance to CI
 if [ -z "$BIANBU_LINUX_ARCHIVE" ]; then
-    TARGET_IMAGE_ZIP="$IMGS_DIR/bianbu-linux-${solution_name}.zip"
-    SDCARD_IMAGE="bianbu-linux-${solution_name}-sdcard.img"
+    TARGET_IMAGE_ZIP="$IMGS_DIR/Buildroot-${solution_name}.zip"
+    SDCARD_IMAGE="Buildroot-${solution_name}-sdcard.img"
 else
     TARGET_IMAGE_ZIP="$BIANBU_LINUX_ARCHIVE.zip"
     SDCARD_IMAGE="$BIANBU_LINUX_ARCHIVE-sdcard.img"
@@ -109,7 +109,7 @@ pack_image_zip() {
     mkdir -p ${IMGS_DIR}/factory
     cp -f ${IMGS_DIR}/FSBL.bin ${IMGS_DIR}/factory/
     cp -f ${IMGS_DIR}/bootinfo_*.bin ${IMGS_DIR}/factory/
-    
+
     cp -f ${DEVICE_DIR}/fastboot.yaml ${IMGS_DIR}/
     cp -f ${DEVICE_DIR}/partition_*.json ${IMGS_DIR}/
     #cp -f ${DEVICE_DIR}/partition_universal.json ${IMGS_DIR}/
@@ -134,7 +134,7 @@ pack_image_zip() {
     #    partition_2M.json
     #    partition_universal.json \
     cd - >/dev/null
- 
+
     echo "Images successfully packed into ${TARGET_IMAGE_ZIP}"
     echo -e "\n"
 }

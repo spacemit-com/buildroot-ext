@@ -17,7 +17,6 @@ source "$BR2_EXTERNAL_Bianbu_PATH/package/ai-support/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/usb-gadget/Config.in"
 
 source "$BR2_EXTERNAL_Bianbu_PATH/package/factorytest/Config.in"
-source "$BR2_EXTERNAL_Bianbu_PATH/package/jetson-utils/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/lvgl/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/jdk/Config.in"
 
