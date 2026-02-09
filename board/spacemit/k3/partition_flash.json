@@ -61,6 +61,7 @@
                 "esos.itb",
                 "bootloader.img",
                 "bootfs.img",
+		"env.bin",
                 "/partition_.+.json$/"]
     }
   ]
