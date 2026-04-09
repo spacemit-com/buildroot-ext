@@ -1,0 +1,7 @@
+
+config BR2_PACKAGE_LLAMA_CPP
+	bool "llama.cpp"
+
+	help
+	    Customized Version of llama.cpp
+
