@@ -14,6 +14,7 @@ source "$BR2_EXTERNAL_Bianbu_PATH/package/k1x-cam/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/vk-gl-cts/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/onnx-runtime/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/llama-cpp/Config.in"
+source "$BR2_EXTERNAL_Bianbu_PATH/package/spine-tcm/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/ai-support/Config.in"
 source "$BR2_EXTERNAL_Bianbu_PATH/package/usb-gadget/Config.in"
 

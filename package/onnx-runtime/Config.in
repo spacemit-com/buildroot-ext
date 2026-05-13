@@ -1,6 +1,7 @@
 
 config BR2_PACKAGE_ONNX_RUNTIME
         bool "ONNX Runtime"
+        select BR2_PACKAGE_SPINE_TCM
 
         help
             Customized Version of ONNX Runtime

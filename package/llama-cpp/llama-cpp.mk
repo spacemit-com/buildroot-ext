@@ -1,4 +1,4 @@
-LLAMA_CPP_VERSION:=0.0.6
+LLAMA_CPP_VERSION:=0.0.9
 LLAMA_CPP_SITE=http://archive.spacemit.com/spacemit-ai/llama.cpp
 LLAMA_CPP_SITE_METHOD=wget
 LLAMA_CPP_SOURCE=spacemit-llama.cpp.riscv64.$(LLAMA_CPP_VERSION).tar.gz
