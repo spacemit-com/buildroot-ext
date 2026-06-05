@@ -1,0 +1,8 @@
+
+config BR2_PACKAGE_LLAMA_CPP
+	bool "llama.cpp"
+	select BR2_PACKAGE_SPINE_TCM
+
+	help
+	    Customized Version of llama.cpp
+

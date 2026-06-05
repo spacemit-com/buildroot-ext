@@ -1,0 +1,7 @@
+
+config BR2_PACKAGE_SPINE_TCM
+	bool "spine-tcm"
+
+	help
+	    SpacemiT TCM (Tightly Coupled Memory) support library
+
