@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "format": "mtd",
+  "partitions": [
+    {
+      "name": "bootinfo",
+      "comment": "contain address and size info of fsbl, MUST not change its position",
+      "offset": "0",
+      "size": "128K",
+      "image": "factory/bootinfo_spinand.bin"
+    },
+    {
+      "name": "fsbl",
+      "comment": "its offset was designated by bootinfo",
+      "offset": "128K",
+      "size": "512K",
+      "image": "factory/FSBL.bin"
+    },
+    {
+      "name": "env",
+      "comment": "uboot env data partition, MUST not change its offset and size",
+      "offset": "640K",
+      "size": "64K",
+      "image": "env.bin"
+    },
+    {
+      "name": "esos",
+      "offset": "704K",
+      "size": "1M",
+      "image": "esos.itb"
+    },
+    {
+      "name": "opensbi",
+      "offset": "1728K",
+      "size": "320K",
+      "image": "fw_dynamic.itb"
+    },
+    {
+      "name": "optee",
+      "comment": "OP-TEE standalone FIT (optee.itb), loaded by SPL before OpenSBI",
+      "offset": "2048K",
+      "size": "512K",
+      "image": "optee.itb"
+    },
+    {
+      "name": "uboot",
+      "offset": "2560K",
+      "size": "2560K",
+      "image": "u-boot.itb"
+    },
+    {
+      "name": "bootfs",
+      "offset": "5M",
+      "size": "59M",
+      "image": "bootfs.img"
+    }
+  ]
+}

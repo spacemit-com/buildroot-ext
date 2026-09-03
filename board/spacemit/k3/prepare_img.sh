@@ -12,6 +12,7 @@ SRC_ROOTFS_FILE="$DEVICE_DIR/rootfs.ext4"
 PARTITIONS_FILE="$DEVICE_DIR/partition_universal.json"
 UENV_TXT_FILE="$DEVICE_DIR/env_k3.txt"
 UBOOT_LOGO_FILE="$DEVICE_DIR/bianbu.bmp"
+SEC_PART_DIR="$DEVICE_DIR/flash_config/sec"
 
 
 solution_name=$(echo "$IMGS_DIR" | awk -F'/' '{print $(NF-1)}')
@@ -22,6 +23,15 @@ if [ -z "$BIANBU_LINUX_ARCHIVE" ]; then
 else
     TARGET_IMAGE_ZIP="$BIANBU_LINUX_ARCHIVE.zip"
     SDCARD_IMAGE="$BIANBU_LINUX_ARCHIVE-sdcard.img"
+fi
+# secure image names: reuse the non-secure stamp with a -sec suffix so the
+# two sets do not collide
+if [ -z "$BIANBU_LINUX_ARCHIVE" ]; then
+    SEC_IMAGE_ZIP="$IMGS_DIR/Buildroot-${solution_name}-$(date +%Y%m%d%H%M%S)-sec.zip"
+    SEC_SDCARD_IMAGE="Buildroot-${solution_name}-$(date +%Y%m%d%H%M%S)-sec-sdcard.img"
+else
+    SEC_IMAGE_ZIP="$BIANBU_LINUX_ARCHIVE-sec.zip"
+    SEC_SDCARD_IMAGE="$BIANBU_LINUX_ARCHIVE-sec-sdcard.img"
 fi
 
 TARGET_ROOTFS_FILE="$IMGS_DIR/rootfs.ext2"
@@ -146,6 +156,53 @@ pack_image_zip() {
     echo -e "\n"
 }
 
+# secure (OP-TEE) pack: only when images/sec/ exists (secure-firmware pkg).
+# Nothing in the images root is touched: secure-only files (u-boot.itb,
+# env.bin, optee.itb) are read straight from images/sec/ via genimage and
+# zip, FSBL/bootinfo are staged in images/sec/factory/ (non-secure
+# factory/ keeps the non-secure FSBL set untouched). Secure partition
+# tables stay in flash_config/sec/ and are zipped from there.
+SEC_PART_FILE="$SEC_PART_DIR/partition_universal.json"
+SEC_CFG_FILE="$IMGS_DIR/genimage_sec.cfg"
+
+pack_sec() {
+    local sec_dir="$IMGS_DIR/sec"
+
+    [ -d "$sec_dir" ] || { echo "INFO: no $sec_dir, skip secure pack"; return 0; }
+    [ -f "$sec_dir/u-boot.itb" ] || { echo "ERROR: $sec_dir/u-boot.itb missing (secure-firmware not built?)"; exit 1; }
+
+    # secure factory/: FSBL + bootinfo staged under sec/factory/ so the
+    # zip entry path matches the partition-table references
+    # (factory/FSBL.bin, factory/bootinfo_block.bin) while staying
+    # completely inside images/sec/ - the images root is never touched.
+    mkdir -p "$sec_dir/factory"
+    cp -f "$sec_dir/FSBL.bin" "$sec_dir/factory/"
+    cp -f ${IMGS_DIR}/bootinfo_*.bin "$sec_dir/factory/" 2>/dev/null || true
+
+    echo "Generating genimage_sec.cfg ........................"
+    $PWD/../scripts/gen_imgcfg.py -i "$SEC_PART_FILE" -n "$SEC_SDCARD_IMAGE" -o "$SEC_CFG_FILE" --sec
+
+    echo "Generating secure sdcard image ........................"
+    $PWD/support/scripts/genimage.sh -c "$SEC_CFG_FILE"
+    if [ $? -ne 0 ]; then
+        echo "Generating secure sdcard failed. Please check for errors..............."
+        exit 1
+    fi
+    echo "Successfully generated at ${IMGS_DIR}/${SEC_SDCARD_IMAGE}"
+
+    echo "Starting to pack secure images........................."
+    rm -f "$SEC_IMAGE_ZIP"
+    # shared artifacts (zip paths = images root layout)
+    (cd ${IMGS_DIR} && zip "$SEC_IMAGE_ZIP" \
+        fw_dynamic.itb esos.itb ec.bin bootfs.img rootfs.ext4 fastboot.yaml \
+        genimage_sec.cfg)
+    # secure-only artifacts: from sec/ (env/u-boot/optee) and sec/factory/
+    # (FSBL/bootinfo, archived under factory/ to match the partition tables)
+    (cd "$sec_dir" && zip "$SEC_IMAGE_ZIP" env.bin u-boot.itb optee.itb -r factory)
+    (cd "$SEC_PART_DIR" && zip "$SEC_IMAGE_ZIP" partition_*.json)
+    echo "Secure images successfully packed into ${SEC_IMAGE_ZIP}"
+    echo -e "\n"
+}
 
 #include env and Image
 gen_sub_images
@@ -165,3 +222,5 @@ pack_image_zip
 #Gen sdcard.img if need
 gen_sdcard_img
 
+#Pack secure (OP-TEE) image set when images/sec/ exists
+pack_sec
