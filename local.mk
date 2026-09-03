@@ -30,6 +30,10 @@ endif
 
 UBOOT_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/uboot-2022.10
 OPENSBI_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/opensbi
+# BSP-provided optee-os source (bsp-src), same layout as uboot/opensbi
+OPTEE_OS_OVERRIDE_SRCDIR = $(TOPDIR)/../bsp-src/optee_os
+# keep the local build output (out/) out of the buildroot rsync
+OPTEE_OS_OVERRIDE_SRCDIR_RSYNC_EXCLUSIONS = --exclude out/
 MESA3D_OVERRIDE_SRCDIR = $(TOPDIR)/../package-src/mesa
 IMG_GPU_POWERVR_OVERRIDE_SRCDIR = $(TOPDIR)/../package-src/img-gpu-powervr
 GLMARK2_OVERRIDE_SRCDIR = $(TOPDIR)/../package-src/glmark2

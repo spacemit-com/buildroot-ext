@@ -1,0 +1,23 @@
+config BR2_PACKAGE_SECURE_FIRMWARE
+	bool "build secure firmware set (OP-TEE itb + secure u-boot) into images/sec/"
+	depends on BR2_TARGET_UBOOT
+	depends on BR2_TARGET_OPTEE_OS
+	help
+	  Single pseudo-package producing the whole secure (OP-TEE) firmware
+	  set under images/sec/, mirroring the k3-dev BSP SDK output/sec/:
+	    - optee.itb  : tee.bin packed as a standalone FIT (its maintained
+	                   in optee_os plat-k3/, single source of truth)
+	    - secure u-boot variant (k3_sec.config merged) : u-boot.itb,
+	                   FSBL.bin, env.bin (optee mtdparts), u-boot-nodtb.bin,
+	                   spl/u-boot-spl.bin, uboot/*.dtb (tdomain/udomain)
+	    - tee.bin relocated under sec/ (non-secure images/ root stays
+	                   tee-free)
+	  Depends on the normal (non-secure) uboot having been built first
+	  (its build dir is reused for the in-place secure re-build); the
+	  non-secure .config/env are restored afterwards.
+
+	  Chips without configs/<chip>_sec.config skip the secure u-boot
+	  re-build but still get optee.itb packed.
+
+comment "secure firmware needs u-boot + optee-os"
+	depends on !BR2_TARGET_UBOOT || !BR2_TARGET_OPTEE_OS
