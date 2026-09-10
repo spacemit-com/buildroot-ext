@@ -59,6 +59,12 @@ endef
 # Build step: equivalent to ./build_top.sh (builds all boards under rt24 chip)
 define ESOS_BUILD_CMDS
 	@echo "INFO: Starting esos build for all boards ..."
+	export GIT_COMMIT_ID=$$(git -C $(ESOS_SITE) log -1 --format=%H 2>/dev/null || true); \
+	export SOURCE_DATE_EPOCH=$$( \
+		main=$$(git -C $(ESOS_SITE) log -1 --format=%ct 2>/dev/null || echo 0); \
+		lite=$$(git -C $(ESOS_SITE)/components/esos-lite log -1 --format=%ct 2>/dev/null || echo 0); \
+		[ "$$lite" -gt "$$main" ] && echo "$$lite" || echo "$$main" \
+	); \
 	cd $(@D) && ./build_top.sh
 	@echo "INFO: esos build completed"
 endef
