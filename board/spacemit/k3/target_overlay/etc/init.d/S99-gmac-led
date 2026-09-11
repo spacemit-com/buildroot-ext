@@ -2,6 +2,27 @@
 
 LED_BASE="/sys/class/leds"
 
+is_ethercat_mode() {
+    local path
+    local drv
+
+    path=$(readlink -f "$1/device") || return 1
+
+    while [ "$path" != "/" ]; do
+        if [ -L "$path/driver" ]; then
+            drv=$(readlink "$path/driver")
+            drv=${drv##*/}
+
+            [ "$drv" = "dwmac-spacemit-ethqos-ethercat" ] && return 0
+        fi
+
+        path=${path%/*}
+        [ -n "$path" ] || path=/
+    done
+
+    return 1
+}
+
 # Write a value to a LED sysfs attribute, skip if the file does not exist
 write_led() {
     local led_path="$1"
@@ -16,6 +37,8 @@ write_led() {
 configure_green_led() {
     local led_path="$1"
 
+    is_ethercat_mode "${led_path}" && return 0
+
     write_led "${led_path}" trigger     netdev
     sleep 0.5
     write_led "${led_path}" link_10     0
@@ -28,6 +51,8 @@ configure_green_led() {
 # Configure yellow LED: blink on tx/rx activity, no link-speed indication
 configure_yellow_led() {
     local led_path="$1"
+
+    is_ethercat_mode "${led_path}" && return 0
 
     write_led "${led_path}" trigger     netdev
     sleep 0.5
